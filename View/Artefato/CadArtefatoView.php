@@ -1,5 +1,5 @@
 <script src="js/CadArtefatoView.js?rdm=<?php echo time();?>"></script>
-<form name="menuForm" enctype="multpart/form-data" id="cadastroMenuForm" method="post" action="../../Controller/Menu/CadastroMenuController.php">
+<form>
     <input type="hidden" id="codArtefato" name="codArtefato" value="0" class="persist">    
     <table width="100%" align="left">
         <tr>
@@ -7,18 +7,18 @@
         </tr>
         <tr>
             <td>
-                <input type="text" name="dscMenu" id="dscArtefato" class="persist input">
+                <input type="text" name="dscArtefato" id="dscArtefato" class="persist input">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" name="indAtivo" id="indAtivo" class="persist"> Ativo
+            </td>
+        </tr>
+        <tr style="padding-top:20px;">
+            <td>
+                <input type="button" id="btnSalvar" value="Salvar" class="button-salvar">
             </td>
         </tr>
     </table>   
 </form>
-<table>
-    <tr style="padding-top:20px;">
-        <td>
-            <input type="button" id="btnSalvar" value="Salvar" class="button-salvar">
-        </td>
-        <td>
-            <input type="button" id="btnDeletar" value="Deletar" class="button-cancelar">
-        </td>
-    </tr>
-</table>

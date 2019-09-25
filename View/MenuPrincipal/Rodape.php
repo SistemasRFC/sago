@@ -15,6 +15,7 @@
                 background-color: #019b9b;
                 color: white;
                 margin-top: 30px;
+                z-index: 1;
             }
         </style>
     </head>

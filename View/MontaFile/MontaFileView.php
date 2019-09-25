@@ -6,7 +6,7 @@ include_once PATH."View/MenuPrincipal/Rodape.php";
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>RADI - Monta File</title>
+        <title>SAGO - Monta File</title>
         <script src="../MontaFile/JavaScript/MontaFileView.js?rdm=<?php echo time();?>"></script>        
     </head>
     <body>

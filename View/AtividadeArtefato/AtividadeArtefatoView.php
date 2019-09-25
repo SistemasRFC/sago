@@ -5,7 +5,7 @@ include_once PATH."View/MenuPrincipal/Rodape.php";
 ?>
 <html>
     <head>
-        <title>2 - Atividade Artefato</title>
+        <title>SAGO - 2-Atividade Artefato</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="js/AtividadeArtefatoView.js?rdm=<?php echo time();?>"></script>
 

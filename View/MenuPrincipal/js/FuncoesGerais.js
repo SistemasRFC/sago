@@ -373,7 +373,7 @@ function retornaParametros(){
 /**
  * 
  * @param {type} arrCampos
- * @param {type} valorPadrao (Passar o nome do campo concatenado com ';' e após o tipo do campo e depois '|' ex.:IND_ATIVO;B|
+ * @param {type} valorPadrao (Passar o nome do campo concatenado com ';' e após o tipo do campo e depois '|' ex.:indAtivo;B|
  * @returns {undefined}
  */
 function preencheCamposForm(arrCampos, valorPadrao){

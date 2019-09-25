@@ -2,14 +2,14 @@ $(function () {
     $("#CadAtividade").jqxWindow({
         title: 'Cadastro de Atividades',
         height: 250,
-        width: 650,
+        width: 600,
         animationType: 'fade',
         showAnimationDuration: 500,
         closeAnimationDuration: 500,
         theme: 'darkcyan',
         isModal: true,
         autoOpen: false,
-        position: {x: (widthTela/2)-(650/2), y: (heightTela/2)-(250/2)}
+        position: 'absolute'
     });
 
     $("#btnNovo").click(function () {
@@ -24,7 +24,6 @@ function CarregaGridAtividade(listaAtividade) {
 
 function MontaTabelaAtividade(listaAtividade) {
     var nomeGrid = 'listaAtividade';
-    var contextMenu = $("#jqxMenu").jqxMenu({ width: '120px', autoOpenPopup: false, mode: 'popup', theme: 'darkcyan' });
     var source =
     {
         localdata: listaAtividade,
@@ -35,7 +34,8 @@ function MontaTabelaAtividade(listaAtividade) {
         datafields:
             [
                 { name: 'COD_ATIVIDADE', type: 'string' },
-                { name: 'DSC_ATIVIDADE', type: 'string' }
+                { name: 'DSC_ATIVIDADE', type: 'string' },
+                { name: 'ATIVO', type: 'boolean' }
             ]
     };
     var dataAdapter = new $.jqx.dataAdapter(source);
@@ -51,26 +51,12 @@ function MontaTabelaAtividade(listaAtividade) {
             columnsresize: true,
             selectionmode: 'singlerow',
             columns: [
-                { text: 'C&oacute;d.', columntype: 'textbox', datafield: 'COD_ATIVIDADE', width: 40 },
-                { text: 'Descri&ccedil;&atilde;o', datafield: 'DSC_ATIVIDADE', columntype: 'textbox', width: 695 }
+                { text: 'C&oacute;d.', columntype: 'textbox', datafield: 'COD_ATIVIDADE', width: 50 },
+                { text: 'Descri&ccedil;&atilde;o', datafield: 'DSC_ATIVIDADE', columntype: 'textbox', width: 700 },
+                { text: 'Ativo', datafield: 'ATIVO', columntype: 'checkbox', width: 50, align: 'center' }
             ]
         });
     // events
-    $('#' + nomeGrid).on('rowclick', function (event) {
-        var args = event.args;
-        var row = args.rowindex;
-
-        if (event.args.rightclick) {
-
-            $("#"+nomeGrid).jqxGrid('selectrow', event.args.rowindex);
-            var scrollTop = $(window).scrollTop();
-            var scrollLeft = $(window).scrollLeft();
-            contextMenu.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
-            $("#codAtividade").val($('#'+nomeGrid).jqxGrid('getrowdatabyid', args.rowindex).COD_ATIVIDADE);
-            $("#dscAtividade").val($('#'+nomeGrid).jqxGrid('getrowdatabyid', args.rowindex).DSC_ATIVIDADE);
-            return false;
-        }
-    });
     $("#" + nomeGrid).jqxGrid('localizestrings', localizationobj);
     $('#' + nomeGrid).on('rowdoubleclick', function (event) {
         var args = event.args;
@@ -78,23 +64,11 @@ function MontaTabelaAtividade(listaAtividade) {
         var rowData = rows[args.visibleindex];
         var rowID = rowData.uid;
 
-        preencheCamposForm(listaAtividade[rowID], '');
+        preencheCamposForm(listaAtividade[rowID], 'indAtivo;B|');
         $("#method").val("UpdateMenu");
         $("#CadAtividade").jqxWindow("open");
-    });
-    $("#jqxMenu").on('itemclick', function (event) {
-        var args = event.args;
-        var rowindex = $("#"+nomeGrid).jqxGrid('getselectedrowindex');
-        if ($.trim($(args).text()) == "Editar") {
-            $("#CadAtividade").jqxWindow("open");
-        } else if ($.trim($(args).text()) == "Novo") {
-            $("#btnNovo").click();
-        }
     });
 }
 $(document).ready(function () {
     ExecutaDispatch('Atividade', 'ListarAtividade', '', CarregaGridAtividade);
-    $(document).on('contextmenu', function (e) {
-        return false;
-    });
 });

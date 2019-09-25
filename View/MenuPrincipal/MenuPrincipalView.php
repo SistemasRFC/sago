@@ -4,7 +4,7 @@ include_once "Cabecalho.php";
 include_once "Rodape.php";
 ?>
 <head>
-    <title>Início</title>
+    <title>SAGO - Início</title>
     <script src="../../View/MenuPrincipal/js/MenuPrincipalView.js?rdm=<?php echo time();?>"></script>
 <style>
     /*Grid*/
@@ -87,8 +87,10 @@ include_once "Rodape.php";
 </head>
 <body>
     <div class="card" style="max-width: 100%;">
-        <div class="grid-container">
-
+        <div class="grid-container" >
+            <div class="item3" >
+                <h2>SISTEMA DE APOIO AO GERENCIAMENTO DE ORÇAMENTOS</h2>
+            </div>
         </div>
     </div>
 </body>

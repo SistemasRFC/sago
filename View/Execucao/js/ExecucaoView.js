@@ -1,7 +1,7 @@
 $(function () {
     $("#CadExecucao").jqxWindow({
         title: 'Cadastro de Execução',
-        height: 700,
+        height: 650,
         maxHeight: 900,
         width: 1050,
         maxWidth: 1050,
@@ -11,7 +11,7 @@ $(function () {
         theme: 'darkcyan',
         isModal: true,
         autoOpen: false,
-        position: { x: 435, y: 90 }
+        position: 'absolute'
     });
 
     $("#btnSalvarExecucao").click(function () {
@@ -72,7 +72,8 @@ function MontaTabelaExecucao(listaExecucao) {
             [
                 { name: 'COD_EXECUCAO', type: 'string' },
                 { name: 'COD_OF', type: 'string' },
-                { name: 'QTD_PONTOS_TOTAL', type: 'string' }
+                { name: 'QTD_PONTOS_TOTAL', type: 'string' },
+                { name: 'IND_STATUS', type: 'string' }
             ]
     };
     var dataAdapter = new $.jqx.dataAdapter(source);
@@ -89,25 +90,12 @@ function MontaTabelaExecucao(listaExecucao) {
             selectionmode: 'singlerow',
             columns: [
                 { text: 'C&oacute;d.', columntype: 'textbox', datafield: 'COD_EXECUCAO', width: 40 },
-                { text: 'OF', datafield: 'COD_OF', columntype: 'textbox', width: 395 },
-                { text: 'Pontuação da OF', datafield: 'QTD_PONTOS_TOTAL', columntype: 'textbox', width: 195 }
+                { text: 'OF', datafield: 'COD_OF', columntype: 'textbox', width: 400 },
+                { text: 'Pontuação da OF', datafield: 'QTD_PONTOS_TOTAL', columntype: 'textbox', width: 200 },
+                { text: 'Status', datafield: 'IND_STATUS', columntype: 'textbox', width: 160 }
             ]
         });
     // events
-    $('#' + nomeGrid).on('rowclick', function (event) {
-        var args = event.args;
-        var row = args.rowindex;
-
-        if (event.args.rightclick) {
-
-            $("#"+nomeGrid).jqxGrid('selectrow', event.args.rowindex);
-            var scrollTop = $(window).scrollTop();
-            var scrollLeft = $(window).scrollLeft();
-            $("#codExecucao").val($('#'+nomeGrid).jqxGrid('getrowdatabyid', args.rowindex).COD_EXECUCAO);
-            $("#codOf").val($('#'+nomeGrid).jqxGrid('getrowdatabyid', args.rowindex).COD_OF);
-            return false;
-        }
-    });
     $("#" + nomeGrid).jqxGrid('localizestrings', localizationobj);
     $('#' + nomeGrid).on('rowdoubleclick', function (event) {
         var args = event.args;
@@ -124,7 +112,17 @@ function MontaTabelaExecucao(listaExecucao) {
 
 }
 
+function CarregaComboMeses() {
+
+}
+
+function CarregaComboAnos() {
+
+}
+
 $(document).ready(function () {
     ExecutaDispatch('Execucao', 'ListarExecucao', '', CarregaGridExecucao);
-    $("#cadNovaOf").hide();
+    // $("#cadNovaOf").hide();
+    ExecutaDispatch('Execucao', 'ListarMeses', 'verificaPermissao;N|', CarregaComboMeses);
+    ExecutaDispatch('Execucao', 'ListarAnos', 'verificaPermissao;N|', CarregaComboAnos);
 });

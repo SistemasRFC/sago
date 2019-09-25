@@ -5,7 +5,7 @@ include_once PATH."View/MenuPrincipal/Rodape.php";
 ?>
 <html>
     <head>
-        <title>Relatório Gerencial</title>
+        <title>SAGO - Relatório Gerencial</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="js/RelatorioGerencialView.js?rdm=<?php echo time();?>"></script>
 

@@ -1,1 +1,3 @@
-Só para comitar
+$(function() {
+    // Só pra comitar
+});

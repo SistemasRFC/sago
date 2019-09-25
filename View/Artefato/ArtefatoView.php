@@ -5,7 +5,7 @@ include_once PATH."View/MenuPrincipal/Rodape.php";
 ?>
 <html>
     <head>
-        <title>Cadastro de Artefatos</title>
+        <title>SAGO - Cadastro de Artefatos</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="js/ArtefatoView.js?rdm=<?php echo time();?>"></script>
 
@@ -28,12 +28,6 @@ include_once PATH."View/MenuPrincipal/Rodape.php";
             <div style="overflow: hidden;" id="windowContent">
                 <?php include_once "CadArtefatoView.php";?>
             </div>            
-        </div>   
-        <div id='jqxMenu' style="display: none;">
-            <ul>
-                <li><a href="#">Novo</a></li>
-                <li><a href="#">Editar</a></li>            
-            </ul>
         </div>
   </body>
 </html>

@@ -9,7 +9,7 @@ $(function () {
         theme: 'darkcyan',
         isModal: true,
         autoOpen: false,
-        position: { x: 435, y: 90 }
+        position: 'absolute'
     });
     $("#ListaController").jqxWindow({
         title: 'Lista de Controllers',
@@ -47,7 +47,6 @@ function CarregaGridMenu(listaMenus) {
 
 function MontaTabelaMenu(listaMenus) {
     var nomeGrid = 'listaMenus';
-    var contextMenu = $("#jqxMenu").jqxMenu({ width: '120px', autoOpenPopup: false, mode: 'popup', theme: 'darkcyan' });
     var source =
     {
         localdata: listaMenus,
@@ -93,28 +92,6 @@ function MontaTabelaMenu(listaMenus) {
             ]
         });
     // events
-    $('#' + nomeGrid).on('rowclick', function (event) {
-        var args = event.args;
-        var row = args.rowindex;
-
-        if (event.args.rightclick) {
-
-            $("#listaMenus").jqxGrid('selectrow', event.args.rowindex);
-            var scrollTop = $(window).scrollTop();
-            var scrollLeft = $(window).scrollLeft();
-            contextMenu.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
-            $("#codMenu").val($('#listaMenus').jqxGrid('getrowdatabyid', args.rowindex).COD_MENU_W);
-            $("#dscMenu").val($('#listaMenus').jqxGrid('getrowdatabyid', args.rowindex).DSC_MENU_W);
-            $("#nmeController").val($('#listaMenus').jqxGrid('getrowdatabyid', args.rowindex).NME_CONTROLLER);
-            $("#nmeMethod").val($('#listaMenus').jqxGrid('getrowdatabyid', args.rowindex).NME_METHOD);
-            $("#dscCaminhoImagem").val($('#listaMenus').jqxGrid('getrowdatabyid', args.rowindex).DSC_CAMINHO_IMAGEM);
-            $("#codMenuPai").val($('#listaMenus').jqxGrid('getrowdatabyid', args.rowindex).COD_MENU_PAI_W);
-            $("#indAtivo").prop("checked", $('#listaMenus').jqxGrid('getrowdatabyid', args.rowindex).ATIVO);
-            $("#indAtalho").prop("checked", $('#listaMenus').jqxGrid('getrowdatabyid', args.rowindex).ATALHO);
-            $("#indVisible").prop("checked", $('#' + nomeGrid).jqxGrid('getrowdatabyid', args.rowindex).VISIBLE);
-            return false;
-        }
-    });
     $("#" + nomeGrid).jqxGrid('localizestrings', localizationobj);
     $('#' + nomeGrid).on('rowdoubleclick', function (event) {
         var args = event.args;
@@ -126,21 +103,8 @@ function MontaTabelaMenu(listaMenus) {
         $("#method").val("UpdateMenu");
         $("#CadMenus").jqxWindow("open");
     });
-    $("#jqxMenu").on('itemclick', function (event) {
-        var args = event.args;
-        var rowindex = $("#listaMenus").jqxGrid('getselectedrowindex');
-        if ($.trim($(args).text()) == "Editar") {
-            $("#CadMenus").jqxWindow("open");
-        } else if ($.trim($(args).text()) == "Novo") {
-            LimparCampos();
-            $("#CadMenus").jqxWindow("open");
-        }
-    });
 }
 $(document).ready(function () {
     ExecutaDispatch('Menu', 'ListaMenus', '', MontaComboMenu);
     ExecutaDispatch('Menu', 'ListarMenusGrid', '', CarregaGridMenu);
-    $(document).on('contextmenu', function (e) {
-        return false;
-    });
 });

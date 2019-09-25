@@ -5,7 +5,7 @@ include_once PATH."View/MenuPrincipal/Rodape.php";
 ?>
 <html>
     <head>
-        <title>Cadastro de Perfil</title>
+        <title>SAGO - Cadastro de Perfil</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8; IBM850; ISO-8859-1">
         <script src="js/PerfilView.js?rdm=<?php echo time();?>"></script>
 
