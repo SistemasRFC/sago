@@ -35,4 +35,27 @@ class ExecucaoController extends BaseController
         $ExecucaoModel = new ExecucaoModel();
         echo $ExecucaoModel->DeleteExecucao();
     }
+
+    Public Function ListarMeses() {
+        $meses = array( ['ID'=>1, 'DSC'=>'Janeiro'],
+                        ['ID'=>2, 'DSC'=>'Fevereiro'],
+                        ['ID'=>3, 'DSC'=>'Março'],
+                        ['ID'=>4, 'DSC'=>'Abril'],
+                        ['ID'=>5, 'DSC'=>'Maio'],
+                        ['ID'=>6, 'DSC'=>'Junho'],
+                        ['ID'=>7, 'DSC'=>'Julho'],
+                        ['ID'=>8, 'DSC'=>'Agosto'],
+                        ['ID'=>9, 'DSC'=>'Setembro'],
+                        ['ID'=>10, 'DSC'=>'Outubro'],
+                        ['ID'=>11, 'DSC'=>'Novembro'],
+                        ['ID'=>12, 'DSC'=>'Dezembro']);
+        echo json_encode(array(true, $meses));
+    }
+
+    Public Function ListarAnos() {
+        $anos = array( ['ID'=>date('Y')-1, 'DSC'=>date('Y')-1],
+                       ['ID'=>date('Y'), 'DSC'=>date('Y')],
+                       ['ID'=>date('Y')+1, 'DSC'=>date('Y')+1]);
+        echo json_encode(array(true, $anos));
+    }
 }
