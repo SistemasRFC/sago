@@ -1,6 +1,7 @@
 <?php
 include_once("Model/BaseModel.php");
 include_once("Dao/Disciplina/DisciplinaDao.php");
+include_once("Resources/php/FuncoesArray.php");
 class DisciplinaModel extends BaseModel
 {
     public function DisciplinaModel() {
@@ -13,6 +14,9 @@ class DisciplinaModel extends BaseModel
     Public Function ListarDisciplina($Json=true) {
         $dao = new DisciplinaDao();
         $lista = $dao->ListarDisciplina();
+        if ($lista[0] && $lista[1]>0){
+            $lista = FuncoesArray::AtualizaBooleanInArray($lista, 'IND_ATIVO', 'ATIVO');
+        }
         if ($Json){
             return json_encode($lista);
         }else{

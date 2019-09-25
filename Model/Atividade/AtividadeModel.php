@@ -1,6 +1,7 @@
 <?php
 include_once("Model/BaseModel.php");
 include_once("Dao/Atividade/AtividadeDao.php");
+include_once("Resources/php/FuncoesArray.php");
 class AtividadeModel extends BaseModel
 {
     public function AtividadeModel() {
@@ -13,6 +14,9 @@ class AtividadeModel extends BaseModel
     Public Function ListarAtividade($Json=true) {
         $dao = new AtividadeDao();
         $lista = $dao->ListarAtividade();
+        if ($lista[0] && $lista[1]>0){
+            $lista = FuncoesArray::AtualizaBooleanInArray($lista, 'IND_ATIVO', 'ATIVO');
+        }
         if ($Json){
             return json_encode($lista);
         }else{

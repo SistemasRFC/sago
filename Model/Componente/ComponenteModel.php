@@ -1,6 +1,7 @@
 <?php
 include_once("Model/BaseModel.php");
 include_once("Dao/Componente/ComponenteDao.php");
+include_once("Resources/php/FuncoesArray.php");
 class ComponenteModel extends BaseModel
 {
     public function ComponenteModel() {
@@ -13,6 +14,9 @@ class ComponenteModel extends BaseModel
     Public Function ListarComponente($Json=true) {
         $dao = new ComponenteDao();
         $lista = $dao->ListarComponente();
+        if ($lista[0] && $lista[1]>0){
+            $lista = FuncoesArray::AtualizaBooleanInArray($lista, 'IND_ATIVO', 'ATIVO');
+        }
         if ($Json){
             return json_encode($lista);
         }else{

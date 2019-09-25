@@ -1,6 +1,7 @@
 <?php
 include_once("Model/BaseModel.php");
 include_once("Dao/Artefato/ArtefatoDao.php");
+include_once("Resources/php/FuncoesArray.php");
 class ArtefatoModel extends BaseModel
 {
     public function ArtefatoModel() {
@@ -13,6 +14,9 @@ class ArtefatoModel extends BaseModel
     Public Function ListarArtefato($Json=true) {
         $dao = new ArtefatoDao();
         $lista = $dao->ListarArtefato();
+        if ($lista[0] && $lista[1]>0){
+            $lista = FuncoesArray::AtualizaBooleanInArray($lista, 'IND_ATIVO', 'ATIVO');
+        }
         if ($Json){
             return json_encode($lista);
         }else{

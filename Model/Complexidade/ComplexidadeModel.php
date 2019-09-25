@@ -1,6 +1,7 @@
 <?php
 include_once("Model/BaseModel.php");
 include_once("Dao/Complexidade/ComplexidadeDao.php");
+include_once("Resources/php/FuncoesArray.php");
 class ComplexidadeModel extends BaseModel
 {
     public function ComplexidadeModel() {
@@ -13,6 +14,9 @@ class ComplexidadeModel extends BaseModel
     Public Function ListarComplexidade($Json=true) {
         $dao = new ComplexidadeDao();
         $lista = $dao->ListarComplexidade();
+        if ($lista[0] && $lista[1]>0){
+            $lista = FuncoesArray::AtualizaBooleanInArray($lista, 'IND_ATIVO', 'ATIVO');
+        }
         if ($Json){
             return json_encode($lista);
         }else{
