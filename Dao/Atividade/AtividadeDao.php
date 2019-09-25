@@ -4,9 +4,10 @@ class AtividadeDao extends BaseDao
 {
     Protected $tableName = "ATIVIDADE";
 
-    Protected $columns = array ("dscAtividade"   => array("column" =>"DSC_ATIVIDADE", "typeColumn" =>"S"));
+    Protected $columns = array ("dscAtividade"  => array("column" =>"DSC_ATIVIDADE", "typeColumn" =>"S"),
+                                "indAtivo"      => array("column" =>"IND_ATIVO", "typeColumn" =>"S"));
 
-    Protected $columnKey = array("codAtividade"=> array("column" =>"COD_ATIVIDADE", "typeColumn" => "I"));
+    Protected $columnKey = array("codAtividade" => array("column" =>"COD_ATIVIDADE", "typeColumn" => "I"));
 
     Public Function AtividadeDao() {
         $this->conect();
@@ -17,12 +18,13 @@ class AtividadeDao extends BaseDao
     }
     
     Public Function ListarAtividadeCombo() {
-        $sql = 'SELECT COD_ATIVIDADE,
+        $sql = "SELECT COD_ATIVIDADE,
                        DSC_ATIVIDADE
                   FROM ATIVIDADE
                  WHERE COD_ATIVIDADE NOT IN (SELECT COD_ATIVIDADE
                                                FROM DISCIPLINA_ATIVIDADE
-                                              WHERE COD_DISCIPLINA = '.$this->Populate('codDisciplina', 'I').')';
+                                              WHERE COD_DISCIPLINA = ".$this->Populate('codDisciplina', 'I').")
+                   AND IND_ATIVO = 'S'";
         return $this->selectDB($sql, false);
     }
     
@@ -31,7 +33,8 @@ class AtividadeDao extends BaseDao
                        A.DSC_ATIVIDADE
                   FROM ATIVIDADE A
                  INNER JOIN DISCIPLINA_ATIVIDADE DA ON A.COD_ATIVIDADE = DA.COD_ATIVIDADE
-                 WHERE DA.COD_DISCIPLINA =  '.$this->Populate('codDisciplina', 'I');
+                 WHERE DA.COD_DISCIPLINA =  '.$this->Populate('codDisciplina', 'I').'
+                   AND A.IND_ATIVO = "S"';
         return $this->selectDB($sql, false);
     }
 

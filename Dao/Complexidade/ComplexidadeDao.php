@@ -4,9 +4,10 @@ class ComplexidadeDao extends BaseDao
 {
     Protected $tableName = "COMPLEXIDADE";
 
-    Protected $columns = array ("dscComplexidade"   => array("column" =>"DSC_COMPLEXIDADE", "typeColumn" =>"S"));
+    Protected $columns = array ("dscComplexidade"   => array("column" =>"DSC_COMPLEXIDADE", "typeColumn" =>"S"),
+                                "indAtivo"          => array("column" =>"IND_ATIVO", "typeColumn" =>"S"));
 
-    Protected $columnKey = array("codComplexidade"=> array("column" =>"COD_COMPLEXIDADE", "typeColumn" => "I"));
+    Protected $columnKey = array("codComplexidade"  => array("column" =>"COD_COMPLEXIDADE", "typeColumn" => "I"));
 
     Public Function ComplexidadeDao() {
         $this->conect();
@@ -22,7 +23,8 @@ class ComplexidadeDao extends BaseDao
                   FROM COMPLEXIDADE C
                  WHERE C.COD_COMPLEXIDADE NOT IN (SELECT COD_COMPLEXIDADE
                                                     FROM ARTEFATO_COMPLEXIDADE
-                                                   WHERE COD_ATIVIDADE_ARTEFATO = '.$this->Populate('codAtividadeArtefato', 'I').')';
+                                                   WHERE COD_ATIVIDADE_ARTEFATO = '.$this->Populate('codAtividadeArtefato', 'I').')
+                   AND C.IND_ATIVO = "S"';
         return $this->selectDB($sql, false);
     }
 
@@ -31,7 +33,8 @@ class ComplexidadeDao extends BaseDao
                        C.DSC_COMPLEXIDADE
                   FROM COMPLEXIDADE C
                  INNER JOIN ARTEFATO_COMPLEXIDADE AC ON C.COD_COMPLEXIDADE = AC.COD_COMPLEXIDADE
-                 WHERE AC.COD_ATIVIDADE_ARTEFATO = '.$this->Populate('codAtividadeArtefato', 'I');
+                 WHERE AC.COD_ATIVIDADE_ARTEFATO = '.$this->Populate('codAtividadeArtefato', 'I').'
+                   AND C.IND_ATIVO = "S"';
         return $this->selectDB($sql, false);
     }
 

@@ -4,7 +4,8 @@ class DisciplinaDao extends BaseDao
 {
     Protected $tableName = "DISCIPLINA";
 
-    Protected $columns = array ("dscDisciplina"   => array("column" =>"DSC_DISCIPLINA", "typeColumn" =>"S"));
+    Protected $columns = array ("dscDisciplina"   => array("column" =>"DSC_DISCIPLINA", "typeColumn" =>"S"),
+                                "indAtivo"   => array("column" =>"IND_ATIVO", "typeColumn" =>"S"));
 
     Protected $columnKey = array("codDisciplina"=> array("column" =>"COD_DISCIPLINA", "typeColumn" => "I"));
 

@@ -4,7 +4,8 @@ class ArtefatoDao extends BaseDao
 {
     Protected $tableName = "ARTEFATO";
 
-    Protected $columns = array ("dscArtefato"   => array("column" =>"DSC_ARTEFATO", "typeColumn" =>"S"));
+    Protected $columns = array ("dscArtefato"   => array("column" =>"DSC_ARTEFATO", "typeColumn" =>"S"),
+                                "indAtivo"   => array("column" =>"IND_ATIVO", "typeColumn" =>"S"));
 
     Protected $columnKey = array("codArtefato"=> array("column" =>"COD_ARTEFATO", "typeColumn" => "I"));
 
@@ -23,6 +24,7 @@ class ArtefatoDao extends BaseDao
                  WHERE COD_ARTEFATO NOT IN (SELECT COD_ARTEFATO
                                               FROM ATIVIDADE_ARTEFATO
                                              WHERE COD_DISCIPLINA_ATIVIDADE = '.$this->Populate('codDisciplinaAtividade', 'I').')
+                   AND IND_ATIVO = "S"
                  ORDER BY DSC_ARTEFATO';
         return $this->selectDB($sql, false);
     }
@@ -34,6 +36,7 @@ class ArtefatoDao extends BaseDao
                   FROM ARTEFATO A
                  INNER JOIN ATIVIDADE_ARTEFATO AA ON A.COD_ARTEFATO = AA.COD_ARTEFATO
                  WHERE COD_DISCIPLINA_ATIVIDADE = '.$this->Populate('codDisciplinaAtividade', 'I').'
+                   AND A.IND_ATIVO = "S"
                  ORDER BY DSC_ARTEFATO';
         return $this->selectDB($sql, false);
     }
