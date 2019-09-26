@@ -5,7 +5,7 @@ include_once getenv("CONSTANTES");
 ?>
 <html>
     <head>
-        <title>Gerador de Planilha</title>
+        <title>SAGO</title>
         <script src="../../Resources/JavaScript.js"></script>
         <link rel="stylesheet" href="../../Resources/css/style.css?random=<?php echo time(); ?>" type="text/css" />
         <link href="../../Resources/css/redmond/jquery-ui-1.10.3.custom.css" rel="stylesheet">
@@ -75,7 +75,7 @@ include_once getenv("CONSTANTES");
         <input type="hidden" id="verificaPermissao" name="verificaPermissao" value="N" class="persist">
         <div class="card" style="max-width: 300px;margin-top: 180px;padding-bottom: 20px;">
             <!--<div class="cabecalho" style="padding-left: 10px;padding-bottom: 10px;"><img src="Resources/images/LogoRADI_edit_nb.png" width="300"></div>-->
-            <!-- <div class="cabecalho" style="color: darkcyan;padding-bottom:15px;">INPLA - Investimentos</div> -->
+            <div class="cabecalho" style="color: darkcyan;padding-bottom:15px;">SAGO</div>
             
             <label for="nmeUsuario" class="titulo">Login</label>
             <input type="text" id="nmeUsuario" name="nmeUsuario" class='login persist input' placeholder="Login">
@@ -84,7 +84,7 @@ include_once getenv("CONSTANTES");
             <input type="password" id="txtSenha" name="txtSenha" class='login persist input' placeholder="Senha">
 
             <div class="titulo">
-                <input type="button" id="btnLogin" value="Login" class="button" style="background-color: darkcyan;">
+                <input type="button" id="btnLogin" value="Login" class="button" style="width: 290px;background-color: darkcyan;">
             </div>
         </div>
     </body>
