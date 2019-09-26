@@ -20,6 +20,14 @@ include_once PATH."View/MenuPrincipal/Rodape.php";
                         <label for="codUsuario" class="titulo">Usuário</label>
                         <div id="tdcodUsuario"></div>                        
                     </td>
+                    <td>
+                        <label for="mesReferencia" class="titulo">Mês *</label>
+                        <div id="tdnroMesReferencia"></div>                        
+                    </td>
+                    <td>
+                        <label for="anoReferencia" class="titulo">Ano *</label>
+                        <div id="tdnroAnoReferencia"></div>                        
+                    </td>
                 </tr>                    
                 <tr>                    
                     <td>

@@ -23,15 +23,15 @@ include_once PATH."View/MenuPrincipal/Rodape.php";
                             <label for="codOf" class="titulo">O.F.</label>
                             <input type="text" name="codOf" id="codOf" class="persist titulo" size='40'>
                         </td>
-                        <td style="padding-top: 0px;padding-left: 80px">
+                        <td style="padding-top: 0px;">
                             <label for="nroMesReferencia" class="titulo">Mês referência</label>
-                            <input type="number" name="nroMesReferencia" id="nroMesReferencia" class="persist titulo">
-                            <span id="msgMes">Mês inválido!</span>
+                            <div id="tdnroMesReferencia"></div>
+                            <!-- <input type="number" name="nroMesReferencia" id="nroMesReferencia" class="persist titulo"> -->
                         </td>
                         <td style="padding-top: 0px;">
                             <label for="nroAnoReferencia" class="titulo">Ano referência</label>
-                            <input type="text" name="nroAnoReferencia" id="nroAnoReferencia" class="persist titulo" size='15'>
-                            <span id="msgAno">Ano inválido!</span>
+                            <div id="tdnroAnoReferencia"></div>
+                            <!-- <input type="text" name="nroAnoReferencia" id="nroAnoReferencia" class="persist titulo" size='15'> -->
                         </td>
                     </tr>
                     <tr>

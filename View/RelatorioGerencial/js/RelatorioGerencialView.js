@@ -1,7 +1,16 @@
 $(function(){
     $("#btnPesquisar").click(function(){
-        var parametros = retornaParametros();
-        ExecutaDispatch('RelatorioGerencial', 'ListarRelatorioGerencial', parametros, MontaTabelaExecucao);
+        if ($("#nroMesReferencia").val() != 0 && $("#nroAnoReferencia").val() != 0) {
+            var parametros = retornaParametros();
+            ExecutaDispatch('RelatorioGerencial', 'ListarRelatorioGerencial', parametros, MontaTabelaExecucao);
+        } else {
+            swal({
+                title: "Aviso!",
+                text: "Selecione o Mês e o Ano!",
+                showConfirmButton: true,
+                type: "info"
+            });
+        }
     });
 });
 
@@ -12,12 +21,9 @@ function MontaTabelaExecucao(lista){
         var tabela = "<table align='center' width='90%'>";
         var totalOfs = lista.length;
         for (var i=0;i<totalOfs;i++){
-            tabela += '<tr><td align="center"><h2>*******Descritivo da OF Executada*******</h2></td></tr>';
+            tabela += '<tr><td align="center"><h2>O.F.: '+lista[i].COD_OF+'</h2></td></tr>';
             tabela += '<tr>';
-            tabela += '<td><b>Usuário: </b>'+lista[i].NME_USUARIO_COMPLETO+'</td>';
-            tabela += '</tr>';
-            tabela += '<tr>';
-            tabela += '<td><b>OF: </b>'+lista[i].COD_OF+'</td>';
+            tabela += '<td style="margin: 5px 0px 5px 0px;font-size: 20px;"><b>Usuário: </b>'+lista[i].NME_USUARIO_COMPLETO+'</td>';
             tabela += '</tr>';
             var LEC = lista[i]['LEC'+lista[i].COD_EXECUCAO];
             var totalLEC = LEC.length;
@@ -35,22 +41,28 @@ function MontaTabelaExecucao(lista){
                 tabela += '<tr><td style="width: 10px;"><b>Pontuação: </b></td><td>'+LEC[iLEC].QTD_TOTAL_PONTOS+'</td></tr>';
                 var LEA =  LEC[iLEC]['LEA'+LEC[iLEC].COD_EXECUCAO_COMPLEXIDADE];
                 var totalLEA = Object.keys(LEA).length;
-                tabela += '<tr>';
-                tabela += '<td colspan="2" align="center"><h3>**********Arquivos Alterados***********</h3></td>';
-                tabela += '</tr>';
                 tabela += '<tr><td style="border: 1px solid #000000" colspan="2">';
-                tabela += "<table width='100%' align='center'>";
+                tabela += "<table width='100%' align='center' style='border-spacing: 3px'>";
+                tabela += '<tr>';
+                tabela += '<td colspan="2" align="center" style="border: 1px solid #000"><h3 style="margin-bottom: 1px">Arquivos Alterados</h3></td>';
+                tabela += '</tr>';
+                var corLinha = 'white';
                 for (var iLEA=0;iLEA<totalLEA;iLEA++){
-                    tabela += '<tr>';
-                    tabela += '<td colspan="2">'+LEA[iLEA].NME_ARQUIVO+'</td>';
+                    if (corLinha == 'white'){
+                        corLinha = '#E8E8E8';
+                    }else{
+                        corLinha = 'white';
+                    }
+                    tabela += '<tr bgcolor="'+corLinha+'">';
+                    tabela += '<td colspan="2" style="font-size: 17px">'+LEA[iLEA].NME_ARQUIVO+'</td>';
                     tabela += '</tr>';
                 }
                 tabela += "</table>";
                 tabela += '</td></tr>';
-                tabela += '<tr><td colspan="2"><br></td></tr>';
                 tabela += "</table>";
                 tabela += '</td></tr>';
                 tabela += '<tr><td colspan="2"><br></td></tr>';
+                tabela += '<tr><td colspan="2"><hr style="border: 1px solid"></td></tr>';
             }
             
         }
@@ -58,7 +70,6 @@ function MontaTabelaExecucao(lista){
         tabela += '<tr><td><br></td></tr>';
         tabela += '<tr><td><br></td></tr>';
         tabela += "</table>";
-//        $("#listagemExecucao").html(tabela);
     wLeft = window.screenLeft ? window.screenLeft : window.screenX;
     wTop = window.screenTop ? window.screenTop : window.screenY;
     var w = 1000;
@@ -83,8 +94,19 @@ function CarregaComboUsuario(arrDados) {
     CriarComboDispatchComTamanho('codUsuario', arrDados, -1, 300);
 }
 
+function CarregaComboMeses(meses) {
+
+    CriarComboDispatch('nroMesReferencia', meses, new Date().getMonth()+1);
+}
+
+function CarregaComboAnos(anos) {
+    CriarComboDispatch('nroAnoReferencia', anos,  new Date().getFullYear());
+}
+
 $(document).ready(function () {
     ExecutaDispatch('Usuario', 'ListarUsuarioCombo', '', CarregaComboUsuario);
+    ExecutaDispatch('Execucao', 'ListarMeses', 'verificaPermissao;N|', CarregaComboMeses);
+    ExecutaDispatch('Execucao', 'ListarAnos', 'verificaPermissao;N|', CarregaComboAnos);
 });
 
 

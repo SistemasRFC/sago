@@ -73,7 +73,8 @@ function MontaTabelaExecucao(listaExecucao) {
                 { name: 'COD_EXECUCAO', type: 'string' },
                 { name: 'COD_OF', type: 'string' },
                 { name: 'QTD_PONTOS_TOTAL', type: 'string' },
-                { name: 'IND_STATUS', type: 'string' }
+                { name: 'IND_STATUS', type: 'string' },
+                { name: 'PERIODO_REFERENCIA', type: 'string' }
             ]
     };
     var dataAdapter = new $.jqx.dataAdapter(source);
@@ -90,9 +91,10 @@ function MontaTabelaExecucao(listaExecucao) {
             selectionmode: 'singlerow',
             columns: [
                 { text: 'C&oacute;d.', columntype: 'textbox', datafield: 'COD_EXECUCAO', width: 40 },
-                { text: 'OF', datafield: 'COD_OF', columntype: 'textbox', width: 400 },
-                { text: 'Pontuação da OF', datafield: 'QTD_PONTOS_TOTAL', columntype: 'textbox', width: 200 },
-                { text: 'Status', datafield: 'IND_STATUS', columntype: 'textbox', width: 160 }
+                { text: 'O.F.', datafield: 'COD_OF', columntype: 'textbox', width: 400 },
+                { text: 'Pontuação', datafield: 'QTD_PONTOS_TOTAL', columntype: 'textbox', width: 90 },
+                { text: 'Status', datafield: 'IND_STATUS', columntype: 'textbox', width: 130 },
+                { text: 'Período referência', datafield: 'PERIODO_REFERENCIA', columntype: 'textbox', width: 140 }
             ]
         });
     // events
@@ -112,17 +114,17 @@ function MontaTabelaExecucao(listaExecucao) {
 
 }
 
-function CarregaComboMeses() {
-
+function CarregaComboMeses(meses) {
+    CriarComboDispatch('nroMesReferencia', meses, 0);
 }
 
-function CarregaComboAnos() {
-
+function CarregaComboAnos(anos) {
+    CriarComboDispatch('nroAnoReferencia', anos, 0);
 }
 
 $(document).ready(function () {
+    $("#cadNovaOf").hide();
     ExecutaDispatch('Execucao', 'ListarExecucao', '', CarregaGridExecucao);
-    // $("#cadNovaOf").hide();
     ExecutaDispatch('Execucao', 'ListarMeses', 'verificaPermissao;N|', CarregaComboMeses);
     ExecutaDispatch('Execucao', 'ListarAnos', 'verificaPermissao;N|', CarregaComboAnos);
 });
