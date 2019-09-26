@@ -28,7 +28,7 @@ class UsuarioModel extends BaseModel
         $lista = $dao->ListarUsuarioCombo();
         $return[0] = false;
         $return[1][0]['ID'] = "-1";        
-        $return[1][0]['DSC'] = "(Selecione)";
+        $return[1][0]['DSC'] = "Selecione...";
         if ($lista[0]){
             $return[0] = true;
             $c = count($lista[1]);

@@ -16,7 +16,7 @@ class RelatorioGerencialModel extends BaseModel{
         if ($this->objRequest->codUsuario>0){
             $lista = $dao->ListarRelatorioGerencialPorUsuario($this->objRequest);   
         }else{
-            $lista = $dao->ListarRelatorioGerencial();
+            $lista = $dao->ListarRelatorioGerencial($this->objRequest);
         }
         if ($lista[0]){
             $totalRegistros = count($lista[1]);
