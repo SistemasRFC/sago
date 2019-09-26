@@ -17,13 +17,16 @@ class ExecucaoDao extends BaseDao
     }
 
     Public Function ListarExecucao($codUsuario) {
-        $sql = ' SELECT COD_EXECUCAO, COD_OF, SUM(QTD_PONTOS_TOTAL) as QTD_PONTOS_TOTAL, IND_STATUS
+        $sql = ' SELECT COD_EXECUCAO, COD_OF, SUM(QTD_PONTOS_TOTAL) as QTD_PONTOS_TOTAL, IND_STATUS, NRO_MES_REFERENCIA, NRO_ANO_REFERENCIA, PERIODO_REFERENCIA
                    FROM (SELECT E.COD_EXECUCAO,
                                 E.COD_OF,
                                 COALESCE(CC.QTD_PONTOS*(COUNT(EA.COD_EXECUCAO_ARQUIVO)),0) AS QTD_PONTOS_TOTAL,
                                 CASE E.IND_STATUS WHEN "E" THEN "Em execução"
                                                   WHEN "F" THEN "Finalizada"
-                                END AS IND_STATUS
+                                END AS IND_STATUS,
+                                E.NRO_MES_REFERENCIA,
+                                E.NRO_ANO_REFERENCIA,
+                                CONCAT(E.NRO_MES_REFERENCIA,\'/\',E.NRO_ANO_REFERENCIA) AS PERIODO_REFERENCIA
                            FROM EXECUCAO E
                            LEFT JOIN EXECUCAO_COMPLEXIDADE EC ON E.COD_EXECUCAO = EC.COD_EXECUCAO
                            LEFT JOIN EXECUCAO_ARQUIVOS EA ON EC.COD_EXECUCAO_COMPLEXIDADE = EA.COD_EXECUCAO_COMPLEXIDADE
