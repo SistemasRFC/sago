@@ -7,8 +7,8 @@ class ExecucaoDao extends BaseDao
     Protected $columns = array ("codOf"   => array("column" =>"COD_OF", "typeColumn" =>"S"),
                                 "codUsuario"   => array("column" =>"COD_USUARIO", "typeColumn" =>"I"),
                                 "indStatus"   => array("column" =>"IND_STATUS", "typeColumn" =>"S"),
-                                "nroMesReferecia"   => array("column" =>"NRO_MES_REFERENCIA", "typeColumn" =>"I"),
-                                "nroAnoReferecia"   => array("column" =>"NRO_ANO_REFERENCIA", "typeColumn" =>"I"));
+                                "nroMesReferencia"   => array("column" =>"NRO_MES_REFERENCIA", "typeColumn" =>"I"),
+                                "nroAnoReferencia"   => array("column" =>"NRO_ANO_REFERENCIA", "typeColumn" =>"I"));
 
     Protected $columnKey = array("codExecucao"=> array("column" =>"COD_EXECUCAO", "typeColumn" => "I"));
 
