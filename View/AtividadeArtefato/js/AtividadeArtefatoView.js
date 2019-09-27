@@ -15,7 +15,7 @@ function LimparCamposAtividade(){
 function CarregaComboDisciplina(arrDados, valor, disabled) {
     if (valor==undefined){
         valor = 0;
-    }        
+    }
     CriarComboDispatchComTamanho('codDisciplina', arrDados, valor, 300, disabled);
     $("#codDisciplina").change(function () {
         if ($(this).val() != 0) {

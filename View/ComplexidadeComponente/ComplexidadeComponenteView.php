@@ -11,6 +11,8 @@ include_once PATH."View/MenuPrincipal/Rodape.php";
 
     </head>
     <body>
+        <input type='hidden' id='method'>
+        <input type="hidden" id="codComplexidadeComponente" value='' class='persist'>
         <div class="card" style="max-width: 1010px;">
             <div class="cabecalho">Relacionamento entre Complexidades e Componentes</div>
             <table width="100%">
@@ -40,7 +42,7 @@ include_once PATH."View/MenuPrincipal/Rodape.php";
                         <div id="tdcodComponente"></div>
                     </td>
                     <td>
-                        <label for="qtdPontos" class="titulo">Pontos</label>
+                        <label for="qtdPontos" class="titulo">Pontos</label><br>
                         <input type="text" id="qtdPontos" class="persist titulo">
                     </td>
                 </tr>                    

@@ -34,8 +34,8 @@ include_once PATH."View/MenuPrincipal/Rodape.php";
                 </tr>                    
                 <tr>
                     <td colspan="2">
-                        <label for="codTarefa" class="titulo">Tarefa</label>
-                        <input type="text" id="codTarefa" class="titulo persist">
+                        <label for="codTarefa" class="titulo">Tarefa</label><br>
+                        <input type="text" id="codTarefa" class="titulo persist" size='50'>
                     </td>
                 </tr>                    
                 <tr>                    

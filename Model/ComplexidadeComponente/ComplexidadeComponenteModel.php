@@ -1,6 +1,8 @@
 <?php
 include_once("Model/BaseModel.php");
 include_once("Dao/ComplexidadeComponente/ComplexidadeComponenteDao.php");
+include_once("Resources/php/FuncoesMoeda.php");
+
 class ComplexidadeComponenteModel extends BaseModel
 {
     public function ComplexidadeComponenteModel() {
@@ -22,6 +24,7 @@ class ComplexidadeComponenteModel extends BaseModel
     Public Function ListarComplexidadeComponentePorArtefatoComplexidade($Json=true) {
         $dao = new ComplexidadeComponenteDao();
         $lista = $dao->ListarComplexidadeComponentePorArtefatoComplexidade();
+        $lista = FuncoesMoeda::FormataMoedaInArray($lista, 'QTD_PONTOS');
         if ($Json){
             return json_encode($lista);
         }else{

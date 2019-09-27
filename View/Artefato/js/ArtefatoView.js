@@ -51,8 +51,8 @@ function MontaTabelaArtefato(listaArtefato) {
             columnsresize: true,
             selectionmode: 'singlerow',
             columns: [
-                { text: 'C&oacute;d.', columntype: 'textbox', datafield: 'COD_ARTEFATO', width: 40 },
-                { text: 'Descri&ccedil;&atilde;o', datafield: 'DSC_ARTEFATO', columntype: 'textbox', width: 695 },
+                { text: 'C&oacute;d.', columntype: 'textbox', datafield: 'COD_ARTEFATO', width: 50 },
+                { text: 'Descri&ccedil;&atilde;o', datafield: 'DSC_ARTEFATO', columntype: 'textbox', width: 700 },
                 { text: 'Ativo', datafield: 'ATIVO', columntype: 'checkbox', width: 50, align: 'center' }
             ]
         });

@@ -51,9 +51,9 @@ function MontaTabelaDisciplina(listaDisciplina) {
             columnsresize: true,
             selectionmode: 'singlerow',
             columns: [
-                { text: 'C&oacute;d.', columntype: 'textbox', datafield: 'COD_DISCIPLINA', width: 40 },
-                { text: 'Descri&ccedil;&atilde;o', datafield: 'DSC_DISCIPLINA', columntype: 'textbox', width: 395 },
-                { text: 'Ativo', datafield: 'ATIVO', columntype: 'checkbox', width: 48, align: 'center' }
+                { text: 'C&oacute;d.', columntype: 'textbox', datafield: 'COD_DISCIPLINA', width: 50 },
+                { text: 'Descri&ccedil;&atilde;o', datafield: 'DSC_DISCIPLINA', columntype: 'textbox', width: 700 },
+                { text: 'Ativo', datafield: 'ATIVO', columntype: 'checkbox', width: 50, align: 'center' }
             ]
         });
     // events

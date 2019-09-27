@@ -49,6 +49,10 @@ class ComponenteModel extends BaseModel
     Public Function ListarComponentePorArtefatoComplexidadeCombo($Json=true) {
         $dao = new ComponenteDao();
         $lista = $dao->ListarComponentePorArtefatoComplexidadeCombo();
+        $campo = $dao->Populate('dscCampo', 'S');
+        if ($campo==''){
+            $campo = 'COD_COMPLEXIDADE_COMPONENTE';
+        }        
         $return[0] = false;
         $return[1][0]['ID'] = "-1";        
         $return[1][0]['DSC'] = "(Selecione)";
@@ -56,7 +60,7 @@ class ComponenteModel extends BaseModel
             $return[0] = true;
             $c = count($lista[1]);
             for ($i=0;$i<$c;$i++){
-                $return[1][$i+1]['ID'] = $lista[1][$i]['COD_COMPONENTE'];
+                $return[1][$i+1]['ID'] = $lista[1][$i][$campo];
                 $return[1][$i+1]['DSC'] = $lista[1][$i]['DSC_COMPONENTE'];
             }
         }
