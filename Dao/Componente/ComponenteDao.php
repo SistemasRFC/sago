@@ -29,7 +29,8 @@ class ComponenteDao extends BaseDao
     }
 
     Public Function ListarComponentePorArtefatoComplexidadeCombo() {
-        $sql = ' SELECT CC.COD_COMPLEXIDADE_COMPONENTE AS COD_COMPONENTE,
+        $sql = ' SELECT CC.COD_COMPLEXIDADE_COMPONENTE,
+                        C.COD_COMPONENTE,
                         C.DSC_COMPONENTE
                    FROM COMPONENTE C
                   INNER JOIN COMPLEXIDADE_COMPONENTE CC ON C.COD_COMPONENTE = CC.COD_COMPONENTE

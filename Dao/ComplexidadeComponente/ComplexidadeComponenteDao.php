@@ -22,11 +22,16 @@ class ComplexidadeComponenteDao extends BaseDao
         $sql = 'SELECT AC.COD_ARTEFATO_COMPLEXIDADE,
                        AC.COD_ATIVIDADE_ARTEFATO,
                        AC.COD_COMPLEXIDADE,
+                       D.COD_DISCIPLINA,
+                       DA.COD_DISCIPLINA_ATIVIDADE,
+                       CC.COD_COMPLEXIDADE_COMPONENTE,
+                       AT.COD_ARTEFATO,
                        D.DSC_DISCIPLINA,
                        A.DSC_ATIVIDADE,
                        AT.DSC_ARTEFATO,
                        C.DSC_COMPLEXIDADE,
                        CM.DSC_COMPONENTE,
+                       CM.COD_COMPONENTE,
                        CC.QTD_PONTOS
                   FROM COMPLEXIDADE_COMPONENTE CC
                  INNER JOIN ARTEFATO_COMPLEXIDADE AC ON CC.COD_ARTEFATO_COMPLEXIDADE = AC.COD_ARTEFATO_COMPLEXIDADE
