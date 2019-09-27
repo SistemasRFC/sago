@@ -13,6 +13,7 @@ include_once PATH."View/MenuPrincipal/Rodape.php";
     <body>
         <input type="hidden" id="method" name="method" class="persist">
         <input type="hidden" id="codExecucao" name="codExecucao" class="persist">
+        <input type="hidden" id="indStatus" name="indStatus" class="persist">
         <div class="card" style="max-width: 810px;">
             <div class="cabecalho">Cadastro de O.F.</div>
             <div class="titulo">
@@ -51,6 +52,12 @@ include_once PATH."View/MenuPrincipal/Rodape.php";
             <div style="overflow: auto;" id="windowContent">
                 <?php include_once "CadExecucaoView.php";?>
             </div>            
-        </div>   
+        </div> 
+        <div id='ofMenu' style="display:none;">
+            <ul>
+                <li>Finalizar</li>
+                <li>Excluir</li>
+            </ul>
+        </div>          
   </body>
 </html>

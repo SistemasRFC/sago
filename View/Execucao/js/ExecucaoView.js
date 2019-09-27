@@ -32,20 +32,34 @@ $(function () {
 });
 
 function ExcluirOf(){
-    $("#method").val('DeleteExecucao');
-    var parametros = retornaParametros();
-    ExecutaDispatch('Execucao', $("#method").val(), parametros, AtualizaGrid);    
-    $("#CadExecucao").jqxWindow("close");
+    swal({
+        title: "Excluir",
+        text: "Deseja realmente excluir esse registro?",
+        type: "warning",
+        showCancelButton: true,
+        buttons: ["Não", "Sim"],
+    },
+    function(isConfirm) {
+      if (isConfirm) {
+            $("#method").val('DeleteExecucao');
+            var parametros = retornaParametros();
+            ExecutaDispatch('Execucao', $("#method").val(), parametros, AtualizaGrid, 'Aguarde, excluíndo!', 'Registro excluído!');    
+            $("#CadExecucao").jqxWindow("close");
+      } else {
+        swal("Cancelled", "Your imaginary file is safe :)", "error");
+      }
+    });
 }
 
 function SalvarExecucao(){
     if ($('#codExecucao').val() == '') {
         $("#method").val('InsertExecucao');
+        $("#indStatus").val('E');
     } else {
         $("#method").val('UpdateExecucao');
     }
     var parametros = retornaParametros();
-    ExecutaDispatch('Execucao', $("#method").val(), parametros, AtualizaGrid);
+    ExecutaDispatch('Execucao', $("#method").val(), parametros, AtualizaGrid, 'Aguarde, Salvando!', 'Registro salvo!');
     LimparCampos();
     $("#cadNovaOf").hide("fade");
     $("#btnNovaOf").show();
@@ -61,6 +75,7 @@ function CarregaGridExecucao(listaExecucao) {
 
 function MontaTabelaExecucao(listaExecucao) {
     var nomeGrid = 'listaExecucao';
+    var contextMenu = $("#ofMenu").jqxMenu({ width: 200,  autoOpenPopup: false, mode: 'popup', theme: 'darkcyan' });
     var source =
     {
         localdata: listaExecucao,
@@ -111,7 +126,23 @@ function MontaTabelaExecucao(listaExecucao) {
         $("#CadExecucao").jqxWindow("open");
         return false;
     });
-
+    $("#"+nomeGrid).on('contextmenu', function () {
+        return false;
+    });
+    $("#"+nomeGrid).on('rowclick', function (event) {
+        if (event.args.rightclick) {
+            var args = event.args;
+            var rows = $('#'+nomeGrid).jqxGrid('getdisplayrows');
+            var rowData = rows[args.visibleindex];
+            var rowID = rowData.uid;
+            preencheCamposForm(listaExecucao[rowID], '');
+            $("#"+nomeGrid).jqxGrid('selectrow', rowID);                       
+            var scrollTop = $(window).scrollTop();
+            var scrollLeft = $(window).scrollLeft();
+            contextMenu.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
+            return false;
+        }
+    });
 }
 
 function CarregaComboMeses(meses) {
@@ -127,4 +158,14 @@ $(document).ready(function () {
     ExecutaDispatch('Execucao', 'ListarExecucao', '', CarregaGridExecucao);
     ExecutaDispatch('Execucao', 'ListarMeses', 'verificaPermissao;N|', CarregaComboMeses);
     ExecutaDispatch('Execucao', 'ListarAnos', 'verificaPermissao;N|', CarregaComboAnos);
+    
+    $("#ofMenu").on('itemclick', function (event) {        
+        var args = event.args; 
+        if ($.trim($(args).text()) == "Finalizar") {
+            $("#indStatus").val('F');
+            SalvarExecucao();
+        }else if ($.trim($(args).text()) == "Excluir"){             
+            ExcluirOf();
+        }
+    });     
 });
