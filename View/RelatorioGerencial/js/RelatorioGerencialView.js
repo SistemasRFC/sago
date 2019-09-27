@@ -20,11 +20,13 @@ function MontaTabelaExecucao(lista){
     if (lista!=null){
         var tabela = "<table align='center' width='90%'>";
         var totalOfs = lista.length;
+        var totalPontos = 0;
         for (var i=0;i<totalOfs;i++){
             tabela += '<tr><td align="center"><h2>O.F.: '+lista[i].COD_OF+'</h2></td></tr>';
             tabela += '<tr>';
             tabela += '<td style="margin: 5px 0px 5px 0px;font-size: 20px;"><b>Usuário: </b>'+lista[i].NME_USUARIO_COMPLETO+'</td>';
             tabela += '</tr>';
+            var qtdPontos = 0;
             var LEC = lista[i]['LEC'+lista[i].COD_EXECUCAO];
             var totalLEC = LEC.length;
             for (var iLEC=0;iLEC<totalLEC;iLEC++){
@@ -62,10 +64,13 @@ function MontaTabelaExecucao(lista){
                 tabela += "</table>";
                 tabela += '</td></tr>';
                 tabela += '<tr><td colspan="2"><br></td></tr>';
-                tabela += '<tr><td colspan="2"><hr style="border: 1px solid"></td></tr>';
+                qtdPontos = parseInt(LEC[iLEC].QTD_TOTAL_PONTOS)+parseInt(qtdPontos);
             }
-            
+            totalPontos = parseInt(totalPontos)+parseInt(qtdPontos);
+            tabela += '<tr><td colspan="2" align="right"><b>Total de Pontos da O.F. => '+qtdPontos+'</b></td></tr>';
+            tabela += '<tr><td colspan="2"><hr style="border: 1px solid"></td></tr>';
         }
+        tabela += '<tr><td colspan="2" align="right"><b>Total de Pontos => '+totalPontos+'</b></td></tr>';
         tabela += '<tr><td><br></td></tr>';
         tabela += '<tr><td><br></td></tr>';
         tabela += '<tr><td><br></td></tr>';
