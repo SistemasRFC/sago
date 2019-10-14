@@ -1,16 +1,16 @@
 $(function(){
     $("#btnPesquisar").click(function(){
-        if ($("#nroMesReferencia").val() != 0 && $("#nroAnoReferencia").val() != 0) {
-            var parametros = retornaParametros();
-            ExecutaDispatch('RelatorioGerencial', 'ListarRelatorioGerencial', parametros, MontaTabelaExecucao);
-        } else {
+        if ($("#nroMesReferencia").val() == 0 || $("#nroAnoReferencia").val() == 0) {
             swal({
                 title: "Aviso!",
                 text: "Selecione o Mês e o Ano!",
                 showConfirmButton: true,
                 type: "info"
-            });
-        }
+            });            
+            return false;
+        } 
+        var parametros = retornaParametros();
+        ExecutaDispatch('RelatorioGerencial', 'ListarRelatorioGerencial', parametros, MontaTabelaExecucao);
     });
 });
 
@@ -32,7 +32,7 @@ function MontaTabelaExecucao(lista){
             for (var iLEC=0;iLEC<totalLEC;iLEC++){
                 tabela += '<tr><td style="border: 1px solid #000000">';
                 tabela += "<table width='100%' align='center'>";
-                tabela += '<tr><td colspan="2" align="center" style="border: 1px solid #000000; padding-top:15px;"><h3>Tarefa Executada</h3></td></tr>';
+                tabela += '<tr bgcolor="silver"><td colspan="2" align="center" style="border: 1px solid #000000; padding-top:15px;"><h3>Tarefa Executada Nº: '+parseInt(iLEC+1)+'</h3></td></tr>';
                 tabela += '<tr><td style="width: 10px;"><b>Data: </b></td><td>'+LEC[iLEC].DTA_REGISTRO+'</td></tr>';
                 tabela += '<tr><td style="width: 10px;"><b>Tarefa: </b></td><td>'+LEC[iLEC].COD_TAREFA+'</td></tr>';
                 tabela += '<tr><td style="width: 10px;"><b>Disciplina:</b></td><td>'+LEC[iLEC].DSC_DISCIPLINA+'</td></tr>';

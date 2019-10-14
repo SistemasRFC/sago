@@ -1,5 +1,5 @@
 <?php 
-include_once getenv("CONSTANTES");
+include_once '../../constantes.php';
 include_once "Cabecalho.php";
 include_once "Rodape.php";
 ?>
@@ -11,8 +11,8 @@ include_once "Rodape.php";
     .grid-container {
         display: grid;
         grid-template-areas:
-        'header header header'
-        'left main right';
+        'main main main'
+        'left left right';
         grid-gap: 20px;
         background-color: #f2f2f2;
     }
@@ -90,7 +90,7 @@ include_once "Rodape.php";
         <div class="grid-container" >
             <div class="item3" >
                 <h2>SISTEMA DE APOIO AO GERENCIAMENTO DE ORÇAMENTOS</h2>
-            </div>
+            </div>            
         </div>
     </div>
 </body>

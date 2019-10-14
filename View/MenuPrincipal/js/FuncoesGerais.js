@@ -170,7 +170,7 @@ function ExecutaDispatch(Controller, Method, Parametros, Callback, MensagemAguar
     if (MensagemAguarde!=undefined){
         swal({
             title: MensagemAguarde,
-            imageUrl: "../../Resources/images/preload.gif",
+            imageUrl: PATH_RAIZ+"Resources/images/preload.gif",
             showConfirmButton: false
         });
     }
@@ -198,7 +198,7 @@ function ExecutaDispatch(Controller, Method, Parametros, Callback, MensagemAguar
                                 value: campos[1] });
         }    
     }
-    $.post('../../Dispatch.php',
+    $.post(PATH_RAIZ+"Dispatch.php",
         obj,
         function(retorno){
             retorno = eval ('('+retorno+')');
@@ -235,12 +235,12 @@ function ExecutaDispatchUpload(Controller, Method, Parametros, Callback, Mensage
     if (MensagemAguarde!=undefined){
         swal({
             title: MensagemAguarde,
-            imageUrl: "../../Resources/images/preload.gif",
+            imageUrl: PATH_RAIZ+"Resources/images/preload.gif",
             showConfirmButton: false
         });
     }
     $.ajax({
-        url: '../../Dispatch.php?controller='+Controller+'&method='+Method,
+        url: PATH_RAIZ+'Dispatch.php?controller='+Controller+'&method='+Method,
         type: 'POST',
         // Form data
         data: Parametros,
@@ -285,7 +285,7 @@ function ExecutaDispatchValor(Controller, Method, Parametros, Callback, Valor, D
     if (MensagemAguarde!=undefined){
         swal({
             title: MensagemAguarde,
-            imageUrl: "../../Resources/images/preload.gif",
+            imageUrl: PATH_RAIZ+"Resources/images/preload.gif",
             showConfirmButton: false
         });
     }
@@ -313,7 +313,7 @@ function ExecutaDispatchValor(Controller, Method, Parametros, Callback, Valor, D
                                 value: campos[1] });
         }    
     }
-    $.post('../../Dispatch.php',
+    $.post('../../"+ALIAS+"Dispatch.php',
         obj,
         function(retorno){
             retorno = eval ('('+retorno+')');
@@ -442,5 +442,5 @@ function LimparCampos(){
 
 
 function RedirecionaController(Controller, Method){
-    $(location).attr('href','../../Dispatch.php?controller='+Controller+'&method='+Method);
+    $(location).attr('href',PATH_RAIZ+'Dispatch.php?controller='+Controller+'&method='+Method);
 }

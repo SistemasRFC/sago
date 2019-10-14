@@ -11,6 +11,7 @@ if (!isset($_SESSION['cod_usuario'])) {
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="../../Resources/constantes.js?random=<?php echo time(); ?>"></script>
         <script src="../../Resources/JavaScript.js"></script>
         <link rel="stylesheet" href="../../Resources/css/style.css?random=<?php echo time(); ?>" type="text/css" />
         <link href="../../Resources/css/redmond/jquery-ui-1.10.3.custom.css" rel="stylesheet">
