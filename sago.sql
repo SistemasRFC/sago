@@ -26,7 +26,7 @@ CREATE TABLE `execucao_complexidade` (
   `cod_execucao_complexidade` int(11) NOT NULL,
   `cod_execucao` int(11) NOT NULL,
   `cod_complexidade_componente` int(11) DEFAULT NULL,
-  `dta_registro` datetime DEFAULT CURRENT_TIMESTAMP,
+  `dta_registro` datetime DEFAULT NOW(),
   PRIMARY KEY (`cod_execucao_complexidade`),
   KEY `execucao_complexidade_execucao_fk` (`cod_execucao`),
   KEY `execucao_complexidade_complexidade_componente_fk` (`cod_complexidade_componente`),
