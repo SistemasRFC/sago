@@ -1,3 +1,8 @@
+<?php
+include_once '../../constantes.php';
+include_once PATH . "View/MenuPrincipal/Cabecalho.php";
+include_once PATH . "View/MenuPrincipal/Rodape.php";
+?>
 <html>
     <head>
         <title>SAGO - Alterar Senha</title>
