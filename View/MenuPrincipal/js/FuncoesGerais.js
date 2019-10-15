@@ -313,7 +313,7 @@ function ExecutaDispatchValor(Controller, Method, Parametros, Callback, Valor, D
                                 value: campos[1] });
         }    
     }
-    $.post('../../"+ALIAS+"Dispatch.php',
+    $.post(PATH_RAIZ+'Dispatch.php',
         obj,
         function(retorno){
             retorno = eval ('('+retorno+')');
