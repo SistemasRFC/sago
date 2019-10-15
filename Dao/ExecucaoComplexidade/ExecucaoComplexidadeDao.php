@@ -47,7 +47,12 @@ class ExecucaoComplexidadeDao extends BaseDao
     }
 
     Public Function InsertExecucaoComplexidade(stdClass $obj) {
-        return $this->MontarInsert($obj);
+        $sql = "INSERT INTO EXECUCAO_COMPLEXIDADE (COD_EXECUCAO_COMPLEXIDADE, COD_EXECUCAO, COD_COMPLEXIDADE_COMPONENTE, DTA_REGISTRO)
+                VALUES (".$this->CatchUltimoCodigo($this->tableName, $this->columnKey[key($this->columnKey)]['column']).",
+                        ".$obj->codExecucao.",
+                        ".$obj->codComplexidadeComponente.",
+                        NOW())";
+        return $this->insertDB($sql);
     }
 
     Public Function ClonarDados(stdClass $obj) {
