@@ -118,7 +118,7 @@ function fecharTelaCadastro(dados) {
 }
 
 function carregaOf(){
-    var parametros = 'codOf;'+$("#codOf").val();
+    var parametros = 'codExecucao;'+$("#codExecucao").val();
     ExecutaDispatch('Execucao', 'ListarExecucaoPorOf', parametros, MontaListaExecucao);
 }
 
@@ -129,15 +129,15 @@ function MontaListaExecucao(lista){
         var tabela = "<table width='100%' height='350' style='border: 1px solid #000000; table-layout: auto;' cellspacing='0'>";
         tabela += "<thead style='display:block;'>";
         tabela += "<tr>";
-        tabela += "<td style='border: 1px solid #000000; width: 20px;'><br></td>";
-        tabela += "<td style='border: 1px solid #000000; width: 106px;'><b>Data</b></td>";
-        tabela += "<td style='border: 1px solid #000000; width: 170px;'><b>Disciplina</b></td>";
-        tabela += "<td style='border: 1px solid #000000; width: 170px;'><b>Atividade</b></td>";
-        tabela += "<td style='border: 1px solid #000000; width: 240px;'><b>Artefato</b></td>";
-        tabela += "<td style='border: 1px solid #000000; width: 70px;'><b>Cpl.</b></td>";
-        tabela += "<td style='border: 1px solid #000000; width: 70px;'><b>Cmp.</b></td>";
-        tabela += "<td style='border: 1px solid #000000; width: 60px;'><b>Pts.</b></td>";
-        tabela += "<td style='border: 1px solid #000000; width: 102px;'><b>Ação</b></td>";
+        tabela += "<td style='width: 20px;'><br></td>";
+        tabela += "<td style='width: 106px;'><b>Data</b></td>";
+        tabela += "<td style='width: 170px;'><b>Disciplina</b></td>";
+        tabela += "<td style='width: 170px;'><b>Atividade</b></td>";
+        tabela += "<td style='width: 240px;'><b>Artefato</b></td>";
+        tabela += "<td style='width: 70px;'><b>Cpl.</b></td>";
+        tabela += "<td style='width: 70px;'><b>Cmp.</b></td>";
+        tabela += "<td style='width: 60px;'><b>Pts.</b></td>";
+        tabela += "<td style='width: 102px;'><b>Ação</b></td>";
         tabela += "</tr>";
         tabela += "</thead>";
         tabela += "<tbody style='display:block; overflow: auto; height: 350px;'>";
@@ -243,15 +243,15 @@ function ClonarDados(codExecucaoComplexidade){
 
 function editarOf(codExecucaoComplexidade, codDisciplina, codDisciplinaAtividade, codAtividadeArtefato, codArtefatoComplexidade, codComplexidadeComponente){
     $("#codExecucaoComplexidade").val(codExecucaoComplexidade);
-    ExecutaDispatchValor('Disciplina', 'ListarDisciplinaCombo', '', CarregaComboDisciplina, codDisciplina, true);
+    ExecutaDispatchValor('Disciplina', 'ListarDisciplinaCombo', '', CarregaComboDisciplina, codDisciplina, false);
     var parametros = 'codDisciplina;'+codDisciplina;    
-    ExecutaDispatchValor('Atividade', 'ListarAtividadeComboPorDisciplina', parametros, CarregaComboAtividade, codDisciplinaAtividade, true); 
+    ExecutaDispatchValor('Atividade', 'ListarAtividadeComboPorDisciplina', parametros, CarregaComboAtividade, codDisciplinaAtividade, false); 
     parametros = 'codDisciplinaAtividade;'+codDisciplinaAtividade;
-    ExecutaDispatchValor('Artefato', 'ListarArtefatoPorDisciplinaAtividadeCombo', parametros, CarregaComboArtefato, codAtividadeArtefato, true);
+    ExecutaDispatchValor('Artefato', 'ListarArtefatoPorDisciplinaAtividadeCombo', parametros, CarregaComboArtefato, codAtividadeArtefato, false);
     parametros = 'codAtividadeArtefato;'+codAtividadeArtefato;
-    ExecutaDispatchValor('Complexidade', 'ListarComplexidadePorAtividadeArtefatoCombo', parametros, CarregaComboComplexidade, codArtefatoComplexidade, true);
+    ExecutaDispatchValor('Complexidade', 'ListarComplexidadePorAtividadeArtefatoCombo', parametros, CarregaComboComplexidade, codArtefatoComplexidade, false);
     parametros = 'codArtefatoComplexidade;'+codArtefatoComplexidade;
-    ExecutaDispatchValor('Componente', 'ListarComponentePorArtefatoComplexidadeCombo', parametros, CarregaComboComponente, codComplexidadeComponente, true);
+    ExecutaDispatchValor('Componente', 'ListarComponentePorArtefatoComplexidadeCombo', parametros, CarregaComboComponente, codComplexidadeComponente, false);
 }
 
 $(document).ready(function(){

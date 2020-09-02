@@ -38,7 +38,8 @@ class ExecucaoComplexidadeDao extends BaseDao
                   INNER JOIN DISCIPLINA_ATIVIDADE DA ON AA.COD_DISCIPLINA_ATIVIDADE = DA.COD_DISCIPLINA_ATIVIDADE
                   INNER JOIN ATIVIDADE ATV ON DA.COD_ATIVIDADE = ATV.COD_ATIVIDADE
                   INNER JOIN DISCIPLINA D ON DA.COD_DISCIPLINA = D.COD_DISCIPLINA
-                  WHERE COD_EXECUCAO = '.$obj->codExecucao;
+                  WHERE COD_EXECUCAO = '.$obj->codExecucao.'
+				  ORDER BY EC.DTA_REGISTRO';
         return $this->selectDB($sql, false);
     }
 

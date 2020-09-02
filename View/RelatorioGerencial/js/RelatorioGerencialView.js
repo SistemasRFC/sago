@@ -81,7 +81,7 @@ function MontaTabelaExecucao(lista){
     var h = 700;
     var left = wLeft + (window.innerWidth / 2) - (w / 2);
     var top = wTop + (window.innerHeight / 2) - (h / 2);    
-    var tmpSinteticoPagamentoColaborador = window.open('', 'Relatório Gerencial', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left + ', screenX=' + left + ', screenY=' + top);
+    var tmpSinteticoPagamentoColaborador = window.open('', 'Relatório Gerencial', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left + ', screenX=' + left + ', screenY=' + top);
     tmpSinteticoPagamentoColaborador.document.body.innerHTML='';
     tmpSinteticoPagamentoColaborador.document.write(tabela);
     tmpSinteticoPagamentoColaborador.focus();

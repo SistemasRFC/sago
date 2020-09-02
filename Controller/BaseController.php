@@ -37,7 +37,7 @@ class BaseController {
      * @return String
      */
     Public Static function getPath() {
-        return 'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . "/" . self::$defaultPath;
+        return 'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . self::$defaultPath;
     }
 
     /**
@@ -47,7 +47,7 @@ class BaseController {
      */
     Public Static Function ReturnView($path, $class, $pathView=null) {
         $pv = empty($pathView)?str_replace("Controller", "", $class):$pathView;
-        return $path . "/View/" . $pv . "/" . str_replace("Controller", "View", $class) . ".php";
+        return $path . "View/" . $pv . "/" . str_replace("Controller", "View", $class) . ".php";
     }
 
     Public Function js2PhpTime($jsdate) {
