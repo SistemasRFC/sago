@@ -12,11 +12,11 @@ if ($ext!='txt' && $ext!='TXT'){
 }
 header("Content-Type: application/force-download");
 header("Content-Type: application/octet-stream;");
-header("Content-Length:".filesize('Resources/arquivos/'.$nomeArquivo));
+header("Content-Length:".filesize('/var/www/html/sago/Resources/arquivos/'.$nomeArquivo));
 header("Content-disposition: attachment; filename=".$nomeArquivo);
 header("Pragma: no-cache");
 header("Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
 header("Expires: 0");
-readfile('Resources/arquivos/'.$nomeArquivo);
+readfile('/var/www/html/sago/Resources/arquivos/'.$nomeArquivo);
 flush();
 
