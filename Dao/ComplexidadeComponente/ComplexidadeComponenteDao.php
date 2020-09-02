@@ -6,7 +6,8 @@ class ComplexidadeComponenteDao extends BaseDao
 
     Protected $columns = array ("codArtefatoComplexidade"   => array("column" =>"COD_ARTEFATO_COMPLEXIDADE", "typeColumn" =>"I"),
                                 "codComponente"   => array("column" =>"COD_COMPONENTE", "typeColumn" =>"I"),
-                                "qtdPontos"   => array("column" =>"QTD_PONTOS", "typeColumn" =>"F"));
+                                "qtdPontos"   => array("column" =>"QTD_PONTOS", "typeColumn" =>"F"),
+                                "indAtivo"          => array("column" =>"IND_ATIVO", "typeColumn" =>"S"));
 
     Protected $columnKey = array("codComplexidadeComponente"=> array("column" =>"COD_COMPLEXIDADE_COMPONENTE", "typeColumn" => "I"));
 
@@ -32,7 +33,8 @@ class ComplexidadeComponenteDao extends BaseDao
                        C.DSC_COMPLEXIDADE,
                        CM.DSC_COMPONENTE,
                        CM.COD_COMPONENTE,
-                       CC.QTD_PONTOS
+                       CC.QTD_PONTOS,
+                       CC.IND_ATIVO
                   FROM COMPLEXIDADE_COMPONENTE CC
                  INNER JOIN ARTEFATO_COMPLEXIDADE AC ON CC.COD_ARTEFATO_COMPLEXIDADE = AC.COD_ARTEFATO_COMPLEXIDADE
                  INNER JOIN ATIVIDADE_ARTEFATO AA ON AC.COD_ATIVIDADE_ARTEFATO = AA.COD_ATIVIDADE_ARTEFATO

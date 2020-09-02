@@ -33,7 +33,7 @@ include_once PATH."View/MenuPrincipal/Rodape.php";
                         <label for="codComplexidade" class="titulo">Complexidade</label>
                         <div id="tdcodComplexidade"></div>
                     </td>
-                </tr>                    
+                </tr>               
                 <tr>                    
                     <td>
                         <br>

@@ -37,6 +37,7 @@ class ArtefatoDao extends BaseDao
                  INNER JOIN ATIVIDADE_ARTEFATO AA ON A.COD_ARTEFATO = AA.COD_ARTEFATO
                  WHERE COD_DISCIPLINA_ATIVIDADE = '.$this->Populate('codDisciplinaAtividade', 'I').'
                    AND A.IND_ATIVO = "S"
+                   AND AA.IND_ATIVO = "S"
                  ORDER BY DSC_ARTEFATO';
         return $this->selectDB($sql, false);
     }

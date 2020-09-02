@@ -1,6 +1,7 @@
 $(function () {
     $("#btnInserir").click(function(){
         var parametros = retornaParametros();
+        parametros += "indAtivo;S";
         ExecutaDispatch('ComplexidadeComponente', $("#method").val(), parametros, AtualizaDados);
     });
 
@@ -113,13 +114,24 @@ function MontaListaAtividades(lista){
                    <table width='100%'><tr>\n\
                        <td><a href=\"javascript:editarRelacionamento("+lista[i].COD_DISCIPLINA_ATIVIDADE+", "+lista[i].COD_DISCIPLINA+", "+qtdPontos+" , "+lista[i].COD_ATIVIDADE_ARTEFATO+", "+lista[i].COD_ARTEFATO_COMPLEXIDADE+" , "+lista[i].COD_COMPONENTE+" , "+lista[i].COD_COMPLEXIDADE_COMPONENTE+");\" title='Editar'>\n\
                             <img src='../../Resources/images/edit.png' width='20' height='20'>\n\
-                       </a></td> \n\
-                       </tr></table>   \n\
+                       </a></td>";
+                        if (lista[i].IND_ATIVO=='S'){
+                            tabela += "<td><a href='javascript:atualizaComplexidadeComponente("+lista[i].COD_COMPLEXIDADE_COMPONENTE+", 0);' title='Desativar'><img src='"+PATH_RAIZ+"/Resources/images/delete.png' width='25' height='25'></td>";
+                        }else{
+                            tabela += "<td><a href='javascript:atualizaComplexidadeComponente("+lista[i].COD_COMPLEXIDADE_COMPONENTE+", 1);' title='Ativar'><img src='"+PATH_RAIZ+"/Resources/images/visto.png' width='25' height='25'></td>";
+                        }
+        tabela += "     </tr></table>   \n\
                     </td>";
         tabela += "</tr>";
     }
     tabela += "</table>";
     $("#listaComplexidades").html(tabela);
+}
+
+function atualizaComplexidadeComponente(codComplexidadeComponente, indAtivo){
+    var ativo = indAtivo==0?'N':'S';
+    var parametros = 'codComplexidadeComponente;'+codComplexidadeComponente+'|indAtivo;'+ativo;
+    ExecutaDispatch('ComplexidadeComponente', 'UpdateComplexidadeComponente', parametros, AtualizaDados);    
 }
 
 function editarRelacionamento(codDisciplinaAtividade, codDisciplina, qtdPontos, codAtividadeArtefato, codArtefatoComplexidade, codComponente, codComplexidadeComponente){

@@ -20,9 +20,9 @@ class ComplexidadeDao extends BaseDao
     Public Function ListarComplexidadeCombo() {
         $sql = 'SELECT C.COD_COMPLEXIDADE,
                        C.DSC_COMPLEXIDADE
-                  FROM COMPLEXIDADE C
+                  FROM COMPLEXIDADE C 
                  WHERE C.COD_COMPLEXIDADE NOT IN (SELECT COD_COMPLEXIDADE
-                                                    FROM ARTEFATO_COMPLEXIDADE
+                                                    FROM ARTEFATO_COMPLEXIDADE AC
                                                    WHERE COD_ATIVIDADE_ARTEFATO = '.$this->Populate('codAtividadeArtefato', 'I').')
                    AND C.IND_ATIVO = "S"';
         return $this->selectDB($sql, false);
@@ -34,7 +34,8 @@ class ComplexidadeDao extends BaseDao
                   FROM COMPLEXIDADE C
                  INNER JOIN ARTEFATO_COMPLEXIDADE AC ON C.COD_COMPLEXIDADE = AC.COD_COMPLEXIDADE
                  WHERE AC.COD_ATIVIDADE_ARTEFATO = '.$this->Populate('codAtividadeArtefato', 'I').'
-                   AND C.IND_ATIVO = "S"';
+                   AND C.IND_ATIVO = "S"
+                   AND AC.IND_ATIVO = "S"';
         return $this->selectDB($sql, false);
     }
 

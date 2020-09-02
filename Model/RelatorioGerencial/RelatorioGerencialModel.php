@@ -39,4 +39,53 @@ class RelatorioGerencialModel extends BaseModel{
         }
         return json_encode($lista);
     }
+    
+    Public Function GerarExcelSumarizado(){
+        $dao = new RelatorioGerencialDao();
+        BaseModel::PopulaObjetoComRequest($dao->getColumns());
+        $this->objRequest->codUsuario = $_SESSION['cod_usuario'];
+        $lista = $dao->GetDadosRelatorioSumarizado($this->objRequest);
+        if ($lista[0]){
+            $nomeArquivo='orcamento'.$_SESSION['cod_usuario'].'T'.time().'.txt';
+            $arquivo = fopen('Resources/arquivos/'.$nomeArquivo,'w');
+            if ($arquivo == false){
+                die('Não foi possível criar o arquivo.');
+            }
+            $totalRegistros = count($lista[1]);
+            $nl=chr(10);
+            for ($i=0;$i<$totalRegistros;$i++){
+                $texto = $lista[1][$i]['COD_TAREFA'].' '.
+                         $lista[1][$i]['DISCIPLINA'].' '.
+                         $lista[1][$i]['ATIVIDADE'].' '.
+                         $lista[1][$i]['ARTEFATO'].' '.
+                         $lista[1][$i]['COMPLEXIDADE'].' '.
+                         $lista[1][$i]['TOTAL'].$nl;
+                fwrite($arquivo, $texto, strlen($texto));
+            }
+            fclose($arquivo);
+        }
+        return $nomeArquivo;
+    }  
+    
+    Public Function GerarArquivosOrcamento(){
+        $dao = new RelatorioGerencialDao();
+        BaseModel::PopulaObjetoComRequest($dao->getColumns());
+        $this->objRequest->codUsuario = $_SESSION['cod_usuario'];
+        $lista = $dao->GerarArquivosOrcamento($this->objRequest);
+        if ($lista[0]){
+            $nomeArquivo='orcamentoArquivo'.$_SESSION['cod_usuario'].'T'.time().'.txt';
+            $arquivo = fopen('Resources/arquivos/'.$nomeArquivo,'w');
+            if ($arquivo == false){
+                die('Não foi possível criar o arquivo.');
+            }
+            $totalRegistros = count($lista[1]);
+            $nl=chr(10);
+            for ($i=0;$i<$totalRegistros;$i++){
+                $texto = $lista[1][$i]['NME_ARQUIVO'].$nl;
+                fwrite($arquivo, $texto, strlen($texto));
+            }
+            fclose($arquivo);
+        }
+        return $nomeArquivo;
+    }    
 }

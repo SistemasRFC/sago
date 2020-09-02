@@ -34,6 +34,14 @@ include_once PATH."View/MenuPrincipal/Rodape.php";
                         <br>
                         <input type="button" id="btnPesquisar" value="Pesquisar" class="button">
                     </td>
+                    <td>
+                        <br>
+                        <input type="button" id="btnPesquisarSumarizado" value="Gerar Orçamento" class="button">
+                    </td>  
+                    <td>
+                        <br>
+                        <input type="button" id="btnPesquisarArquivos" value="Gerar Arquivos" class="button">
+                    </td>                    
                 </tr>
             </table>
         </div>
