@@ -1,5 +1,6 @@
 <?php
 $nomeArquivo = $_GET['nomeArquivo'];
+echo 'Resources/arquivos/'.$nomeArquivo;
 if (!file_exists('Resources/arquivos/'.$nomeArquivo)){
     echo "Arquivo não existe!";
     die;
