@@ -34,7 +34,8 @@ class AtividadeDao extends BaseDao
                   FROM ATIVIDADE A
                  INNER JOIN DISCIPLINA_ATIVIDADE DA ON A.COD_ATIVIDADE = DA.COD_ATIVIDADE
                  WHERE DA.COD_DISCIPLINA =  '.$this->Populate('codDisciplina', 'I').'
-                   AND A.IND_ATIVO = "S"';
+                   AND A.IND_ATIVO = "S"
+                   AND DA.IND_ATIVO= "S"';
         return $this->selectDB($sql, false);
     }
 

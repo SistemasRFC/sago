@@ -1,6 +1,7 @@
 $(function () {
     $("#btnInserir").click(function(){
         var parametros = retornaParametros();
+        parametros += "indAtivo;S";
         ExecutaDispatch('AtividadeArtefato', $("#method").val(), parametros, AtualizaDados);
     });
 
@@ -86,14 +87,24 @@ function MontaListaAtividades(lista){
                    <table width='100%'><tr>\n\
                        <td><a href=\"javascript:editarRelacionamento("+lista[i].COD_DISCIPLINA_ATIVIDADE+", "+lista[i].COD_DISCIPLINA+", "+lista[i].COD_ARTEFATO+", "+codTarefa+" , "+lista[i].COD_ATIVIDADE_ARTEFATO+");\" title='Editar'>\n\
                             <img src='../../Resources/images/edit.png' width='20' height='20'>\n\
-                       </a></td> \n\
-                       </tr></table>   \n\
+                       </a></td>";
+                        if (lista[i].IND_ATIVO=='S'){
+                            tabela += "<td><a href='javascript:atualizaAtividadeArtefato("+lista[i].COD_ATIVIDADE_ARTEFATO+", 0);' title='Desativar'><img src='"+PATH_RAIZ+"/Resources/images/delete.png' width='25' height='25'></td>";
+                        }else{
+                            tabela += "<td><a href='javascript:atualizaAtividadeArtefato("+lista[i].COD_ATIVIDADE_ARTEFATO+", 1);' title='Ativar'><img src='"+PATH_RAIZ+"/Resources/images/visto.png' width='25' height='25'></td>";
+                        }
+        tabela += "     </tr></table>   \n\
                     </td>";
-
         tabela += "</tr>";
     }
     tabela += "</table>";
     $("#listaArtefatos").html(tabela);
+}
+
+function atualizaAtividadeArtefato(codigoAtividadeArtefato, indAtivo){
+    var ativo = indAtivo==0?'N':'S';
+    var parametros = 'codAtividadeArtefato;'+codigoAtividadeArtefato+'|indAtivo;'+ativo;
+    ExecutaDispatch('AtividadeArtefato', 'UpdateAtividadeArtefato', parametros, AtualizaDados);    
 }
 
 function editarRelacionamento(codDisciplinaAtividade, codDisciplina, codArtefato, codTarefa, codAtividadeArtefato){

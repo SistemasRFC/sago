@@ -6,7 +6,8 @@ class AtividadeArtefatoDao extends BaseDao
 
     Protected $columns = array ("codDisciplinaAtividade"   => array("column" =>"COD_DISCIPLINA_ATIVIDADE", "typeColumn" =>"I"),
                                 "codArtefato"   => array("column" =>"COD_ARTEFATO", "typeColumn" =>"I"),
-                                "codTarefa"   => array("column" =>"COD_TAREFA", "typeColumn" =>"S"));
+                                "codTarefa"   => array("column" =>"COD_TAREFA", "typeColumn" =>"S"),
+                                "indAtivo"   => array("column" =>"IND_ATIVO", "typeColumn" =>"S"));
 
     Protected $columnKey = array("codAtividadeArtefato"=> array("column" =>"COD_ATIVIDADE_ARTEFATO", "typeColumn" => "I"));
 
@@ -26,7 +27,8 @@ class AtividadeArtefatoDao extends BaseDao
                        D.DSC_DISCIPLINA,
                        A.DSC_ATIVIDADE,
                        AT.DSC_ARTEFATO,
-                       COALESCE(AA.COD_TAREFA,'') AS COD_TAREFA
+                       COALESCE(AA.COD_TAREFA,'') AS COD_TAREFA,
+                       AA.IND_ATIVO
                   FROM ATIVIDADE_ARTEFATO AA
                  INNER JOIN DISCIPLINA_ATIVIDADE DA ON AA.COD_DISCIPLINA_ATIVIDADE = DA.COD_DISCIPLINA_ATIVIDADE
                  INNER JOIN DISCIPLINA D ON DA.COD_DISCIPLINA = D.COD_DISCIPLINA
@@ -44,7 +46,7 @@ class AtividadeArtefatoDao extends BaseDao
                  INNER JOIN DISCIPLINA D ON DA.COD_DISCIPLINA = D.COD_DISCIPLINA
                  INNER JOIN ATIVIDADE A ON DA.COD_ATIVIDADE = A.COD_ATIVIDADE
                  INNER JOIN ARTEFATO AT ON AA.COD_ARTEFATO = AT.COD_ARTEFATO
-                 WHERE AA.COD_DISCIPLINA_ATIVIDADE = ".$this->Populate("codDisciplinaAtividade", "I");
+                 WHERE AA.IND_ATIVO = 'S' AND AA.COD_DISCIPLINA_ATIVIDADE = ".$this->Populate("codDisciplinaAtividade", "I");
         return $this->selectDB($sql, false);
     }
 

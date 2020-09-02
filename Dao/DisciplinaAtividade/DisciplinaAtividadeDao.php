@@ -5,7 +5,8 @@ class DisciplinaAtividadeDao extends BaseDao
     Protected $tableName = "DISCIPLINA_ATIVIDADE";
 
     Protected $columns = array ("codDisciplina"   => array("column" =>"COD_DISCIPLINA", "typeColumn" =>"I"),
-                                "codAtividade"   => array("column" =>"COD_ATIVIDADE", "typeColumn" =>"I"));
+                                "codAtividade"   => array("column" =>"COD_ATIVIDADE", "typeColumn" =>"I"),
+                                "indAtivo"   => array("column" =>"IND_ATIVO", "typeColumn" =>"S"));
 
     Protected $columnKey = array("codDisciplinaAtividade"=> array("column" =>"COD_DISCIPLINA_ATIVIDADE", "typeColumn" => "I"));
 
@@ -22,7 +23,8 @@ class DisciplinaAtividadeDao extends BaseDao
                        DA.COD_ATIVIDADE,
                        DA.COD_DISCIPLINA_ATIVIDADE,
                        D.DSC_DISCIPLINA,
-                       A.DSC_ATIVIDADE
+                       A.DSC_ATIVIDADE,
+                       DA.IND_ATIVO
                   FROM '.$this->tableName.' DA
                  INNER JOIN ATIVIDADE A ON DA.COD_ATIVIDADE = A.COD_ATIVIDADE
                  INNER JOIN DISCIPLINA D ON DA.COD_DISCIPLINA = D.COD_DISCIPLINA

@@ -444,3 +444,47 @@ function LimparCampos(){
 function RedirecionaController(Controller, Method){
     $(location).attr('href',PATH_RAIZ+'Dispatch.php?controller='+Controller+'&method='+Method);
 }
+
+function Download(Controller, Method, Parametros){
+    var obj = new Object();
+    Object.defineProperty(obj, 'method', {
+        __proto__: null,
+        enumerable : true,
+        configurable : true,
+        value: Method
+    });    
+    Object.defineProperty(obj, 'controller', {
+        __proto__: null,
+        enumerable : true,
+        configurable : true,
+        value: Controller
+    });        
+    if (Parametros != undefined){
+        var dados = Parametros.split('|'); 
+        for (i=0;i<dados.length;i++){
+            var campos = dados[i].split(';');
+            Object.defineProperty(obj, campos[0], {
+                                __proto__: null,
+                                enumerable : true,
+                                configurable : true,
+                                value: campos[1] });
+        }    
+    }
+    $.post(PATH_RAIZ+"Dispatch.php",
+        obj,
+        function(retorno){
+            retorno = eval ('('+retorno+')');
+            if (retorno[0]==true){
+                window.location.href='http://localhost/sago/download.php?nomeArquivo='+retorno[1];
+            }else{
+                $(".jquery-waiting-base-container").fadeOut({modo:"fast"});
+                swal({
+                    title: "Erro ao executar!",
+                    text: "Erro: "+retorno[1],
+                    type: "error",
+                    confirmButtonText: "Fechar"
+                });
+             }
+        }
+    );
+}

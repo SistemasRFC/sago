@@ -12,4 +12,16 @@ class RelatorioGerencialController  extends BaseController{
         $RelatorioGerencialModel = new RelatorioGerencialModel();
         echo $RelatorioGerencialModel->ListarRelatorioGerencial();
     }
+    
+    Public Function GerarExcelSumarizado(){
+        $RelatorioGerencialModel = new RelatorioGerencialModel();
+        $nomeArquivo = $RelatorioGerencialModel->GerarExcelSumarizado();
+        echo(json_encode(Array(true, $nomeArquivo)));
+    }
+    
+    Public Function GerarArquivosOrcamento(){
+        $RelatorioGerencialModel = new RelatorioGerencialModel();
+        $nomeArquivo = $RelatorioGerencialModel->GerarArquivosOrcamento();
+        echo(json_encode(Array(true, $nomeArquivo)));
+    }
 }

@@ -12,6 +12,32 @@ $(function(){
         var parametros = retornaParametros();
         ExecutaDispatch('RelatorioGerencial', 'ListarRelatorioGerencial', parametros, MontaTabelaExecucao);
     });
+    $("#btnPesquisarSumarizado").click(function(){
+        if ($("#nroMesReferencia").val() == 0 || $("#nroAnoReferencia").val() == 0) {
+            swal({
+                title: "Aviso!",
+                text: "Selecione o Mês e o Ano!",
+                showConfirmButton: true,
+                type: "info"
+            });            
+            return false;
+        } 
+        var parametros = retornaParametros();
+        Download('RelatorioGerencial', 'GerarExcelSumarizado', parametros);
+    });  
+    $("#btnPesquisarArquivos").click(function(){
+        if ($("#nroMesReferencia").val() == 0 || $("#nroAnoReferencia").val() == 0) {
+            swal({
+                title: "Aviso!",
+                text: "Selecione o Mês e o Ano!",
+                showConfirmButton: true,
+                type: "info"
+            });            
+            return false;
+        } 
+        var parametros = retornaParametros();
+        Download('RelatorioGerencial', 'GerarArquivosOrcamento', parametros);
+    });   
 });
 
 function MontaTabelaExecucao(lista){

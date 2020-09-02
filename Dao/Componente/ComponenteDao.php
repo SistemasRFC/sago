@@ -22,7 +22,7 @@ class ComponenteDao extends BaseDao
                         C.DSC_COMPONENTE
                    FROM COMPONENTE C
                   WHERE C.COD_COMPONENTE NOT IN (SELECT COD_COMPONENTE
-                                                   FROM COMPLEXIDADE_COMPONENTE
+                                                   FROM COMPLEXIDADE_COMPONENTE 
                                                   WHERE COD_ARTEFATO_COMPLEXIDADE = '.$this->Populate('codArtefatoComplexidade', 'I').')
                     AND C.IND_ATIVO = "S"';
         return $this->selectDB($sql, false);
@@ -34,7 +34,8 @@ class ComponenteDao extends BaseDao
                         C.DSC_COMPONENTE
                    FROM COMPONENTE C
                   INNER JOIN COMPLEXIDADE_COMPONENTE CC ON C.COD_COMPONENTE = CC.COD_COMPONENTE
-                  WHERE COD_ARTEFATO_COMPLEXIDADE = '.$this->Populate('codArtefatoComplexidade', 'I').'
+                  WHERE CC.IND_ATIVO="S" 
+                    AND COD_ARTEFATO_COMPLEXIDADE = '.$this->Populate('codArtefatoComplexidade', 'I').'
                     AND C.IND_ATIVO = "S"';
         return $this->selectDB($sql, false);
     }
