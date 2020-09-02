@@ -1,10 +1,10 @@
 <?php
 $nomeArquivo = $_GET['nomeArquivo'];
 echo 'Resources/arquivos/'.$nomeArquivo;
-if (!file_exists('/var/www/html/sago/Resources/arquivos/'.$nomeArquivo)){
-    echo "Arquivo não existe!";
-    die;
-}
+//if (!file_exists('/var/www/html/sago/Resources/arquivos/'.$nomeArquivo)){
+//    echo "Arquivo não existe!";
+//    die;
+//}
 $ext = pathinfo('Resources/arquivos/'.$nomeArquivo, PATHINFO_EXTENSION);
 if ($ext!='txt' && $ext!='TXT'){
     echo "Arquivo não permitido";
