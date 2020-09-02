@@ -40,8 +40,8 @@ class ExecucaoDao extends BaseDao
                            LEFT JOIN ATIVIDADE ATV ON DA.COD_ATIVIDADE = ATV.COD_ATIVIDADE
                            LEFT JOIN DISCIPLINA D ON DA.COD_DISCIPLINA = D.COD_DISCIPLINA
                            WHERE E.COD_USUARIO = '.$codUsuario.'
-                           GROUP BY E.COD_OF, CC.QTD_PONTOS) X 
-                  group by COD_EXECUCAO, COD_OF';
+                           GROUP BY E.COD_EXECUCAO, CC.QTD_PONTOS) X 
+                  group by COD_EXECUCAO';
         return $this->selectDB($sql, false);
     }
     
@@ -72,7 +72,7 @@ class ExecucaoDao extends BaseDao
                   INNER JOIN ARTEFATO ART ON AA.COD_ARTEFATO = ART.COD_ARTEFATO
                   INNER JOIN ATIVIDADE ATV ON DA.COD_ATIVIDADE = ATV.COD_ATIVIDADE
                   INNER JOIN DISCIPLINA D ON DA.COD_DISCIPLINA = D.COD_DISCIPLINA
-                  WHERE E.COD_OF = \''.$this->Populate('codOf','S').'\'
+                  WHERE E.COD_EXECUCAO = \''.$this->Populate('codExecucao','S').'\'
                   GROUP BY EC.COD_EXECUCAO_COMPLEXIDADE,
                            D.DSC_DISCIPLINA,
                            ATV.DSC_ATIVIDADE,
