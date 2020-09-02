@@ -1,6 +1,7 @@
 $(function () {
     $("#btnInserir").click(function(){
         var parametros = retornaParametros();
+        parametros += "indAtivo;S";
         ExecutaDispatch('ComplexidadeComponente', $("#method").val(), parametros, AtualizaDados);
     });
 
