@@ -57,7 +57,7 @@ class RelatorioGerencialDao extends BaseDao{
                   INNER JOIN EXECUCAO E on EC.COD_EXECUCAO = E.COD_EXECUCAO
                   WHERE E.NRO_ANO_REFERENCIA = '.$obj->nroAnoReferencia.' 
                     AND E.NRO_MES_REFERENCIA = '.$obj->nroMesReferencia.'
-                    AND E.COD_USUARIO = '.$obj->codUsuario.'
+                    AND E.COD_EXECUCAO = '.$obj->codExecucao.'
                   group by AA.COD_TAREFA, D.DSC_DISCIPLINA, ATV.DSC_ATIVIDADE,
                   ART.DSC_ARTEFATO, CPX.DSC_COMPLEXIDADE
                   ORDER by AA.COD_TAREFA, D.DSC_DISCIPLINA, ATV.DSC_ATIVIDADE,
@@ -66,7 +66,8 @@ class RelatorioGerencialDao extends BaseDao{
     }
     
     Public Function GerarArquivosOrcamento(stdClass $obj){
-        $sql = 'SELECT EA.NME_ARQUIVO
+        $sql = 'SELECT EA.NME_ARQUIVO,
+                       EA.TXT_DESCRICAO_JUSTIFICATIVA
                    FROM EXECUCAO_COMPLEXIDADE EC
                   INNER JOIN COMPLEXIDADE_COMPONENTE CC ON EC.COD_COMPLEXIDADE_COMPONENTE = CC.COD_COMPLEXIDADE_COMPONENTE
                   INNER JOIN COMPONENTE CMP ON CC.COD_COMPONENTE = CMP.COD_COMPONENTE

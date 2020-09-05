@@ -30,8 +30,14 @@
         </tr>
         <tr>
             <td colspan="2">
-                <label for="nmeArquivo" class="titulo">Arquivo</label>
+                <label for="nmeArquivo" class="titulo">Arquivo</label><br>
                 <input type="text" id="nmeArquivo" name="nmeArquivo" class="persist titulo" size="80">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <label for="txtDescricaoJustificativa" class="titulo">Justificativa</label><br>
+                <input type="text" id="txtDescricaoJustificativa" name="txtDescricaoJustificativa" class="persist titulo" size="80">
             </td>
         </tr>
         <tr>                    

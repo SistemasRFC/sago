@@ -1,18 +1,32 @@
 $(function () {
     $("#btnInserirArquivo").click(function(){
+        if ($("#nmeArquivo").val()==''){
+            swal({
+                title: "Atenção!",
+                text: "Digite um nome de arquivo",
+                type: "warning",
+                confirmButtonText: "Fechar"
+            });            
+            return;
+        }
         if ($('#codExecucaoComplexidade').val() == '') {
             $("#method").val('InsertExecucaoComplexidade');
         } else {
             $("#method").val('UpdateExecucaoComplexidade');
         }
         var parametros = retornaParametros();
-        ExecutaDispatch('ExecucaoComplexidade', $("#method").val(), parametros, InsereArquivos);
+        ExecutaDispatch('ExecucaoArquivos', "VerificaArquivoExistente", parametros, InsereExecucaoComplexidade);
     });
     
     $("#btnNovo").click(function(){
         LimparCamposExecucao();
     });
 });
+
+function InsereExecucaoComplexidade(){
+    var parametros = retornaParametros();
+    ExecutaDispatch('ExecucaoComplexidade', $("#method").val(), parametros, InsereArquivos);
+}
 
 function LimparCamposExecucao(){
     ExecutaDispatchValor('Disciplina', 'ListarDisciplinaCombo', '', CarregaComboDisciplina);
@@ -30,6 +44,7 @@ function InsereArquivos(dados){
     var parametros = retornaParametros();
     ExecutaDispatch('ExecucaoArquivos', $("#method").val(), parametros, carregaOf, 'Aguarde, Salvando!', 'Registro Salvo com Sucesso!');
     $("#nmeArquivo").val("");
+    $("#txtDescricaoJustificativa").val("");
     ExecutaDispatch('Execucao', 'ListarExecucao', '', CarregaGridExecucao);
 }
 
@@ -190,7 +205,12 @@ function MontaListaExecucao(lista){
                 var indice=l+1;
                 tabela += "<tr>";
                 tabela += "<td style='border: 1px solid #000000;'>"+indice+"</td>";
-                tabela += "<td style='border: 1px solid #000000;'>"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO+"</td>";
+                tabela += "<td style='border: 1px solid #000000;'>"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO;
+                if (lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA!=null &&
+                    lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA!=''){
+                    tabela += ';'+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA;
+                }
+                tabela += "</td>";
                 tabela += "<td style='border: 1px solid #000000;'>\n\
                                <a href='javascript:RemoverArquivo("+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].COD_EXECUCAO_ARQUIVO+")' title='Remove o arquivo'>\n\
                                     <img src='../../Resources/images/delete.png' width='25' height='25'>\n\

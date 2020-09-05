@@ -11,7 +11,7 @@ include_once PATH."View/MenuPrincipal/Rodape.php";
 
     </head>
     <body>
-        <input type="hidden" id="method" name="method" class="persist">
+        <input type="hidden" id="method" name="method">
         <input type="hidden" id="codExecucao" name="codExecucao" class="persist">
         <input type="hidden" id="indStatus" name="indStatus" class="persist">
         <div class="card" style="max-width: 810px;">

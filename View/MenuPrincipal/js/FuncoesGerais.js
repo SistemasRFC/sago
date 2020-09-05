@@ -475,7 +475,7 @@ function Download(Controller, Method, Parametros){
         function(retorno){
             retorno = eval ('('+retorno+')');
             if (retorno[0]==true){
-                window.location.href=PATH_RAIZ+'/download.php?nomeArquivo='+retorno[1];
+                window.location.href=PATH_RAIZ+'/download.php?nomeArquivo='+retorno[1]['nomeArquivo']+'&pasta='+retorno[1]['pasta'];
             }else{
                 $(".jquery-waiting-base-container").fadeOut({modo:"fast"});
                 swal({
