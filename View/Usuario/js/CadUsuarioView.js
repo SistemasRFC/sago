@@ -55,5 +55,9 @@ function retornoSalvarUsuario(retorno) {
 }
 
 function CarregaComboPerfil(arrDados) {
-    CriarComboDispatch('codPerfilW', arrDados, 0);
+    CriarComboDispatch('codPerfilW', arrDados, 0);    
+}
+
+function CarregaComboProjeto(arrDados){
+    CriarComboDispatch('codProjeto', arrDados, 0);
 }

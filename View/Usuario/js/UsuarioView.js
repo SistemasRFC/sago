@@ -38,6 +38,8 @@ function MontaTabelaUsuario(listaUsuario) {
             [
                 { name: 'COD_USUARIO', type: 'string' },
                 { name: 'NME_USUARIO', type: 'string' },
+                { name: 'COD_PROJETO', type: 'string' },
+                { name: 'DSC_PROJETO', type: 'string' },
                 { name: 'NME_USUARIO_COMPLETO', type: 'string' },
                 { name: 'COD_PERFIL_W', type: 'string' },
                 { name: 'DSC_PERFIL_W', type: 'string' },
@@ -62,6 +64,7 @@ function MontaTabelaUsuario(listaUsuario) {
                 { text: 'C&oacute;digo', columntype: 'textbox', datafield: 'COD_USUARIO', width: 70 },
                 { text: 'Login', datafield: 'NME_USUARIO', columntype: 'textbox', width: 170 },
                 { text: 'Nome Completo', datafield: 'NME_USUARIO_COMPLETO', columntype: 'textbox', width: 220 },
+                { text: 'Projeto', datafield: 'DSC_PROJETO', columntype: 'textbox', width: 170 },
                 { text: 'Perfil', datafield: 'DSC_PERFIL_W', columntype: 'textbox', width: 180 },
                 { text: 'CPF', datafield: 'NRO_CPF', columntype: 'textbox', width: 180 },
                 { text: 'Ativo', datafield: 'ATIVO', columntype: 'checkbox', width: 60, align: 'center' }
@@ -84,5 +87,6 @@ function MontaTabelaUsuario(listaUsuario) {
 
 $(document).ready(function () {
     ExecutaDispatch('Perfil', 'ListarPerfilAtivo', undefined, CarregaComboPerfil);
+    ExecutaDispatch('Projeto', 'ListarProjetoAtivo', undefined, CarregaComboProjeto);
     CarregaGridUsuario();
 });

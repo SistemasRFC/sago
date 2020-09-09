@@ -24,6 +24,10 @@
             <td><div id="tdcodPerfilW"></div></td>
         </tr>
         <tr>
+            <td class="titulo">Projeto</td>
+            <td><div id="tdcodProjeto"></div></td>
+        </tr>
+        <tr>
             <td class="titulo"><input type="checkbox" name="indAtivo" id="indAtivo" class="persist">Ativo</td>
         </tr>         
         <tr>
