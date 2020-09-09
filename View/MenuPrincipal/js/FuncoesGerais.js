@@ -2,41 +2,71 @@ function CarregaMenu(){
     ExecutaDispatch('MenuPrincipal', 'CarregaMenuNew', '', MontaMenu);    
 }
 
-function MontaMenu(menu){
+function MontaMenu(menu) {
+    $("#usuSessao").html(menu[1][0].NME_USUARIO_COMPLETO);
     var DadosMenu = '';
-    DadosMenu = menu;
-    if (DadosMenu[0]){
-        var source =
-        {
-            datatype: "json",
-            datafields: [
-                { name: 'id', map: 'COD_MENU_W' },
-                { name: 'idPai', map: 'COD_MENU_PAI_W' },
-                { name: 'dscMenu', map: 'DSC_MENU_W' },
-                { name: 'subMenuWidth', map: 'VLR_TAMANHO_SUBMENU' }
-            ],
-            id: 'id',
-            localdata: DadosMenu[1]
-        };
-        var dataAdapter = new $.jqx.dataAdapter(source);
-        dataAdapter.dataBind();
-        var records = dataAdapter.getRecordsHierarchy('id', 'idPai', 'items', [
-            {name: 'dscMenu', map: 'label'},
-            {name: 'id', map: 'id'}
-        ]);
-        $('#CriaMenu').jqxMenu({ source: records, height: 35, theme: 'darkcyan' });
-        $("#CriaMenu").on('itemclick', function (event) {
-            for(i=0;i<DadosMenu[1].length;i++){
-
-                if (event.args.id==DadosMenu[1][i].COD_MENU_W){                    
-                    if((DadosMenu[1][i].NME_CONTROLLER!='#') && (DadosMenu[1][i].NME_CONTROLLER!=null) && (DadosMenu[1][i].NME_CONTROLLER!='')){
-                        RedirecionaController(DadosMenu[1][i].NME_CONTROLLER, DadosMenu[1][i].NME_METHOD);
+    if (menu[0]){
+        DadosMenu = menu[1];
+        var html = "";
+        for(var i in DadosMenu){
+            if(DadosMenu[i].COD_MENU_PAI_W == 0) {
+                html += "<li class='nav-item'>"
+                html += "    <a href='' class='nav-link collapsed' id='menu'"+DadosMenu[i].COD_MENU_W+"' data-toggle='collapse' data-target='#collapse"+DadosMenu[i].COD_MENU_W+"' aria-expanded='true' aria-controls='collapse"+DadosMenu[i].COD_MENU_W+"'>";
+                html += "        <i class='far fa-circle'></i>";
+                html += "        <span>"+DadosMenu[i].DSC_MENU_W+"</span>";
+                html += "    </a>";
+                html += "    <div id='collapse"+DadosMenu[i].COD_MENU_W+"' class='collapse' aria-labelledby='heading"+DadosMenu[i].COD_MENU_W+"' data-parent='#accordionSidebar'>";
+                html += "        <div class='bg-white py-2 collapse-inner rounded'>";
+                for(var j in DadosMenu) {
+                    if(DadosMenu[j].COD_MENU_PAI_W == DadosMenu[i].COD_MENU_W) {
+                        html += "   <a class='collapse-item' href='"+PATH_RAIZ+"Dispatch.php?controller="+DadosMenu[j].NME_CONTROLLER+"&method="+ DadosMenu[j].NME_METHOD+"'>"+DadosMenu[j].DSC_MENU_W+"</a>";
                     }
                 }
+                html += "        </div>";
+                html += "    </div>";
+                html += "</li>";
             }
-        });
+        }
+
+        $('#CriaNovoMenu').html(html);
     }
 }
+
+// function MontaMenu(menu){
+//     var DadosMenu = '';
+//     DadosMenu = menu;
+//     if (DadosMenu[0]){
+//         var source =
+//         {
+//             datatype: "json",
+//             datafields: [
+//                 { name: 'id', map: 'COD_MENU_W' },
+//                 { name: 'idPai', map: 'COD_MENU_PAI_W' },
+//                 { name: 'dscMenu', map: 'DSC_MENU_W' },
+//                 { name: 'subMenuWidth', map: 'VLR_TAMANHO_SUBMENU' }
+//             ],
+//             id: 'id',
+//             localdata: DadosMenu[1]
+//         };
+//         var dataAdapter = new $.jqx.dataAdapter(source);
+//         dataAdapter.dataBind();
+//         var records = dataAdapter.getRecordsHierarchy('id', 'idPai', 'items', [
+//             {name: 'dscMenu', map: 'label'},
+//             {name: 'id', map: 'id'}
+//         ]);
+//         $('#CriaMenu').jqxMenu({ source: records, height: 35, theme: 'darkcyan' });
+//         $("#CriaMenu").on('itemclick', function (event) {
+//             for(i=0;i<DadosMenu[1].length;i++){
+
+//                 if (event.args.id==DadosMenu[1][i].COD_MENU_W){                    
+//                     if((DadosMenu[1][i].NME_CONTROLLER!='#') && (DadosMenu[1][i].NME_CONTROLLER!=null) && (DadosMenu[1][i].NME_CONTROLLER!='')){
+//                         RedirecionaController(DadosMenu[1][i].NME_CONTROLLER, DadosMenu[1][i].NME_METHOD);
+//                     }
+//                 }
+//             }
+//         });
+//     }
+// }
 
 function CriarDivAutoComplete(nmeInput, url, method, dataFields, displayMember, valueMember, callback, width){ 
     if ( $("#divAutoComplete").length ){
@@ -131,6 +161,23 @@ function SelecionaItem(event, dataAdapter, dataFields, callback){
             eval(callback);
         }                
     }
+}
+
+function CriarSelectPuro(nmeCombo, arrDados, valor, disabled){ 
+    if (disabled==undefined){
+        disabled = false;
+    }
+    $("#td"+nmeCombo).html('');
+    var select = '<select id="'+nmeCombo+'" disabled="'+disabled+'" class="persist form-control" style="background-color: white;">';
+    for (i=0;i<arrDados[1].length;i++){
+        if (arrDados[1][i]['ID']==valor){
+            select += '<option value="'+arrDados[1][i]['ID']+'" selected>'+arrDados[1][i]['DSC']+'</option>';
+        }else{
+            select += '<option value="'+arrDados[1][i]['ID']+'">'+arrDados[1][i]['DSC']+'</option>';
+        }
+    }
+    select += '</select>';
+    $("#td"+nmeCombo).html(select);
 }
 
 function CriarComboDispatch(nmeCombo, arrDados, valor){ 

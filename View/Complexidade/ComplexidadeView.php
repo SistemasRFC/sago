@@ -1,33 +1,65 @@
+<!DOCTYPE html>
 <?php 
-include_once '../../constantes.php';
-include_once PATH."View/MenuPrincipal/Cabecalho.php";
-include_once PATH."View/MenuPrincipal/Rodape.php";
+    include_once '../../constantes.php';
 ?>
-<html>
+<html lang="pt-BR">
     <head>
-        <title>SAGO - Cadastro de Complexidades</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script src="js/ComplexidadeView.js?rdm=<?php echo time();?>"></script>
-
+        <title>SAGO - Cadastro de Complexidade</title>
     </head>
-    <body>
-        <input type="hidden" id="method" name="method" class="persist">
-        <div class="card" style="max-width: 700px;">
-            <div class="cabecalho">Cadastro de Complexidades</div>
-            
-            <div class="titulo" style="margin-bottom: 30px;">
-                <input type="button" id="btnNovo" value="Nova Complexidade" class="button">
-            </div>
-            
-            <div class="titulo">
-                <div id="listaComplexidade"></div>
+
+    <body id="page-top">
+
+        <div id="wrapper">
+            <!-- Navegacao -->
+            <?php include_once PATH."View/MenuPrincipal/Navegacao.php";?>
+            <!-- Fim da Navegacao -->
+
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+                    <!-- Cabecalho -->
+                    <?php include_once PATH."View/MenuPrincipal/Cabecalho.php";?>
+                    <!-- Fim Cabecalho -->
+
+                    <div class="container-fluid">
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-800">Cadastro</h1>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-4">
+                                    <!-- Card Header - Dropdown -->
+                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-persian-dark text-uppercase">Complexidades</h6>
+                                    </div>
+
+                                    <!-- Card Body -->
+                                    <div class="card-body">
+                                        <button class='btn btn-primary btn-icon-split mb-3 new' data-toggle="modal" data-target="#complexidadeModal">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-plus-circle"></i>
+                                            </span>
+                                            <span class="text">Nova Complexidade</span>
+                                        </button>
+
+                                        <div id="listaComplexidade"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div id="CadComplexidade">
-            <div id="windowHeader"></div>
-            <div style="overflow: hidden;" id="windowContent">
-                <?php include_once "CadComplexidadeView.php";?>
-            </div>            
-        </div>
-  </body>
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <script src="../../View/Complexidade/js/ComplexidadeView.js?rdm=<?php echo time();?>"></script>
+
+        <?php include_once "CadComplexidadeView.php" ?>
+    </body>
+
 </html>

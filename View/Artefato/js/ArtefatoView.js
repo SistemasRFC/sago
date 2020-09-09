@@ -1,20 +1,10 @@
+var todasArtefatos;
 $(function () {
-    $("#CadArtefato").jqxWindow({
-        title: 'Cadastro de Artefatos',
-        height: 250,
-        width: 600,
-        animationType: 'fade',
-        showAnimationDuration: 500,
-        closeAnimationDuration: 500,
-        theme: 'darkcyan',
-        isModal: true,
-        autoOpen: false,
-        position: 'absolute'
-    });
-
-    $("#btnNovo").click(function () {
-        LimparCampos();
-        $("#CadArtefato").jqxWindow("open");
+    $(".new").click(function() {
+        $("#exampleModalLabel").html("Novo Artefato");
+        $("#codArtefato").val(0);
+        $("#dscArtefato").val("");
+        $("#indAtivo").prop('checked', false);
     });
 });
 
@@ -23,52 +13,60 @@ function CarregaGridArtefato(listaArtefato) {
 }
 
 function MontaTabelaArtefato(listaArtefato) {
-    var nomeGrid = 'listaArtefato';
-    var source =
-    {
-        localdata: listaArtefato,
-        datatype: "json",
-        updaterow: function (rowid, rowdata, commit) {
-            commit(true);
-        },
-        datafields:
-            [
-                { name: 'COD_ARTEFATO', type: 'string' },
-                { name: 'DSC_ARTEFATO', type: 'string' },
-                { name: 'ATIVO', type: 'boolean' }
-            ]
-    };
-    var dataAdapter = new $.jqx.dataAdapter(source);
-    $("#" + nomeGrid).jqxGrid(
-        {
-            width: 800,
-            height: 350,
-            source: dataAdapter,
-            theme: 'darkcyan',
-            sortable: true,
-            filterable: true,
-            pageable: true,
-            columnsresize: true,
-            selectionmode: 'singlerow',
-            columns: [
-                { text: 'C&oacute;d.', columntype: 'textbox', datafield: 'COD_ARTEFATO', width: 50 },
-                { text: 'Descri&ccedil;&atilde;o', datafield: 'DSC_ARTEFATO', columntype: 'textbox', width: 700 },
-                { text: 'Ativo', datafield: 'ATIVO', columntype: 'checkbox', width: 50, align: 'center' }
-            ]
-        });
-    // events
-    $("#" + nomeGrid).jqxGrid('localizestrings', localizationobj);
-    $('#' + nomeGrid).on('rowdoubleclick', function (event) {
-        var args = event.args;
-        var rows = $('#' + nomeGrid).jqxGrid('getdisplayrows');
-        var rowData = rows[args.visibleindex];
-        var rowID = rowData.uid;
+    todasArtefatos = listaArtefato;
+    var html = '';
+    html +='<table class="table table-striped table-hover table-bordered" id="artefatoTable" width="100%" cellspacing="0">';
+    html +='    <thead>';
+    html +='        <tr>';
+    html +='            <th width="10%">Código</th>';
+    html +='            <th width="75%">Descrição</th>';
+    html +='            <th width="10%" class="text-center">Ativo</th>';
+    html +='            <th width="5%"></th>';
+    html +='        </tr>';
+    html +='    </thead>';
+    html +='    <tbody>';
+    for(var i in listaArtefato) {
+        html +='    <tr>';
+        html +='        <td>'+listaArtefato[i]['COD_ARTEFATO']+'</td>';
+        html +='        <td>'+listaArtefato[i]['DSC_ARTEFATO']+'</td>';
+        if(listaArtefato[i]['ATIVO'] == true) {
+            html +='    <td class="text-center">Sim</td>';
+        } else {
+            html +='    <td class="text-center">Não</td>';
+        }
+        html +='        <td class="text-center">';
+        html +='            <button class="btn btn-success btn-sm edit" data-id="'+listaArtefato[i]['COD_ARTEFATO']+'" data-toggle="modal" title="Editar">';
+        html +='                <span class="icon">';
+        html +='                    <i class="fas fa-pencil-alt"></i>';
+        html +='                </span>';
+        html +='            </button>';
+        html +='        </td>';
+        html +='    </tr>';
+    }
+    html +='    </tbody>';
+    html +='</table>';
 
-        preencheCamposForm(listaArtefato[rowID], 'indAtivo;B|');
-        $("#method").val("UpdateArtefato");
-        $("#CadArtefato").jqxWindow("open");
+    $("#listaArtefato").html(html);
+
+    $('#artefatoTable').DataTable({
+            "searching": false,
+            "pagingType": "simple_numbers",
+            "lengthChange" : false,
+            "language": {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+        }
+    });
+    
+    $(".edit").click(function(){
+        $("#exampleModalLabel").html("Editar Artefato");
+        var item = todasArtefatos.filter(elm => elm.COD_ARTEFATO == $(this).data('id'));
+        $("#codArtefato").val(item[0].COD_ARTEFATO);
+        $("#dscArtefato").val(item[0].DSC_ARTEFATO);
+        $("#indAtivo").prop('checked', item[0].ATIVO);
+        $("#artefatoModal").modal('show');
     });
 }
+
 $(document).ready(function () {
     ExecutaDispatch('Artefato', 'ListarArtefato', '', CarregaGridArtefato);
 });
