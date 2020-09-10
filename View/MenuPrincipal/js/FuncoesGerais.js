@@ -168,7 +168,11 @@ function CriarSelectPuro(nmeCombo, arrDados, valor, disabled){
         disabled = false;
     }
     $("#td"+nmeCombo).html('');
-    var select = '<select id="'+nmeCombo+'" disabled="'+disabled+'" class="persist form-control" style="background-color: white;">';
+    if(disabled == true){
+        var select = '<select id="'+nmeCombo+'" disabled class="persist form-control">';
+    } else {
+        var select = '<select id="'+nmeCombo+'" class="persist form-control">';
+    }
     for (i=0;i<arrDados[1].length;i++){
         if (arrDados[1][i]['ID']==valor){
             select += '<option value="'+arrDados[1][i]['ID']+'" selected>'+arrDados[1][i]['DSC']+'</option>';

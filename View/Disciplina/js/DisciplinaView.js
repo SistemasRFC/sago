@@ -49,10 +49,10 @@ function MontaTabelaDisciplina(listaDisciplina) {
     $("#listaDisciplina").html(html);
 
     $('#disciplinaTable').DataTable({
-            "searching": false,
-            "pagingType": "simple_numbers",
-            "lengthChange" : false,
-            "language": {
+        "searching": false,
+        "pagingType": "simple_numbers",
+        "lengthChange" : false,
+        "language": {
             "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
         }
     });

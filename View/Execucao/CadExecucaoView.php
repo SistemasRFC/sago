@@ -53,7 +53,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-6 mb-3 mb-sm-0">
-                            <button class='btn btn-info btn-block mb-3' id="btnNovo">
+                            <button class='btn btn-info btn-block mb-3' id="btnLimpar">
                                 <span class="icon">
                                     <i class="fas fa-eraser"></i>
                                 </span>
