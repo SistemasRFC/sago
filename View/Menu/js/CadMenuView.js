@@ -1,7 +1,9 @@
 $(function () {
+    $("#controllerList").hide();
     $("#btnDeletar").click(function () {
         DeleteMenu();
     });
+
     $("#btnSalvar").click(function () {
         if ($("#arquivo").val() != "") {
             var formData = new FormData($('form')[0]);
@@ -10,10 +12,11 @@ $(function () {
             salvarMenu();
         }
     });
+
     $("#btnListarController").click(function () {
         ListarController(undefined);
-        $("#ListaController").jqxWindow('open');
     });
+
     $("#btnListarMetodos").click(function () {
         ListarMetodos($("#nmeClasse").val());
     });
@@ -38,7 +41,7 @@ function salvarMenu(data) {
 }
 
 function fecharTelaCadastro(dados) {
-    $("#CadMenus").jqxWindow("close");
+    $("#menuModal").modal("hide");
     ExecutaDispatch('Menu', 'ListarMenusGrid', '', CarregaGridMenu);
     swal({
         title: "Sucesso!",
@@ -48,7 +51,7 @@ function fecharTelaCadastro(dados) {
 }
 
 function MontaComboMenu(arrDados) {
-    CriarComboDispatch('codMenuPaiW', arrDados, 0);
+    CriarSelectPuro('codMenuPaiW', arrDados, 0);
 }
 
 function DeleteMenu() {
@@ -56,6 +59,6 @@ function DeleteMenu() {
 }
 
 function retornoDeleteMenu(retorno) {
-    $("#CadMenus").jqxWindow("close");
+    $("#menuModal").modal("close");
     CarregaGridMenu();
 }

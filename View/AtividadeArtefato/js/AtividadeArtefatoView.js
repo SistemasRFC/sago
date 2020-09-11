@@ -63,6 +63,7 @@ function MontaListaAtividades(lista){
     $("#listaArtefatos").html("");
     var tabela = "";
     tabela += "<table class='table table-striped table-hover table-bordered' id='atvdArtefatoTable' width='100%'>";
+    tabela += " <thead>";
     tabela += " <tr>";
     tabela += "     <th>Tarefa</th>";
     tabela += "     <th>Disciplina</th>";
@@ -70,6 +71,8 @@ function MontaListaAtividades(lista){
     tabela += "     <th>Artefato</th>";
     tabela += "     <th>Ação</th>";
     tabela += " </tr>";
+    tabela += " </thead>";
+    tabela += " <tbody>";
     for (var i in lista){
         tabela += "<tr>";
         tabela += " <td>"+lista[i].COD_TAREFA+"</td>";
@@ -99,6 +102,7 @@ function MontaListaAtividades(lista){
         tabela += " </td>";
         tabela += "</tr>";
     }
+    tabela += " </tbody>";
     tabela += " </table>";
     $("#listaArtefatos").html(tabela);
 

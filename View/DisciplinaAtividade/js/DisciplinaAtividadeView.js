@@ -33,11 +33,14 @@ function MontaListaAtividades(lista){
     $("#listaAtividades").html("");
     var tabela = "";
     tabela += "<table class='table table-striped table-hover table-bordered' id='disciplinaAtvdTable' width='100%'>";
+    tabela += " <thead>";
     tabela += " <tr>";
     tabela += "     <th><b>Disciplina</b></th>";
     tabela += "     <th><b>Atividade</b></th>";
     tabela += "     <th><b>Ação</b></th>";
     tabela += " </tr>";
+    tabela += " </thead>";
+    tabela += " <tbody>";
     for (var i in lista){
         tabela += "<tr>";
         tabela += " <td>"+lista[i].DSC_DISCIPLINA+"</td>";
@@ -61,6 +64,7 @@ function MontaListaAtividades(lista){
         }
         tabela += "</tr>";
     }
+    tabela += "</tbody>";
     tabela += "</table>";
     
     $("#listaAtividades").html(tabela);

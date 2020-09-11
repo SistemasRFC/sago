@@ -92,6 +92,7 @@ function MontaListaAtividades(lista){
     $("#listaComplexidades").html("");
     var tabela = "";
     tabela += "<table class='table table-striped table-hover table-bordered' id='complexCompoTable' width='100%'>";
+    tabela += " <thead>";
     tabela += " <tr>";
     tabela += "     <th>Disciplina</th>";
     tabela += "     <th>Atividade</th>";
@@ -101,6 +102,8 @@ function MontaListaAtividades(lista){
     tabela += "     <th>Pontos</th>";
     tabela += "     <th>Ação</th>";
     tabela += " </tr>";
+    tabela += " </thead>";
+    tabela += " <tbody>";
     for ( var i in lista){
         tabela += "<tr>";
         tabela += " <td>"+lista[i].DSC_DISCIPLINA+"</td>";
@@ -132,6 +135,7 @@ function MontaListaAtividades(lista){
         tabela += " </td>";
         tabela += "</tr>";
     }
+    tabela += "</tbody>";
     tabela += "</table>";
     $("#listaComplexidades").html(tabela);
 
