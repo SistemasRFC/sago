@@ -1,15 +1,17 @@
+var listaGeralPerfil;
 $(function () {
-    $("#listaPerfil").jqxTooltip({
-        content: 'D&ecirc; um duplo clique para editar',
-        position: 'mouse',
-        name: 'movieTooltip',
-        theme: 'darkcyan'
-    });
+    $("#cadNovoPerfil").hide();
 
     $("#btnNovo").click(function () {
         LimparCampos();
+        $("#cadNovoPerfil").show('fade');
     });
-
+    
+    $("#btnCancel").click(function () {
+        $("#cadNovoPerfil").hide('fade');
+        LimparCampos();
+    });
+    
     $("#btnSalvar").click(function () {
         SalvarPerfil();
     });
@@ -37,47 +39,56 @@ function carregaGridPerfil() {
 
 function montaTabelaPerfil(listaPerfil) {
     listaPerfil = listaPerfil[1];
-    var nomeGrid = 'listaPerfil';
-    var source =
-    {
-        localdata: listaPerfil,
-        datatype: "json",
-        updaterow: function (rowid, rowdata, commit) {
-            commit(true);
-        },
-        datafields:
-            [
-                { name: 'COD_PERFIL_W', type: 'string' },
-                { name: 'DSC_PERFIL_W', type: 'string' },
-                { name: 'IND_ATIVO', type: 'string' },
-                { name: 'ATIVO', type: 'boolean' }
-            ]
-    };
-    var dataAdapter = new $.jqx.dataAdapter(source);
-    $("#" + nomeGrid).jqxGrid(
-        {
-            width: 500,
-            source: dataAdapter,
-            theme: 'darkcyan',
-            selectionmode: 'singlerow',
-            sortable: true,
-            filterable: true,
-            pageable: true,
-            columnsresize: true,
-            columns: [
-                { text: 'C&oacute;digo', columntype: 'textbox', datafield: 'COD_PERFIL_W', width: 80 },
-                { text: 'Descri&ccedil;&atilde;o', datafield: 'DSC_PERFIL_W', columntype: 'textbox', width: 280 },
-                { text: 'Ativo', datafield: 'ATIVO', columntype: 'checkbox', width: 67 }
-            ]
-        });
-    $("#" + nomeGrid).jqxGrid('localizestrings', localizationobj);
-    // events
-    $('#' + nomeGrid).on('rowdoubleclick', function (event) {
-        var args = event.args;
-        var rows = $('#' + nomeGrid).jqxGrid('getdisplayrows');
-        var rowData = rows[args.visibleindex];
-        var rowID = rowData.uid;
-        preencheCamposForm(listaPerfil[rowID],'indAtivo;B|');
+    listaGeralPerfil = listaPerfil;
+    var tabela = "";
+    tabela += "<table class='table table-striped table-hover table-bordered' id='perfilTable' width='100%'>";
+    tabela += " <thead>";
+    tabela += "     <tr>";
+    tabela += "         <th>Código</th>";
+    tabela += "         <th>Descrição</th>";
+    tabela += "         <th>Ativo</th>";
+    tabela += "         <th></th>";
+    tabela += "     </tr>";
+    tabela += " </thead>";
+    tabela += " <tbody>";
+    for(var i in listaPerfil) {
+        tabela += " <tr>";
+        tabela += "     <td>"+listaPerfil[i].COD_PERFIL_W+"</td>";
+        tabela += "     <td>"+listaPerfil[i].DSC_PERFIL_W+"</td>";
+        if(listaPerfil[i].ATIVO == true) {
+            tabela += " <td>Sim</td>";
+        } else {
+            tabela += " <td>Não</td>";
+        }
+        tabela += "     <td class='text-center'>\n\
+                            <button class='btn btn-success btn-sm edit' data-id='"+listaPerfil[i].COD_PERFIL_W+"' title='Editar'>\n\
+                                <span class='icon'>\n\
+                                    <i class='fas fa-pencil-alt'></i>\n\
+                                </span>\n\
+                            </button>\n\
+                        </td>";
+        tabela += " </tr>";
+    }
+    tabela += " </tbody>";
+    tabela += "</table>";
+
+    $("#listaPerfil").html(tabela);
+
+    $('#perfilTable').DataTable({
+        "searching": false,
+        "pagingType": "simple_numbers",
+        "lengthChange" : false,
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+        }
+    });
+    
+    $(".edit").click(function(){
+        var item = listaGeralPerfil.filter(elm => elm.COD_PERFIL_W == $(this).data('id'));
+        $("#codPerfilW").val(item[0].COD_PERFIL_W);
+        $("#dscPerfilW").val(item[0].DSC_PERFIL_W);
+        $("#indAtivo").prop('checked', item[0].ATIVO);
+        $("#cadNovoPerfil").show('fade');
     });
 }
 
