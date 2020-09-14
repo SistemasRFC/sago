@@ -220,24 +220,6 @@ function MontaListaExecucao(lista){
         "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
         }
     });
-    
-    // $(".editArq").click(function(){
-    //     console.log("editArq");
-    //     var item = listaGlobal.filter(elm => elm.COD_EXECUCAO_COMPLEXIDADE == $(this).data('id'));
-    //     editarOF(item[0]);
-    // });
-    // $(".cloneArq").click(function(){
-    //     console.log("cloneArq");
-    //     ClonarDados($(this).data('id'));
-    // });
-    // $(".delArq").click(function(){
-    //     console.log("delArq");
-    //     // RemoverExecucaoComplexidade($(this).data('id'));
-    // });
-    // $(".delSubArq").click(function(){
-    //     console.log("delSubArq");
-    //     // RemoverArquivo($(this).data('id'));
-    // });
 }
 
 function testando(){
@@ -256,14 +238,7 @@ function mostraArquivos(codtr){
         $("#icone"+codtr).class('far fa-minus-square');
     } else {
         $("#icone"+codtr).class('far fa-plus-square');
-    }
-    //     $("#cd"+codtr).hide('slow');
-        
-    //     $("#icone"+codtr).class('far fa-plus-square');
-    // } else {
-    //     $("#icone"+codtr).class('far fa-minus-square');
-    //     $("#cd"+codtr).show('slow');
-    // }    
+    }   
 }
 
 function RemoverExecucaoComplexidade(codExecucaoComplexidade){

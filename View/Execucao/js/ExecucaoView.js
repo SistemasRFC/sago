@@ -121,11 +121,11 @@ function MontaTabelaExecucao(listaExecucao) {
 }
 
 function CarregaComboMeses(meses) {
-    CriarSelectPuro('nroMesReferencia', meses, 0);
+    CriarSelectPuro('nroMesReferencia', meses, new Date().getMonth()+1);
 }
 
 function CarregaComboAnos(anos) {
-    CriarSelectPuro('nroAnoReferencia', anos, 0);
+    CriarSelectPuro('nroAnoReferencia', anos, new Date().getFullYear());
 }
 
 $(document).ready(function () {
