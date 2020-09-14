@@ -1,71 +1,69 @@
 <?php
-include_once '../../constantes.php';
-include_once PATH . "View/MenuPrincipal/Cabecalho.php";
-include_once PATH . "View/MenuPrincipal/Rodape.php";
+    include_once '../../constantes.php';
 ?>
 <html>
     <head>
         <title>SAGO - Alterar Senha</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8; IBM850; ISO-8859-1">
-        <script language="JavaScript" type="text/JavaScript"></script>
-        <script src="../../Resources/JavaScript.js"></script>
-        <script src="../../Resources/js/jquery-1.9.0.js"></script>
-        <script src="../../Resources/js/jquery-ui-1.10.0.custom.js"></script>
-        <link href="../../Resources/css/redmond/jquery-ui-1.10.3.custom.css" rel="stylesheet">
-        <script src="../../View/MenuPrincipal/js/FuncoesGerais.js?random=<?php echo time(); ?>"></script>
-        <script src="../../Resources/swal/dist/sweetalert.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="../../Resources/swal/dist/sweetalert.css">
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=IBM850; ISO-8859-1">
+        <!-- jquery -->
+        <script src="../../../<?=ALIAS;?>Resources/constantes.js?random=<?php echo time(); ?>"></script>
+        <script src="../../../<?=ALIAS;?>Resources/bootstrap-admin/vendor/jquery/jquery.min.js"></script>
+        <script src="../../../<?=ALIAS;?>Resources/bootstrap-admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- JS -->
+        <script src="../../../<?=ALIAS;?>Resources/bootstrap-admin/js/sb-admin-2.min.js"></script>
+        <!-- CSS -->
+        <link rel="stylesheet" href="../../../<?=ALIAS;?>Resources/bootstrap-admin/css/sb-admin-2.min.css"></link>
+        <!-- bootstrap -->
+        <script src="../../../<?=ALIAS;?>Resources/bootstrap-admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="../../../<?=ALIAS;?>Resources/bootstrap-admin/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!-- fontawesome-free -->
+        <link href="../../../<?=ALIAS;?>Resources/bootstrap-admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+        <!-- css -->
+        <link href="../../../<?=ALIAS;?>Resources/bootstrap-admin/css/style.css" rel="stylesheet" type="text/css">
+
+        <!-- Antiga Index -->
+        <script src="../../../<?=ALIAS;?>View/MenuPrincipal/js/FuncoesGerais.js?random=<?php echo time(); ?>"></script>
+        <script src="../../../<?=ALIAS;?>Resources/swal/dist/sweetalert.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../../<?=ALIAS;?>Resources/swal/dist/sweetalert.css"> 
+
         <script src="js/AlteraSenhaView.js?rdm=<?php echo time();?>"></script>
-        <style>
-            #table_form tr{
-                padding-bottom: 2px;
-            }
-            #table_form{
-                border: 1px solid; 
-                margin-top: 180; 
-                background-color: #CEE3F6;
-                width: 430px;
-                height: 250px;
-                color: preto;
-                font-weight: bold;
-            }
-        </style>
     </head>
     <body>
-        <form name="AlteraSenhaForm" id="AlteraSenhaForm" method="post" action="../../Controller/Login/LoginController.php">
-            <table align=center id="table_form">
-                <tr align="center">
-                    <td colspan="2" style="font-family:Times New Roman;
-                                           font-size:30;
-                                           color: darkcyan;
-                                           border-bottom: 1px solid darkcyan">
-                        <b>Alteração de Senha</b>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Senha Atual
-                    </td>
-                    <td><input type="password" id="txtSenha" name="txtSenha" class="persist"></td>
-                </tr>
-                <tr>
-                    <td>
-                        Nova Senha
-                    </td>
-                    <td><input type="password" id="txtSenhaNova" name="txtSenhaNova" class="persist"></td>
-                </tr>
-                <tr>
-                    <td>
-                        Confirmar <br>Nova Senha
-                    </td>
-                    <td><input type="password" id="txtConfirmacao" name="txtConfirmacao" class="persist"></td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center">
-                        <input type="button" id="btnAlterar" value="Alterar">
-                    </td>
-                </tr>
-            </table>
-        </form>
+        <div class="container">
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-lg-5" style="padding-top: 6rem">
+                            <h1 class="text-center text-persian-dark">SAGO</h1>
+                            <h2 class="text-center text-persian-light">Sistema de Apoio ao Gerenciamento de Orçamentos</h2>
+                        </div>
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-5 p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-800 mb-4">ALTERAÇÃO DE SENHA</h1>
+                            </div>
+                            <form class="user" name="AlteraSenhaForm" id="AlteraSenhaForm" method="post" action="../../Controller/Login/LoginController.php">
+                                <div class="form-group">
+                                    <label for="txtSenha" class="mb-0">Senha Atual</label>
+                                    <input type="password" id="txtSenha" name="txtSenha" class='login persist input form-control'>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtSenhaNova" class="mb-0">Nova Senha</label>
+                                    <input type="password" id="txtSenhaNova" name="txtSenhaNova" class='login persist input form-control'>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtConfirmacao" class="mb-0">Confirmar Nova Senha</label>
+                                    <input type="password" id="txtConfirmacao" name="txtConfirmacao" class='login persist input form-control'>
+                                </div>
+                                <input type="button" id="btnAlterar" value="Alterar" class="btn btn-primary btn-user btn-block">
+                            </form>
+                        </div>
+                        <div class="col-lg-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

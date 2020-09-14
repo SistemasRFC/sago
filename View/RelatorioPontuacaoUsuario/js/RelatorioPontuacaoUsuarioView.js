@@ -18,42 +18,34 @@ function MontaTabelaExecucao(lista){
     lista = lista[1];
     $("#listagemExecucao").html('');
     if (lista!=null){
-        var tabela = "<table align='center' width='80%' cellspacing=0>";
-        tabela += '<tr><td><br></td></tr>';
-        tabela += '<tr><td><br></td></tr>';
-        var totalOfs = lista.length;
-        var totalPontos = 0;
-        tabela += '<tr>';
-        tabela += '<td style="border: 1px solid #000000;"><b>Usuário</b></td>';
-        tabela += '<td style="border: 1px solid #000000;"><b>Pontos</b></td>';
-        tabela += '</tr>';        
-        var corLinha = 'white';
-        for (var i=0;i<totalOfs;i++){
-            if (corLinha == 'white'){
-                corLinha = 'silver';
-            }else{
-                corLinha = 'white';
-            }
-            tabela += '<tr bgcolor="'+corLinha+'">';
-            tabela += '<td style="border: 1px solid #000000;">'+lista[i].NME_USUARIO_COMPLETO+'</td>';
-            tabela += '<td style="border: 1px solid #000000;">'+lista[i].QTD_TOTAL_PONTOS+'</td>';
-            tabela += '</tr>';           
+        var tabela = '<table class="table table-striped table-hover table-bordered" id="relPontoUsuTable" width="100%">';
+        tabela += '     <thead>';
+        tabela += '         <tr>';
+        tabela += '             <th>Usuário</th>';
+        tabela += '             <th>Pontos</th>';
+        tabela += '         </tr>';        
+        tabela += '     </thead>';
+        tabela += '     </tbody>';
+        for (var i in lista){
+            tabela += '     <tr>';
+            tabela += '         <td>'+lista[i].NME_USUARIO_COMPLETO+'</td>';
+            tabela += '         <td>'+lista[i].QTD_TOTAL_PONTOS+'</td>';
+            tabela += '     </tr>';
         }
-        tabela += '<tr><td><br></td></tr>';
-        tabela += '<tr><td><br></td></tr>';
-        tabela += '<tr><td><br></td></tr>';
-        tabela += "</table>";
-//        wLeft = window.screenLeft ? window.screenLeft : window.screenX;
-//        wTop = window.screenTop ? window.screenTop : window.screenY;
-//        var w = 1000;
-//        var h = 700;
-//        var left = wLeft + (window.innerWidth / 2) - (w / 2);
-//        var top = wTop + (window.innerHeight / 2) - (h / 2);    
-//        var tmpSinteticoPagamentoColaborador = window.open('', 'Relatório Gerencial', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left + ', screenX=' + left + ', screenY=' + top);
-//        tmpSinteticoPagamentoColaborador.document.body.innerHTML='';
-//        tmpSinteticoPagamentoColaborador.document.write(tabela);
-//        tmpSinteticoPagamentoColaborador.focus();
-        $("#listagemExecucao").html(tabela);
+        tabela += '     </tbody>';
+        tabela += '   </table>';
+
+        $("#listagemRelatorio").html(tabela);
+    
+        $('#relPontoUsuTable').DataTable({
+            "searching": false,
+            "pagingType": "simple_numbers",
+            "lengthChange" : false,
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+            }
+        });
+        
     }else{
         swal({
             title: "",
@@ -65,12 +57,11 @@ function MontaTabelaExecucao(lista){
 }
 
 function CarregaComboMeses(meses) {
-
-    CriarComboDispatch('nroMesReferencia', meses, new Date().getMonth()+1);
+    CriarSelectPuro('nroMesReferencia', meses, new Date().getMonth()+1);
 }
 
 function CarregaComboAnos(anos) {
-    CriarComboDispatch('nroAnoReferencia', anos,  new Date().getFullYear());
+    CriarSelectPuro('nroAnoReferencia', anos,  new Date().getFullYear());
 }
 
 $(document).ready(function () {

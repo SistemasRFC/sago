@@ -1,18 +1,7 @@
+var listaUsuarios;
 $(function () {
-    $("#CadUsuarios").jqxWindow({
-        autoOpen: false,
-        height: 360,
-        width: 480,
-        theme: 'darkcyan',
-        animationType: 'fade',
-        showAnimationDuration: 500,
-        closeAnimationDuration: 500,
-        title: 'Cadastro de Usu&aacute;rios',
-        isModal: true
-    });
-    $("#btnNovo").click(function () {
+    $(".new").click(function () {
         LimparCampos();
-        $("#CadUsuarios").jqxWindow("open");
     });
 });
 
@@ -26,59 +15,66 @@ function retornoGridUsuario(retorno) {
 }
 
 function MontaTabelaUsuario(listaUsuario) {
-    var nomeGrid = 'listaUsuarios';
-    var source =
-    {
-        localdata: listaUsuario,
-        datatype: "json",
-        updaterow: function (rowid, rowdata, commit) {
-            commit(true);
-        },
-        datafields:
-            [
-                { name: 'COD_USUARIO', type: 'string' },
-                { name: 'NME_USUARIO', type: 'string' },
-                { name: 'NME_USUARIO_COMPLETO', type: 'string' },
-                { name: 'COD_PERFIL_W', type: 'string' },
-                { name: 'DSC_PERFIL_W', type: 'string' },
-                { name: 'IND_ATIVO', type: 'string' },
-                { name: 'ATIVO', type: 'boolean' },
-                { name: 'NRO_CPF', type: 'string' },
-                { name: 'TXT_EMAIL', type: 'string' }
-            ]
-    };
-    var dataAdapter = new $.jqx.dataAdapter(source);
-    $("#" + nomeGrid).jqxGrid(
-        {
-            width: 700,
-            source: dataAdapter,
-            theme: 'darkcyan',
-            sortable: true,
-            filterable: true,
-            pageable: true,
-            columnsresize: true,
-            selectionmode: 'singlerow',
-            columns: [
-                { text: 'C&oacute;digo', columntype: 'textbox', datafield: 'COD_USUARIO', width: 70 },
-                { text: 'Login', datafield: 'NME_USUARIO', columntype: 'textbox', width: 170 },
-                { text: 'Nome Completo', datafield: 'NME_USUARIO_COMPLETO', columntype: 'textbox', width: 220 },
-                { text: 'Perfil', datafield: 'DSC_PERFIL_W', columntype: 'textbox', width: 180 },
-                { text: 'CPF', datafield: 'NRO_CPF', columntype: 'textbox', width: 180 },
-                { text: 'Ativo', datafield: 'ATIVO', columntype: 'checkbox', width: 60, align: 'center' }
-            ]
-        });
-    // events
-    $('#' + nomeGrid).jqxGrid('hidecolumn', 'NRO_CPF');
+    listaUsuarios = listaUsuario;
+    var tabela = "";
+    tabela += "<table class='table table-striped table-hover table-bordered' id='usuarioTable' width='100%'>";
+    tabela += " <thead>";
+    tabela += "     <tr>";
+    tabela += "         <th>Código</th>";
+    tabela += "         <th>Nome</th>";
+    tabela += "         <th>CPF</th>";
+    tabela += "         <th>Login</th>";
+    tabela += "         <th>Perfil</th>";
+    tabela += "         <th>Ativo</th>";
+    tabela += "         <th></th>";
+    tabela += "     </tr>";
+    tabela += " </thead>";
+    tabela += " <tbody>";
+    for(var i in listaUsuario) {
+        tabela += " <tr>";
+        tabela += "     <td>"+listaUsuario[i].COD_USUARIO+"</td>";
+        tabela += "     <td>"+listaUsuario[i].NME_USUARIO_COMPLETO+"</td>";
+        tabela += "     <td>"+listaUsuario[i].NRO_CPF+"</td>";
+        tabela += "     <td>"+listaUsuario[i].NME_USUARIO+"</td>";
+        tabela += "     <td>"+listaUsuario[i].DSC_PERFIL_W+"</td>";
+        if(listaUsuario[i].ATIVO == true) {
+            tabela += " <td>Sim</td>";
+        } else {
+            tabela += " <td>Não</td>";
+        }
+        tabela += "     <td class='text-center'>\n\
+                            <button class='btn btn-success btn-sm edit' data-id='"+listaUsuario[i].COD_USUARIO+"' title='Editar'>\n\
+                                <span class='icon'>\n\
+                                    <i class='fas fa-pencil-alt'></i>\n\
+                                </span>\n\
+                            </button>\n\
+                        </td>";
+        tabela += " </tr>";
+    }
+    tabela += " </tbody>";
+    tabela += "</table>";
 
-    $("#" + nomeGrid).jqxGrid('localizestrings', localizationobj);
-    $('#' + nomeGrid).on('rowdoubleclick', function (event) {
-        var args = event.args;
-        var rows = $('#listaUsuarios').jqxGrid('getdisplayrows');
-        var rowData = rows[args.visibleindex];
-        var rowID = rowData.uid;
-        preencheCamposForm(listaUsuario[rowID],'indAtivo;B|');
-        $("#method").val("UpdateMenu");
-        $("#CadUsuarios").jqxWindow("open");
+    $("#listaUsuarios").html(tabela);
+
+    $('#usuarioTable').DataTable({
+        "searching": false,
+        "pagingType": "simple_numbers",
+        "lengthChange" : false,
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+        }
+    });
+    
+    $(".edit").click(function(){
+        var item = listaUsuarios.filter(elm => elm.COD_USUARIO == $(this).data('id'));
+        preencheCamposForm(item[0],'indAtivo;B|');
+        if(item[0].COD_PERFIL_W == 1){
+            $("#codPerfilW").prop('disabled', true);
+        } else {
+            $("#codPerfilW").prop('disabled', false);
+        }
+        $("#exampleModalLabel").html('Editar Usuário');
+        $("#usuarioModal").modal('show');
     });
 }
 

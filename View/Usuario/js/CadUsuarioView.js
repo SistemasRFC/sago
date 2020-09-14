@@ -27,9 +27,6 @@ $(function () {
         ExecutaDispatch('Usuario',$('#method').val(), parametros, retornoSalvarUsuario, "Aguarde, Salvando Usuário!");
     });
     
-    $("#codCliente").change(function () {
-        CarregaLojas($(this).val(), -1);
-    });
 });
 
 function retornoSalvarUsuario(retorno) {
@@ -55,5 +52,5 @@ function retornoSalvarUsuario(retorno) {
 }
 
 function CarregaComboPerfil(arrDados) {
-    CriarComboDispatch('codPerfilW', arrDados, 0);
+    CriarSelectPuro('codPerfilW', arrDados, 0);
 }

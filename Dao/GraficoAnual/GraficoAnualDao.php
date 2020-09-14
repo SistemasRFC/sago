@@ -24,7 +24,8 @@ class GraficoAnualDao extends BaseDao{
                                   WHERE NRO_ANO_REFERENCIA = '.$obj->nroAnoReferencia.'
                                     AND COD_USUARIO = '.$obj->codUsuario.'
                                   GROUP BY E.NRO_MES_REFERENCIA, EC.COD_EXECUCAO_COMPLEXIDADE) AS X
-                  GROUP BY NRO_MES_REFERENCIA';
+                  GROUP BY NRO_MES_REFERENCIA
+                  ORDER BY NRO_MES_REFERENCIA';
         return $this->selectDB($sql, false);
     }
 }
