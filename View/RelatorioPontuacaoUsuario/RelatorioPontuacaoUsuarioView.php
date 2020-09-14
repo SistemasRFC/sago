@@ -4,7 +4,7 @@
 ?>
 <html lang="pt-BR">
     <head>
-        <title>SAGO - Gráfico Anual</title>
+        <title>SAGO - Relatório pontuação por usuário</title>
     </head>
 
     <body id="page-top">

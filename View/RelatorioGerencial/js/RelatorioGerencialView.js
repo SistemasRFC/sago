@@ -42,7 +42,7 @@ $(function(){
 
 function MontaTabelaExecucao(lista){
     lista = lista[1];
-    $("#listagemExecucao").html('');
+    // $("#listagemGerencial").html('');
     if (lista!=null){
         var tabela = "<table align='center' width='90%'>";
         var totalOfs = lista.length;
@@ -122,16 +122,15 @@ function MontaTabelaExecucao(lista){
 }
 
 function CarregaComboUsuario(arrDados) {
-    CriarComboDispatchComTamanho('codUsuario', arrDados, -1, 300);
+    CriarSelectPuro('codUsuario', arrDados, -1);
 }
 
 function CarregaComboMeses(meses) {
-
-    CriarComboDispatch('nroMesReferencia', meses, new Date().getMonth()+1);
+    CriarSelectPuro('nroMesReferencia', meses, new Date().getMonth()+1);
 }
 
 function CarregaComboAnos(anos) {
-    CriarComboDispatch('nroAnoReferencia', anos,  new Date().getFullYear());
+    CriarSelectPuro('nroAnoReferencia', anos,  new Date().getFullYear());
 }
 
 $(document).ready(function () {

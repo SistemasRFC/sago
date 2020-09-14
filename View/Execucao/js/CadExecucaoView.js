@@ -120,7 +120,7 @@ function MontaListaExecucao(lista){
     if (lista!=null){
         listaGlobal = lista;
         var tabela = "";
-        tabela += "<table class='table table-striped table-hover table-bordered' id='arquivoExecucaoTable' width='100%' cellspacing='0'>";
+        tabela += "<table class='table table-hover table-bordered' id='arquivoExecucaoTable' width='100%' cellspacing='0'>";
         tabela += " <thead>";
         tabela += "     <tr>";
         tabela += "         <td style='width: 7%;'></td>";
@@ -135,8 +135,14 @@ function MontaListaExecucao(lista){
         tabela += "     </tr>";
         tabela += " </thead>";
         tabela += " <tbody>";
+        var corLinha = 'ddd';
         for (var i in lista){
-            tabela += " <tr>";
+            if (corLinha == 'ddd'){
+                corLinha = '#0000000d';
+            }else{
+                corLinha = 'ddd';
+            }
+            tabela += " <tr style='background-color:"+corLinha+";'>";
             tabela += "     <td style='width: 20px; vertical-align: middle'>\n\
                                 <a href='' class='nav-link collapsed' id='"+lista[i].COD_EXECUCAO_COMPLEXIDADE+"' data-toggle='collapse' data-target='#cd"+lista[i].COD_EXECUCAO_COMPLEXIDADE+"' aria-expanded='true' aria-controls='cd"+lista[i].COD_EXECUCAO_COMPLEXIDADE+"'>\n\
                                     <span class='icon'>\n\
@@ -171,13 +177,16 @@ function MontaListaExecucao(lista){
             tabela += " </tr>";
             
             tabela += " <tr id='cd"+lista[i].COD_EXECUCAO_COMPLEXIDADE+"' class='collapse'>";
-            tabela += "     <td style='padding: 5px 10px 5px 10px'  colspan='9'>";
-            tabela += "         <table width='100%' style='border: 0px solid #000000;' cellspacing='0'>";
-            tabela += "             <tr>";
-            tabela += "                 <td style='border: 1px solid #000000;'><b>N.º</b></td>";
-            tabela += "                 <td style='border: 1px solid #000000;'><b>Nome Arquivo</b></td>";
-            tabela += "                 <td style='border: 1px solid #000000;'><b>Ação</b></td>";
+            tabela += "     <td style='padding: 5px 10px 5px 10px' colspan='9'>";
+            tabela += "         <table class='table table-striped' width='100%'>";
+            tabela += "             <thead>";
+            tabela += "             <tr style='background-color: #fff'>";
+            tabela += "                 <th style='width: 5%;border: 1px solid #000000;'>N.º</th>";
+            tabela += "                 <th style='width: 80%;border: 1px solid #000000;'>Nome Arquivo</th>";
+            tabela += "                 <th style='width: 5%;border: 1px solid #000000;'>Ação</th>";
             tabela += "             </tr>";
+            tabela += "             </thead>";
+            tabela += "             </tbody>";
             var totalListaArquivos = 0;
             if (lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE]!=null){
                 totalListaArquivos = lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE].length;
@@ -186,7 +195,7 @@ function MontaListaExecucao(lista){
                 var indice=l+1;
                 tabela += "         <tr>";
                 tabela += "             <td style='border: 1px solid #000000;'>"+indice+"</td>";
-                tabela += "             <td style='border: 1px solid #000000;'>"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO;
+                tabela += "             <td style='border: 1px solid #000000;' title='"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO+"'>"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO.substring(0, 92)+"...";
                 if (lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA!=null &&
                     lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA!=''){
                     tabela += ';'+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA;
@@ -201,6 +210,7 @@ function MontaListaExecucao(lista){
                                         </td>";
                 tabela += "         </tr>";
             }
+            tabela += "             </tbody>";                
             tabela += "         </table>";                
 
             tabela += "     </td>";

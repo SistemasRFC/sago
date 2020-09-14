@@ -79,18 +79,23 @@ function MontaTabelaExecucao(listaExecucao) {
         html +='        <td>'+listaExecucao[i].QTD_PONTOS_TOTAL+'</td>';
         html +='        <td class="text-center">'+listaExecucao[i].IND_STATUS+'</td>';
         html +='        <td class="text-right">'+listaExecucao[i].PERIODO_REFERENCIA+'</td>';
-        html +='        <td class="text-center">';
-        html +='            <button class="btn btn-success btn-sm edit" data-id="'+listaExecucao[i].COD_EXECUCAO+'" data-toggle="modal" title="Editar">';
-        html +='                <span class="icon">';
-        html +='                    <i class="fas fa-pencil-alt"></i>';
-        html +='                </span>';
-        html +='            </button>';
-        html +='            <button class="btn btn-danger btn-sm del" data-id="'+listaExecucao[i].COD_EXECUCAO+'" title="Excluir">';
-        html +='                <span class="icon">';
-        html +='                    <i class="fas fa-trash"></i>';
-        html +='                </span>';
-        html +='            </button>';
-        html +='        </td>';
+        if(listaExecucao[i].IND_STATUS != 'Finalizada'){
+            html +='        <td class="text-center">';
+            html +='            <button class="btn btn-success btn-sm edit" data-id="'+listaExecucao[i].COD_EXECUCAO+'" data-toggle="modal" title="Editar">';
+            html +='                <span class="icon">';
+            html +='                    <i class="fas fa-pencil-alt"></i>';
+            html +='                </span>';
+            html +='            </button>';
+            html +='            <button class="btn btn-danger btn-sm del" data-id="'+listaExecucao[i].COD_EXECUCAO+'" title="Excluir">';
+            html +='                <span class="icon">';
+            html +='                    <i class="fas fa-trash"></i>';
+            html +='                </span>';
+            html +='            </button>';
+            html +='        </td>';
+        } else {
+            html +='        <td>';
+            html +='        </td>';
+        }
         html +='    </tr>';
     }
     html +='    </tbody>';
