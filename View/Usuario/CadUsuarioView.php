@@ -44,7 +44,13 @@
                     <div class="col-sm-6" style="padding-top: 2.5rem!important">
                         <input type="checkbox" id="indAtivo" name="indAtivo" class='persist input bg-gray-400'> Ativo
                     </div>
-                </div>   
+                </div>  
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label class="label" for="codProjeto">Projeto</label>
+                        <div id="tdcodProjeto"></div>
+                    </div>
+                </div>                 
             </form>
             </div>
             <div class="modal-footer">

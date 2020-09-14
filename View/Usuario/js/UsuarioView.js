@@ -22,6 +22,7 @@ function MontaTabelaUsuario(listaUsuario) {
     tabela += "     <tr>";
     tabela += "         <th>Código</th>";
     tabela += "         <th>Nome</th>";
+    tabela += "         <th>Projeto</th>";
     tabela += "         <th>CPF</th>";
     tabela += "         <th>Login</th>";
     tabela += "         <th>Perfil</th>";
@@ -31,9 +32,14 @@ function MontaTabelaUsuario(listaUsuario) {
     tabela += " </thead>";
     tabela += " <tbody>";
     for(var i in listaUsuario) {
+        var projeto = '';
+        if (listaUsuario[i].DSC_PROJETO!=null){
+            projeto = listaUsuario[i].DSC_PROJETO;
+        }
         tabela += " <tr>";
         tabela += "     <td>"+listaUsuario[i].COD_USUARIO+"</td>";
         tabela += "     <td>"+listaUsuario[i].NME_USUARIO_COMPLETO+"</td>";
+        tabela += "     <td>"+projeto+"</td>";
         tabela += "     <td>"+listaUsuario[i].NRO_CPF+"</td>";
         tabela += "     <td>"+listaUsuario[i].NME_USUARIO+"</td>";
         tabela += "     <td>"+listaUsuario[i].DSC_PERFIL_W+"</td>";
@@ -80,5 +86,6 @@ function MontaTabelaUsuario(listaUsuario) {
 
 $(document).ready(function () {
     ExecutaDispatch('Perfil', 'ListarPerfilAtivo', undefined, CarregaComboPerfil);
+    ExecutaDispatch('Projeto', 'ListarProjetoAtivo', undefined, CarregaComboProjeto);
     CarregaGridUsuario();
 });

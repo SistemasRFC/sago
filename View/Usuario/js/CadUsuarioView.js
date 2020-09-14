@@ -54,3 +54,7 @@ function retornoSalvarUsuario(retorno) {
 function CarregaComboPerfil(arrDados) {
     CriarSelectPuro('codPerfilW', arrDados, 0);
 }
+
+function CarregaComboProjeto(arrDados){
+    CriarSelectPuro('codProjeto', arrDados, 0);
+}

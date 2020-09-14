@@ -53,7 +53,7 @@ class ExecucaoArquivosModel extends BaseModel
         if ($result[0]){
             if ($result[1][0]['QTD']>0){
                 $result[0]=false;
-                $result[1]="Já existe este mesmo artefato neste OF!";
+                $result[1]="Já existe este mesmo artefato nesta OF!";
             }
         }
         return json_encode($result);        
