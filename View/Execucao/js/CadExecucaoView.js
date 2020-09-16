@@ -216,6 +216,7 @@ function MontaListaExecucao(lista){
         tabela += " </tbody>";
         tabela += "</table>";
     }
+    tabela += '<a href="#" id="foo"></a>';
     $("#listaOF").html(tabela);
 
     $('#arquivoExecucaoTable').DataTable({
@@ -257,6 +258,7 @@ function ClonarDados(codExecucaoComplexidade){
     var parametros = 'codExecucaoComplexidade;'+codExecucaoComplexidade;
     ExecutaDispatch('ExecucaoComplexidade', $("#method").val(), parametros, carregaOf, "Aguarde","Clonado");
     LimparCamposExecucao();
+    window.location.href='#foo';
 }
 
 function editarOF(codExecucaoComplexidade){
@@ -272,6 +274,7 @@ function editarOF(codExecucaoComplexidade){
     ExecutaDispatchValor('Complexidade', 'ListarComplexidadePorAtividadeArtefatoCombo', parametros, CarregaComboComplexidade, dadosArquivo.COD_ARTEFATO_COMPLEXIDADE, false);
     parametros = 'codArtefatoComplexidade;'+dadosArquivo.COD_ARTEFATO_COMPLEXIDADE;
     ExecutaDispatchValor('Componente', 'ListarComponentePorArtefatoComplexidadeCombo', parametros, CarregaComboComponente, dadosArquivo.COD_COMPLEXIDADE_COMPONENTE, false);
+    $("#nmeArquivo").focus();
 }
 
 $(document).ready(function(){
