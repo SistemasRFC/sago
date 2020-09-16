@@ -116,22 +116,22 @@ function carregaOf(){
 
 function MontaListaExecucao(lista){
     lista = lista[1];
-    $("#listaOF").html("");
+    $("#listaOF").html("<table class='table table-hover table-bordered' id='arquivoExecucaoTable' width='100%' cellspacing='0'><tr><td></td></tr></table>");
     if (lista!=null){
         listaGlobal = lista;
         var tabela = "";
         tabela += "<table class='table table-hover table-bordered' id='arquivoExecucaoTable' width='100%' cellspacing='0'>";
         tabela += " <thead>";
         tabela += "     <tr>";
-        tabela += "         <td style='width: 7%;'></td>";
-        tabela += "         <td style='width: 11%;'><b>Data</b></td>";
-        tabela += "         <td style='width: 16%;'><b>Disciplina</b></td>";
-        tabela += "         <td style='width: 16%;'><b>Atividade</b></td>";
-        tabela += "         <td style='width: 25%;'><b>Artefato</b></td>";
-        tabela += "         <td style='width: 8%;'><b>Complex.</b></td>";
-        tabela += "         <td style='width: 5%;'><b>Compo.</b></td>";
-        tabela += "         <td style='width: 5%;'><b>Pts.</b></td>";
-        tabela += "         <td style='width: 7%;'><b>Ação</b></td>";
+        tabela += "         <th style='width: 7%;'></th>";
+        tabela += "         <th style='width: 11%;'><b>Data</b></th>";
+        tabela += "         <th style='width: 16%;'><b>Disciplina</b></th>";
+        tabela += "         <th style='width: 16%;'><b>Atividade</b></th>";
+        tabela += "         <th style='width: 25%;'><b>Artefato</b></th>";
+        tabela += "         <th style='width: 8%;'><b>Complex.</b></th>";
+        tabela += "         <th style='width: 5%;'><b>Compo.</b></th>";
+        tabela += "         <th style='width: 5%;'><b>Pts.</b></th>";
+        tabela += "         <th style='width: 7%;'><b>Ação</b></th>";
         tabela += "     </tr>";
         tabela += " </thead>";
         tabela += " <tbody>";
@@ -215,18 +215,18 @@ function MontaListaExecucao(lista){
         }
         tabela += " </tbody>";
         tabela += "</table>";
+    
+        tabela += '<a href="#" id="foo"></a>';
+        $("#listaOF").html(tabela);
+        $('#arquivoExecucaoTable').DataTable({
+            "searching": false,
+            "pagingType": "simple_numbers",
+            "lengthChange" : false,
+            "language": {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+            }
+        });
     }
-    tabela += '<a href="#" id="foo"></a>';
-    $("#listaOF").html(tabela);
-
-    $('#arquivoExecucaoTable').DataTable({
-        "searching": false,
-        "pagingType": "simple_numbers",
-        "lengthChange" : false,
-        "language": {
-        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
-        }
-    });
 }
 
 function RemoverArquivo(codExecucaoArquivo){
@@ -274,7 +274,7 @@ function editarOF(codExecucaoComplexidade){
     ExecutaDispatchValor('Complexidade', 'ListarComplexidadePorAtividadeArtefatoCombo', parametros, CarregaComboComplexidade, dadosArquivo.COD_ARTEFATO_COMPLEXIDADE, false);
     parametros = 'codArtefatoComplexidade;'+dadosArquivo.COD_ARTEFATO_COMPLEXIDADE;
     ExecutaDispatchValor('Componente', 'ListarComponentePorArtefatoComplexidadeCombo', parametros, CarregaComboComponente, dadosArquivo.COD_COMPLEXIDADE_COMPONENTE, false);
-    $("#nmeArquivo").focus();
+    $("#nmeArquivo").focus().fadeIn("slow");
 }
 
 $(document).ready(function(){

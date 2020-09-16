@@ -8,6 +8,11 @@ class RelatorioGerencialController  extends BaseController{
         echo ($this->gen_redirect_and_form(BaseController::ReturnView(BaseController::getPath(), get_class($this)), $params));
     }
     
+    Public Function ChamaUsuarioView() {
+        $params = array();
+        echo ($this->gen_redirect_and_form(BaseController::getPath()."View/RelatorioGerencial/RelatorioGerencialUsuarioView.php", $params));
+    }
+    
     Public Function ListarRelatorioGerencial(){
         $RelatorioGerencialModel = new RelatorioGerencialModel();
         echo $RelatorioGerencialModel->ListarRelatorioGerencial();

@@ -13,6 +13,9 @@ class RelatorioGerencialModel extends BaseModel{
         $ECDao = new ExecucaoComplexidadeDao();
         $EADao = new ExecucaoArquivosDao();
         BaseModel::PopulaObjetoComRequest($dao->getColumns());
+        if (!isset($this->objRequest->codUsuario)){
+            $this->objRequest->codUsuario=$_SESSION['cod_usuario'];
+        }
         if ($this->objRequest->codUsuario>0){
             $lista = $dao->ListarRelatorioGerencialPorUsuario($this->objRequest);   
         }else{
