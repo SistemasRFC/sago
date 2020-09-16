@@ -82,7 +82,7 @@ class RelatorioGerencialDao extends BaseDao{
                   INNER JOIN EXECUCAO E on EC.COD_EXECUCAO = E.COD_EXECUCAO
                   WHERE E.NRO_ANO_REFERENCIA = '.$obj->nroAnoReferencia.' 
                     AND E.NRO_MES_REFERENCIA = '.$obj->nroMesReferencia.'
-                    AND E.COD_USUARIO = '.$obj->codUsuario.'
+                    AND E.COD_EXECUCAO = '.$obj->codExecucao.'
                   ORDER by AA.COD_TAREFA, D.DSC_DISCIPLINA, ATV.DSC_ATIVIDADE,
                   ART.DSC_ARTEFATO, CPX.DSC_COMPLEXIDADE';
         return $this->selectDB($sql, false);
