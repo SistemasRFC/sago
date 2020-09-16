@@ -19,9 +19,9 @@ class MenuPrincipalController extends BaseController {
 
     Public Function VerificaSessao() {
         if (!isset($_SESSION['cod_usuario'])) {
-            echo json_encode(array(false));
+            echo json_encode(array(0=>true, 1=>false));
         } else {
-            echo json_encode(array(true));
+            echo json_encode(array(0=>true, 1=>true));
         }
     }
 

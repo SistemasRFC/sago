@@ -91,7 +91,8 @@ class UsuarioDao extends BaseDao {
                               TXT_EMAIL            = '" . filter_input(INPUT_POST, 'txtEmail', FILTER_SANITIZE_MAGIC_QUOTES) . "',
                               COD_PERFIL_W         = '" . filter_input(INPUT_POST, 'codPerfilW', FILTER_SANITIZE_NUMBER_INT) . "',
                               IND_ATIVO            = '" . filter_input(INPUT_POST, 'indAtivo', FILTER_SANITIZE_STRING) . "',
-                              COD_PROJETO          = " . filter_input(INPUT_POST, 'codProjeto', FILTER_SANITIZE_NUMBER_INT) . "
+                              COD_PROJETO          = " . filter_input(INPUT_POST, 'codProjeto', FILTER_SANITIZE_NUMBER_INT) . ",
+                              NRO_CPF              = '". filter_input(INPUT_POST, 'nroCpf', FILTER_SANITIZE_STRING) . "'
                         WHERE COD_USUARIO = " . filter_input(INPUT_POST, 'codUsuario', FILTER_SANITIZE_NUMBER_INT);
         $result = $this->insertDB("$sql_lista");
         if ($result[0]) {
