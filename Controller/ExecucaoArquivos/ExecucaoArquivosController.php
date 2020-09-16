@@ -30,4 +30,9 @@ class ExecucaoArquivosController extends BaseController
         $ExecucaoArquivosModel = new ExecucaoArquivosModel();
         echo $ExecucaoArquivosModel->DeleteExecucaoArquivos();
     }
+    
+    Public Function VerificaArquivoExistente(){
+        $ExecucaoArquivosModel = new ExecucaoArquivosModel();
+        echo $ExecucaoArquivosModel->VerificaArquivoExistente();
+    }
 }

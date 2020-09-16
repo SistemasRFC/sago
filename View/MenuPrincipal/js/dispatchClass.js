@@ -128,7 +128,7 @@ class dispatch{
 						}, 2000);
 					}
 					if (this._callback!=undefined){
-						this._callback(retorno, this._valorDefault, this._disabled;);
+						this._callback(retorno, this._valorDefault, this._disabled);
 					}
 				}else{
 					$(".jquery-waiting-base-container").fadeOut({modo:"fast"});

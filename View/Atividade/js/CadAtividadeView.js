@@ -14,7 +14,7 @@ function salvarAtividade() {
     ExecutaDispatch('Atividade', $("#method").val(), parametros, fecharTelaCadastro, 'Aguarde, salvando atividade!', 'Atividade salva com sucesso!');
 }
 
-function fecharTelaCadastro(dados) {
-    $("#CadAtividade").jqxWindow("close");
+function fecharTelaCadastro() {
+    $("#atividadeModal").modal("hide");
     ExecutaDispatch('Atividade', 'ListarAtividade', '', CarregaGridAtividade);
 }

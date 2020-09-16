@@ -1,96 +1,124 @@
+<!DOCTYPE html>
 <?php 
-include_once '../../constantes.php';
-include_once "Cabecalho.php";
-include_once "Rodape.php";
+    include_once '../../constantes.php';
 ?>
+<html lang="pt-BR">
+
 <head>
     <title>SAGO - Início</title>
     <script src="../../View/MenuPrincipal/js/MenuPrincipalView.js?rdm=<?php echo time();?>"></script>
-<style>
-    /*Grid*/
-    .grid-container {
-        display: grid;
-        grid-template-areas:
-        'main main main'
-        'left left right';
-        grid-gap: 20px;
-        background-color: #f2f2f2;
-    }
-    .item1 { grid-area: header; }
-    .item2 { grid-area: left; }
-    .item3 { grid-area: main; margin: auto }
-    .item4 { grid-area: right;}
-
-    /*Card*/
-    .card-principal {
-        box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.3);
-        max-width: 100%;
-        padding: 10px 20px;
-        background-color: teal;
-        border-radius: 8px;
-        color: white;
-        font-family: 'Times New Roman';
-        font-size: 22px;
-    }
-    
-    .alert {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        padding: 14px 10px;
-        margin: 10px;
-        background-color: #1E90FF;
-        border-radius: 5px;
-        color: white;
-        font-size: 20px;
-        font-family: 'Courier New';
-        font-weight: bold;
-        width: 380;
-        height: auto;
-    }
-
-    /*Quadro de avisos*/
-    .topo-avisos {
-        padding: 12px 0px;
-        margin: 0px;
-        background-color: #CD6600;
-        color: white;
-        text-align: center;
-        font-size: 22px;
-        font-family: 'times new roman';
-        width: auto;
-        height: 20;
-    }
-
-    /*chip -- recados do quadro de avisos*/
-    .chip {
-        display: inline-block;
-        padding: 0 10px;
-        margin: 8px 10px;
-        width: 460px;
-        height: auto;
-        font-size: 18px;
-        line-height: 50px;
-        border-radius: 10px;
-        background-color: #E8E8E8;
-    }
-    .closebtn {
-        padding-left: 10px;
-        color: #888;
-        font-weight: bold;
-        float: right;
-        font-size: 20px;
-        cursor: pointer;
-    }
-    .closebtn:hover {
-        color: #000;
-    }
-</style>
 </head>
-<body>
-    <div class="card" style="max-width: 100%;">
-        <div class="grid-container" >
-            <div class="item3" >
-                <h2>SISTEMA DE APOIO AO GERENCIAMENTO DE ORÇAMENTOS</h2>
-            </div>            
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Navegacao -->
+        <?php include_once "Navegacao.php";?>
+        <!-- Fim da Navegacao -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Cabecalho -->
+                <?php include_once "Cabecalho.php";?>
+                <!-- Fim Cabecalho -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Início</h1>
+                    </div>
+
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <!-- Card Example -->
+                        <div class="col-xl-6 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Meu Time</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Ubatânia - Audit</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-users fa-3x text-gray-400"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Example -->
+                        <div class="col-xl-6 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Pontuação do mês</div>
+                                            
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">410 USTBB</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-coins fa-3x text-gray-400"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Row -->
+
+                    <div class="row">
+
+                        <!-- Area Chart -->
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-persian-dark">VISÃO GERAL DOS GANHOS <span class="badge bg-success text-gray-100"> Mês Atual</span></h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <canvas id="myAreaChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
         </div>
+        <!-- End of Content Wrapper -->
+
     </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+<!-- Page level custom scripts -->
+<script src="../../Resources/bootstrap-admin/js/demo/chart-area-demo.js"></script>
+<script src="../../Resources/bootstrap-admin/js/demo/chart-pie-demo.js"></script>
+<script src="../../Resources/bootstrap-admin/js/demo/chart-bar-demo.js"></script>
+
 </body>
+
+</html>

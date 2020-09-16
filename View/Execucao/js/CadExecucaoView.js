@@ -1,18 +1,33 @@
+var listaGlobal;
 $(function () {
     $("#btnInserirArquivo").click(function(){
+        if ($("#nmeArquivo").val()==''){
+            swal({
+                title: "Atenção!",
+                text: "Digite um nome de arquivo",
+                type: "warning",
+                confirmButtonText: "Fechar"
+            });            
+            return;
+        }
         if ($('#codExecucaoComplexidade').val() == '') {
             $("#method").val('InsertExecucaoComplexidade');
         } else {
             $("#method").val('UpdateExecucaoComplexidade');
         }
         var parametros = retornaParametros();
-        ExecutaDispatch('ExecucaoComplexidade', $("#method").val(), parametros, InsereArquivos);
+        ExecutaDispatch('ExecucaoArquivos', "VerificaArquivoExistente", parametros, InsereExecucaoComplexidade);
     });
     
-    $("#btnNovo").click(function(){
+    $("#btnLimpar").click(function(){
         LimparCamposExecucao();
     });
 });
+
+function InsereExecucaoComplexidade(){
+    var parametros = retornaParametros();
+    ExecutaDispatch('ExecucaoComplexidade', $("#method").val(), parametros, InsereArquivos, "Aguarde, salvando!", "Registro salvo com sucesso");
+}
 
 function LimparCamposExecucao(){
     ExecutaDispatchValor('Disciplina', 'ListarDisciplinaCombo', '', CarregaComboDisciplina);
@@ -21,6 +36,7 @@ function LimparCamposExecucao(){
     $("#tdcodArtefatoComplexidade").html('');
     $("#tdcodComplexidadeComponente").html('');
     $("#nmeArquivo").val("");
+    $("#txtDescricaoJustificativa").val("");
     $("#codExecucaoComplexidade").val('');
 }
 
@@ -30,6 +46,7 @@ function InsereArquivos(dados){
     var parametros = retornaParametros();
     ExecutaDispatch('ExecucaoArquivos', $("#method").val(), parametros, carregaOf, 'Aguarde, Salvando!', 'Registro Salvo com Sucesso!');
     $("#nmeArquivo").val("");
+    $("#txtDescricaoJustificativa").val("");
     ExecutaDispatch('Execucao', 'ListarExecucao', '', CarregaGridExecucao);
 }
 
@@ -37,7 +54,7 @@ function CarregaComboDisciplina(arrDados, valor, disabled) {
     if (valor==undefined){
         valor = 0;
     }
-    CriarComboDispatchComTamanho('codDisciplina', arrDados, valor, 300, disabled);
+    CriarSelectPuro('codDisciplina', arrDados, valor, disabled);
     $("#codDisciplina").change(function () {
         if ($(this).val() != 0) {
             var parametros = 'codDisciplina;'+$("#codDisciplina").val();
@@ -50,7 +67,7 @@ function CarregaComboAtividade(arrDados, valor, disabled) {
     if (valor==undefined){
         valor = 0;
     }    
-    CriarComboDispatchComTamanho('codDisciplinaAtividade', arrDados, valor, 380, disabled);
+    CriarSelectPuro('codDisciplinaAtividade', arrDados, valor, disabled);
     $("#codDisciplinaAtividade").change(function () {
         if ($(this).val() != 0) {
             var parametros = 'codDisciplinaAtividade;'+$("#codDisciplinaAtividade").val();
@@ -63,7 +80,7 @@ function CarregaComboArtefato(arrDados, valor, disabled) {
     if (valor==undefined){
         valor = 0;
     }    
-    CriarComboDispatchComTamanho('codAtividadeArtefato', arrDados, valor, 400, disabled);
+    CriarSelectPuro('codAtividadeArtefato', arrDados, valor, disabled);
     $("#codAtividadeArtefato").change(function () {
         if ($(this).val() != 0) {
             var parametros = 'codAtividadeArtefato;'+$("#codAtividadeArtefato").val();
@@ -76,7 +93,7 @@ function CarregaComboComplexidade(arrDados, valor, disabled) {
     if (valor==undefined){
         valor = 0;
     }    
-    CriarComboDispatchComTamanho('codArtefatoComplexidade', arrDados, valor, 400, disabled);
+    CriarSelectPuro('codArtefatoComplexidade', arrDados, valor, disabled);
     $("#codArtefatoComplexidade").change(function () {
         if ($(this).val() != 0) {
             var parametros = 'codArtefatoComplexidade;'+$("#codArtefatoComplexidade").val();
@@ -89,32 +106,7 @@ function CarregaComboComponente(arrDados, valor, disabled) {
     if (valor==undefined){
         valor = 0;
     }    
-    CriarComboDispatchComTamanho('codComplexidadeComponente', arrDados, valor, 380, disabled);
-}
-
-function salvarDisciplina(data) {
-    swal({
-        title: 'Aguarde, salvando disciplina!',
-        imageUrl: "../../Resources/images/preload.gif",
-        showConfirmButton: false
-    });
-    if ($('#codDisciplina').val() == '') {
-        $("#method").val('InsertDisciplina');
-    } else {
-        $("#method").val('UpdateDisciplina');
-    }
-    var parametros = retornaParametros();
-    ExecutaDispatch('Disciplina', $("#method").val(), parametros, fecharTelaCadastro);
-}
-
-function fecharTelaCadastro(dados) {
-    $("#CadDisciplina").jqxWindow("close");
-    ExecutaDispatch('Disciplina', 'ListarDisciplina', '', CarregaGridDisciplina);
-    swal({
-        title: "Sucesso!",
-        text: dados[2],
-        type: "info"
-    });
+    CriarSelectPuro('codComplexidadeComponente', arrDados, valor, disabled);
 }
 
 function carregaOf(){
@@ -124,134 +116,162 @@ function carregaOf(){
 
 function MontaListaExecucao(lista){
     lista = lista[1];
-    $("#listaOf").html("");
+    $("#listaOF").html("");
     if (lista!=null){
-        var tabela = "<table width='100%' height='350' style='border: 1px solid #000000; table-layout: auto;' cellspacing='0'>";
-        tabela += "<thead style='display:block;'>";
-        tabela += "<tr>";
-        tabela += "<td style='width: 20px;'><br></td>";
-        tabela += "<td style='width: 106px;'><b>Data</b></td>";
-        tabela += "<td style='width: 170px;'><b>Disciplina</b></td>";
-        tabela += "<td style='width: 170px;'><b>Atividade</b></td>";
-        tabela += "<td style='width: 240px;'><b>Artefato</b></td>";
-        tabela += "<td style='width: 70px;'><b>Cpl.</b></td>";
-        tabela += "<td style='width: 70px;'><b>Cmp.</b></td>";
-        tabela += "<td style='width: 60px;'><b>Pts.</b></td>";
-        tabela += "<td style='width: 102px;'><b>Ação</b></td>";
-        tabela += "</tr>";
-        tabela += "</thead>";
-        tabela += "<tbody style='display:block; overflow: auto; height: 350px;'>";
-        totalLista = lista.length;
-        for (i=0;i<totalLista;i++){
-            tabela += "<tr>";
-            tabela += "<td style='border: 1px solid #000000; width: 20px;'><a href='javascript:mostraArquivos("+lista[i].COD_EXECUCAO_COMPLEXIDADE+");'><img id='img"+lista[i].COD_EXECUCAO_COMPLEXIDADE+"' src='../../Resources/images/plus.png' width='15' height='15'></a></td>";
-            tabela += "<td style='border: 1px solid #000000; width: 106px;'>"+lista[i].DTA_REGISTRO+"</td>";
-            tabela += "<td style='border: 1px solid #000000; width: 170px;'>"+lista[i].DSC_DISCIPLINA+"</td>";
-            tabela += "<td style='border: 1px solid #000000; width: 170px;'>"+lista[i].DSC_ATIVIDADE+"</td>";
-            tabela += "<td style='border: 1px solid #000000; width: 240px;'>"+lista[i].DSC_ARTEFATO+"</td>";
-            tabela += "<td style='border: 1px solid #000000; width: 70px;'>"+lista[i].DSC_COMPLEXIDADE+"</td>";
-            tabela += "<td style='border: 1px solid #000000; width: 70px;'>"+lista[i].DSC_COMPONENTE+"</td>";
-            tabela += "<td style='border: 1px solid #000000; width: 60px;'>"+lista[i].QTD_PONTOS_TOTAL+"</td>";
-            tabela += "<td style='border: 1px solid #000000; width: 102px;'>\n\
-                       <table width='100%'><tr>\n\
-                           <td><a href='javascript:editarOf("+lista[i].COD_EXECUCAO_COMPLEXIDADE+", \n\
-                                                        "+lista[i].COD_DISCIPLINA+", \n\
-                                                        "+lista[i].COD_DISCIPLINA_ATIVIDADE+",   \n\
-                                                        "+lista[i].COD_ATIVIDADE_ARTEFATO+",   \n\
-                                                        "+lista[i].COD_ARTEFATO_COMPLEXIDADE+",   \n\
-                                                        "+lista[i].COD_COMPLEXIDADE_COMPONENTE+")' title='Editar'>\n\
-                                <img src='../../Resources/images/edit.png' width='20' height='20'>\n\
-                           </a></td> \n\
-                           <td><a href='javascript:ClonarDados("+lista[i].COD_EXECUCAO_COMPLEXIDADE+");' title='Dublica este item'> \n\
-                                <img src='../../Resources/images/transferencia.png' width='20' height='20'>\n\
-                           </a>\n\
-                           </td>\n\
-                           <td><a href='javascript:RemoverExecucaoComplexidade("+lista[i].COD_EXECUCAO_COMPLEXIDADE+");' title='Exclui este item e todos os arquivos relacionados'> \n\
-                                <img src='../../Resources/images/delete.png' width='20' height='20'>\n\
-                           </a>\n\
-                           </td>\n\
-                           </tr></table>   \n\
-                        </td>";
-            tabela += "</tr>";
+        listaGlobal = lista;
+        var tabela = "";
+        tabela += "<table class='table table-hover table-bordered' id='arquivoExecucaoTable' width='100%' cellspacing='0'>";
+        tabela += " <thead>";
+        tabela += "     <tr>";
+        tabela += "         <td style='width: 7%;'></td>";
+        tabela += "         <td style='width: 11%;'><b>Data</b></td>";
+        tabela += "         <td style='width: 16%;'><b>Disciplina</b></td>";
+        tabela += "         <td style='width: 16%;'><b>Atividade</b></td>";
+        tabela += "         <td style='width: 25%;'><b>Artefato</b></td>";
+        tabela += "         <td style='width: 8%;'><b>Complex.</b></td>";
+        tabela += "         <td style='width: 5%;'><b>Compo.</b></td>";
+        tabela += "         <td style='width: 5%;'><b>Pts.</b></td>";
+        tabela += "         <td style='width: 7%;'><b>Ação</b></td>";
+        tabela += "     </tr>";
+        tabela += " </thead>";
+        tabela += " <tbody>";
+        var corLinha = 'ddd';
+        for (var i in lista){
+            if (corLinha == 'ddd'){
+                corLinha = '#0000000d';
+            }else{
+                corLinha = 'ddd';
+            }
+            tabela += " <tr style='background-color:"+corLinha+";'>";
+            tabela += "     <td style='width: 20px; vertical-align: middle'>\n\
+                                <button onclick='javascript:mudaIcone("+lista[i].COD_EXECUCAO_COMPLEXIDADE+");' class='nav-link collapsed far fa-plus-square' style='border: 0px;background-color: transparent;' id='"+lista[i].COD_EXECUCAO_COMPLEXIDADE+"' data-toggle='collapse' data-target='#cd"+lista[i].COD_EXECUCAO_COMPLEXIDADE+"' aria-expanded='true' aria-controls='cd"+lista[i].COD_EXECUCAO_COMPLEXIDADE+"'></button>\n\
+                            </td>";
+            tabela += "     <td style='width: 106px;'>"+lista[i].DTA_REGISTRO+"</td>";
+            tabela += "     <td style='width: 170px;'>"+lista[i].DSC_DISCIPLINA+"</td>";
+            tabela += "     <td style='width: 170px;'>"+lista[i].DSC_ATIVIDADE+"</td>";
+            tabela += "     <td style='width: 240px;'>"+lista[i].DSC_ARTEFATO+"</td>";
+            tabela += "     <td style='width: 70px;'>"+lista[i].DSC_COMPLEXIDADE+"</td>";
+            tabela += "     <td style='width: 70px;'>"+lista[i].DSC_COMPONENTE+"</td>";
+            tabela += "     <td style='width: 60px;'>"+lista[i].QTD_PONTOS_TOTAL+"</td>";
+            tabela += "     <td style='width: 102px; vertical-align: middle' class='text-center'>\n\
+                                <button class='btn btn-success btn-sm mb-1' onclick='javascript:editarOF("+lista[i].COD_EXECUCAO_COMPLEXIDADE+");' title='Editar'>\n\
+                                    <span class='icon'>\n\
+                                        <i class='fas fa-pencil-alt'></i>\n\
+                                    </span>\n\
+                                </button>\n\
+                                <button class='btn btn-primary btn-sm mb-1' onclick='javascript:ClonarDados("+lista[i].COD_EXECUCAO_COMPLEXIDADE+");' title='Duplicar'>\n\
+                                    <span class='icon'>\n\
+                                        <i class='far fa-copy'></i>\n\
+                                    </span>\n\
+                                </button>\n\
+                                <button class='btn btn-danger btn-sm' onclick='javascript:RemoverExecucaoComplexidade("+lista[i].COD_EXECUCAO_COMPLEXIDADE+");' title='Remover item e arquivos relacionados'>\n\
+                                    <span class='icon'>\n\
+                                        <i class='fas fa-trash'></i>\n\
+                                    </span>\n\
+                                </button>\n\
+                            </td>";
+            tabela += " </tr>";
             
-            tabela += "<tr style='display: none;' id='cd"+lista[i].COD_EXECUCAO_COMPLEXIDADE+"'>";
-            tabela += "<td style='border: 1px solid #000000; padding: 5px 2px 5px 20px'  colspan='9'>";
-            tabela += "<table width='100%' style='border: 0px solid #000000;' cellspacing='0'>";
-            tabela += "<tr>";
-            tabela += "<td style='border: 1px solid #000000;'><b>N.º</b></td>";
-            tabela += "<td style='border: 1px solid #000000;'><b>Nome Arquivo</b></td>";
-            tabela += "<td style='border: 1px solid #000000;'><b>Ação</b></td>";
-            tabela += "</tr>";
+            tabela += " <tr id='cd"+lista[i].COD_EXECUCAO_COMPLEXIDADE+"' class='collapse'>";
+            tabela += "     <td style='padding: 5px 10px 5px 10px' colspan='9'>";
+            tabela += "         <table class='table table-striped' width='100%'>";
+            tabela += "             <thead>";
+            tabela += "             <tr style='background-color: #fff'>";
+            tabela += "                 <th style='width: 5%;border: 1px solid #000000;'>N.º</th>";
+            tabela += "                 <th style='width: 80%;border: 1px solid #000000;'>Nome Arquivo</th>";
+            tabela += "                 <th style='width: 5%;border: 1px solid #000000;'>Ação</th>";
+            tabela += "             </tr>";
+            tabela += "             </thead>";
+            tabela += "             </tbody>";
             var totalListaArquivos = 0;
             if (lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE]!=null){
                 totalListaArquivos = lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE].length;
             }
             for (var l=0;l<totalListaArquivos;l++){
                 var indice=l+1;
-                tabela += "<tr>";
-                tabela += "<td style='border: 1px solid #000000;'>"+indice+"</td>";
-                tabela += "<td style='border: 1px solid #000000;'>"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO+"</td>";
-                tabela += "<td style='border: 1px solid #000000;'>\n\
-                               <a href='javascript:RemoverArquivo("+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].COD_EXECUCAO_ARQUIVO+")' title='Remove o arquivo'>\n\
-                                    <img src='../../Resources/images/delete.png' width='25' height='25'>\n\
-                               </a>   \n\
-                           </td>";
-                tabela += "</tr>";
+                tabela += "         <tr>";
+                tabela += "             <td style='border: 1px solid #000000;'>"+indice+"</td>";
+                tabela += "             <td style='border: 1px solid #000000;' title='"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO+"'>"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO.substring(0, 92)+"...";
+                if (lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA!=null &&
+                    lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA!=''){
+                    tabela += ';'+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA;
+                }
+                tabela += "             </td>";
+                tabela += "             <td style='border: 1px solid #000000;'>\n\
+                                            <button class='btn btn-danger btn-sm' onclick='javascript:RemoverArquivo("+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].COD_EXECUCAO_ARQUIVO+");' title='Remover arquivo'>\n\
+                                                <span class='icon'>\n\
+                                                    <i class='fas fa-trash'></i>\n\
+                                                </span>\n\
+                                            </button>\n\
+                                        </td>";
+                tabela += "         </tr>";
             }
-            tabela += "</table>";                
-            tabela += "</td>";
-            tabela += "</tr>";           
+            tabela += "             </tbody>";                
+            tabela += "         </table>";                
+
+            tabela += "     </td>";
+            tabela += " </tr>";           
 
         }
-        tabela += "</tbody>";
+        tabela += " </tbody>";
         tabela += "</table>";
     }
-    $("#listaOf").html(tabela);    
+    $("#listaOF").html(tabela);
+
+    $('#arquivoExecucaoTable').DataTable({
+        "searching": false,
+        "pagingType": "simple_numbers",
+        "lengthChange" : false,
+        "language": {
+        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+        }
+    });
 }
 
 function RemoverArquivo(codExecucaoArquivo){
     var parametros = 'codExecucaoArquivo;'+codExecucaoArquivo;
-    ExecutaDispatch('ExecucaoArquivos', 'DeleteExecucaoArquivos', parametros, carregaOf); 
+    ExecutaDispatch('ExecucaoArquivos', 'DeleteExecucaoArquivos', parametros, carregaOf, "Aguarde, excluindo!", "Registro excluído com sucesso"); 
     ExecutaDispatch('Execucao', 'ListarExecucao', '', CarregaGridExecucao);
 }
 
-function mostraArquivos(codtr){
-    if ($("#cd"+codtr).is(':visible')){
-    console.log("cd"+codtr);
-        $("#cd"+codtr).hide('slow');
-        
-        $("#img"+codtr).attr('src', '../../Resources/images/plus.png');
-    }else{
-        $("#cd"+codtr).show('slow');
-        $("#img"+codtr).attr('src', '../../Resources/images/minus.png');
-    }    
+function mudaIcone(codtr){
+    var elm = document.getElementById(codtr);
+    if(elm.classList.contains("fa-plus-square")) {
+        elm.classList.remove("fa-plus-square");
+        elm.classList.add("fa-minus-square");
+    } else {
+        elm.classList.remove("fa-minus-square");
+        elm.classList.add("fa-plus-square");
+    }
 }
 
 function RemoverExecucaoComplexidade(codExecucaoComplexidade){
     $("#method").val('DeleteExecucaoComplexidade');
     var parametros = 'codExecucaoComplexidade;'+codExecucaoComplexidade;
-    ExecutaDispatch('ExecucaoComplexidade', $("#method").val(), parametros, carregaOf);
+    ExecutaDispatch('ExecucaoComplexidade', $("#method").val(), parametros, carregaOf, "Aguarde, excluindo!", "Registro excluído com sucesso");
     ExecutaDispatch('Execucao', 'ListarExecucao', '', CarregaGridExecucao);
 }
 
 function ClonarDados(codExecucaoComplexidade){
     $("#method").val('ClonarDados');
     var parametros = 'codExecucaoComplexidade;'+codExecucaoComplexidade;
-    ExecutaDispatch('ExecucaoComplexidade', $("#method").val(), parametros, carregaOf);
+    ExecutaDispatch('ExecucaoComplexidade', $("#method").val(), parametros, carregaOf, "Aguarde");
     LimparCamposExecucao();
 }
 
-function editarOf(codExecucaoComplexidade, codDisciplina, codDisciplinaAtividade, codAtividadeArtefato, codArtefatoComplexidade, codComplexidadeComponente){
-    $("#codExecucaoComplexidade").val(codExecucaoComplexidade);
-    ExecutaDispatchValor('Disciplina', 'ListarDisciplinaCombo', '', CarregaComboDisciplina, codDisciplina, false);
-    var parametros = 'codDisciplina;'+codDisciplina;    
-    ExecutaDispatchValor('Atividade', 'ListarAtividadeComboPorDisciplina', parametros, CarregaComboAtividade, codDisciplinaAtividade, false); 
-    parametros = 'codDisciplinaAtividade;'+codDisciplinaAtividade;
-    ExecutaDispatchValor('Artefato', 'ListarArtefatoPorDisciplinaAtividadeCombo', parametros, CarregaComboArtefato, codAtividadeArtefato, false);
-    parametros = 'codAtividadeArtefato;'+codAtividadeArtefato;
-    ExecutaDispatchValor('Complexidade', 'ListarComplexidadePorAtividadeArtefatoCombo', parametros, CarregaComboComplexidade, codArtefatoComplexidade, false);
-    parametros = 'codArtefatoComplexidade;'+codArtefatoComplexidade;
-    ExecutaDispatchValor('Componente', 'ListarComponentePorArtefatoComplexidadeCombo', parametros, CarregaComboComponente, codComplexidadeComponente, false);
+function editarOF(codExecucaoComplexidade){
+    var item = listaGlobal.filter(elm => elm.COD_EXECUCAO_COMPLEXIDADE == codExecucaoComplexidade);
+    var dadosArquivo = item[0];
+    $("#codExecucaoComplexidade").val(dadosArquivo.COD_EXECUCAO_COMPLEXIDADE);
+    ExecutaDispatchValor('Disciplina', 'ListarDisciplinaCombo', '', CarregaComboDisciplina, dadosArquivo.COD_DISCIPLINA, false);
+    var parametros = 'codDisciplina;'+dadosArquivo.COD_DISCIPLINA;    
+    ExecutaDispatchValor('Atividade', 'ListarAtividadeComboPorDisciplina', parametros, CarregaComboAtividade, dadosArquivo.COD_DISCIPLINA_ATIVIDADE, false); 
+    parametros = 'codDisciplinaAtividade;'+dadosArquivo.COD_DISCIPLINA_ATIVIDADE;
+    ExecutaDispatchValor('Artefato', 'ListarArtefatoPorDisciplinaAtividadeCombo', parametros, CarregaComboArtefato, dadosArquivo.COD_ATIVIDADE_ARTEFATO, false);
+    parametros = 'codAtividadeArtefato;'+dadosArquivo.COD_ATIVIDADE_ARTEFATO;
+    ExecutaDispatchValor('Complexidade', 'ListarComplexidadePorAtividadeArtefatoCombo', parametros, CarregaComboComplexidade, dadosArquivo.COD_ARTEFATO_COMPLEXIDADE, false);
+    parametros = 'codArtefatoComplexidade;'+dadosArquivo.COD_ARTEFATO_COMPLEXIDADE;
+    ExecutaDispatchValor('Componente', 'ListarComponentePorArtefatoComplexidadeCombo', parametros, CarregaComboComponente, dadosArquivo.COD_COMPLEXIDADE_COMPONENTE, false);
 }
 
 $(document).ready(function(){

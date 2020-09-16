@@ -2,7 +2,7 @@
 var widthTela = $(window).width();
 var heightTela = $(window).height();
 function VerificaSessao(result){
-    if (!result){            
+    if (!result[1]){            
         window.location.href='../../index.php';
     }else{
         CarregaMenu();
@@ -115,5 +115,5 @@ function CriarComboTamanho(nmeCombo, largura, altura, larguraDrop, url, parametr
 }
 
 $(document).ready(function(){        
-    ExecutaDispatch('MenuPrincipal', 'VerificaSessao', '', VerificaSessao);
+    ExecutaDispatch('MenuPrincipal', 'VerificaSessao', 'verificaPermissao;N|', VerificaSessao);
 });

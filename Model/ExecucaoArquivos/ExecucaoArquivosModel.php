@@ -42,5 +42,22 @@ class ExecucaoArquivosModel extends BaseModel
         return json_encode($result);
     }
     
+    Public Function VerificaArquivoExistente(){
+        $dao = new ExecucaoArquivosDao();
+        BaseModel::PopulaObjetoComRequest($dao->getColumns());
+        $this->objRequest->codExecucao = $dao->Populate("codExecucao", "I");
+        if (!isset($this->objRequest->txtDescricaoJustificativa)){
+            $this->objRequest->txtDescricaoJustificativa='';
+        }
+        $result = $dao->VerificaArquivoExistente($this->objRequest);
+        if ($result[0]){
+            if ($result[1][0]['QTD']>0){
+                $result[0]=false;
+                $result[1]="Já existe este mesmo artefato nesta OF!";
+            }
+        }
+        return json_encode($result);        
+    }
+    
 }
 

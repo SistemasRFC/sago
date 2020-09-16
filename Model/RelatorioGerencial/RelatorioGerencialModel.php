@@ -43,49 +43,85 @@ class RelatorioGerencialModel extends BaseModel{
     Public Function GerarExcelSumarizado(){
         $dao = new RelatorioGerencialDao();
         BaseModel::PopulaObjetoComRequest($dao->getColumns());
-        $this->objRequest->codUsuario = $_SESSION['cod_usuario'];
-        $lista = $dao->GetDadosRelatorioSumarizado($this->objRequest);
-        if ($lista[0]){
-            $nomeArquivo='orcamento'.$_SESSION['cod_usuario'].'T'.time().'.txt';
-            $arquivo = fopen('Resources/arquivos/'.$nomeArquivo,'w');
-            if ($arquivo == false){
-                die('Não foi possível criar o arquivo.');
-            }
-            $totalRegistros = count($lista[1]);
-            $nl=chr(10);
-            for ($i=0;$i<$totalRegistros;$i++){
-                $texto = $lista[1][$i]['COD_TAREFA'].' '.
-                         $lista[1][$i]['DISCIPLINA'].' '.
-                         $lista[1][$i]['ATIVIDADE'].' '.
-                         $lista[1][$i]['ARTEFATO'].' '.
-                         $lista[1][$i]['COMPLEXIDADE'].' '.
-                         $lista[1][$i]['TOTAL'].$nl;
-                fwrite($arquivo, $texto, strlen($texto));
-            }
-            fclose($arquivo);
+        $listaOfs = $dao->ListarRelatorioGerencial($this->objRequest);
+        $pasta = 'Resources/arquivos/'.$this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'/ofs/';
+        if (!is_dir($pasta)){
+            mkdir($pasta, 0777, true);
         }
-        return $nomeArquivo;
+        if ($listaOfs[0]){
+            $zip = new ZipArchive();
+            $nomeArquivoZip = $this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'_ofs.zip';
+            if($zip->open($pasta.$nomeArquivoZip, ZIPARCHIVE::CREATE) == TRUE){
+                $totalRegistrosOf = count($listaOfs[1]);
+                for ($i=0;$i<$totalRegistrosOf;$i++){      
+                    $this->objRequest->codExecucao = $listaOfs[1][$i]['COD_EXECUCAO'];
+                    $lista = $dao->GetDadosRelatorioSumarizado($this->objRequest);
+                    if ($lista[0]){
+                        $nomeUsuario = str_replace(" ", "", $listaOfs[1][$i]['NME_USUARIO_COMPLETO']);
+                        $nomeArquivo='projeto_'.$this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'_'.$nomeUsuario.'_'.$listaOfs[1][$i]['COD_OF'].'.txt';
+                        $arquivo = fopen($pasta.$nomeArquivo,'w');
+                        if ($arquivo == false){
+                            die('Não foi possível criar o arquivo.');
+                        }
+                        $totalRegistros = count($lista[1]);
+                        $nl=chr(10);
+                        for ($j=0;$j<$totalRegistros;$j++){
+                            $texto = $lista[1][$j]['COD_TAREFA'].' '.
+                                     $lista[1][$j]['DISCIPLINA'].' '.
+                                     $lista[1][$j]['ATIVIDADE'].' '.
+                                     $lista[1][$j]['ARTEFATO'].' '.
+                                     $lista[1][$j]['COMPLEXIDADE'].' '.
+                                     $lista[1][$j]['TOTAL'].$nl;
+                            fwrite($arquivo, $texto, strlen($texto));
+                        }
+                        fclose($arquivo);
+                    }
+                    $zip->addFile($pasta.$nomeArquivo,$nomeArquivo);
+                }
+            }
+        }
+        return json_encode(array(true, array('nomeArquivo'=> $nomeArquivoZip, 'pasta'=> $pasta)));
     }  
     
     Public Function GerarArquivosOrcamento(){
         $dao = new RelatorioGerencialDao();
         BaseModel::PopulaObjetoComRequest($dao->getColumns());
-        $this->objRequest->codUsuario = $_SESSION['cod_usuario'];
-        $lista = $dao->GerarArquivosOrcamento($this->objRequest);
-        if ($lista[0]){
-            $nomeArquivo='orcamentoArquivo'.$_SESSION['cod_usuario'].'T'.time().'.txt';
-            $arquivo = fopen('Resources/arquivos/'.$nomeArquivo,'w');
-            if ($arquivo == false){
-                die('Não foi possível criar o arquivo.');
-            }
-            $totalRegistros = count($lista[1]);
-            $nl=chr(10);
-            for ($i=0;$i<$totalRegistros;$i++){
-                $texto = $lista[1][$i]['NME_ARQUIVO'].$nl;
-                fwrite($arquivo, $texto, strlen($texto));
-            }
-            fclose($arquivo);
+        $listaOfs = $dao->ListarRelatorioGerencial($this->objRequest);
+        $pasta = 'Resources/arquivos/'.$this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'/arquivos/';
+        if (!is_dir($pasta)){
+            mkdir($pasta, 0777, true);
         }
-        return $nomeArquivo;
+        if ($listaOfs[0]){
+            $zip = new ZipArchive();
+            $nomeArquivoZip = $this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'_arquivos.zip';
+            if($zip->open($pasta.$nomeArquivoZip, ZIPARCHIVE::CREATE) == TRUE){
+                $totalRegistrosOf = count($listaOfs[1]);
+                for ($i=0;$i<$totalRegistrosOf;$i++){      
+                    $this->objRequest->codExecucao = $listaOfs[1][$i]['COD_EXECUCAO'];
+                    $lista = $dao->GerarArquivosOrcamento($this->objRequest);
+                    if ($lista[0]){
+                        $nomeUsuario = str_replace(" ", "", $listaOfs[1][$i]['NME_USUARIO_COMPLETO']);
+                        $nomeArquivo='projeto_'.$this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'_'.$nomeUsuario.'_'.$listaOfs[1][$i]['COD_OF'].'.txt';
+                        $arquivo = fopen($pasta.$nomeArquivo,'w');
+                        if ($arquivo == false){
+                            die('Não foi possível criar o arquivo.');
+                        }
+                        $totalRegistros = count($lista[1]);
+                        $nl=chr(10);
+                        for ($j=0;$j<$totalRegistros;$j++){
+                            $texto = $lista[1][$j]['NME_ARQUIVO'];
+                            if ($lista[1][$j]['TXT_DESCRICAO_JUSTIFICATIVA']!=null){
+                                $texto .= ';'.$lista[1][$j]['TXT_DESCRICAO_JUSTIFICATIVA'];
+                            }
+                            $texto .= $nl;
+                            fwrite($arquivo, $texto, strlen($texto));
+                        }
+                        fclose($arquivo);
+                    }
+                    $zip->addFile($pasta.$nomeArquivo,$nomeArquivo);
+                }
+            }
+        }
+        return json_encode(array(true, array('nomeArquivo'=> $nomeArquivoZip, 'pasta'=> $pasta)));
     }    
 }

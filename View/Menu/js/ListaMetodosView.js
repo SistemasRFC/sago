@@ -1,5 +1,9 @@
 function ListarMetodos(classe){
-    ExecutaDispatch('Menu', 'ListarMetodos', 'classe;'+classe+'|'+'pastaAtual;'+$("#pastaAtual").val()+'|', MontaTabelaMetodos);
+    if(classe != ""){
+        ExecutaDispatch('Menu', 'ListarMetodos', 'classe;'+classe+'|'+'pastaAtual;'+$("#pastaAtual").val()+'|', MontaTabelaMetodos);
+    } else {
+        $("#listagemMetodos").html("<h4 class='text-center'>OPS! Selecione uma Controller Primeiro</h4>");
+    }
 }
 
 function MontaTabelaMetodos(data){
@@ -12,12 +16,11 @@ function MontaTabelaMetodos(data){
             tabela += '</tr>';
         }
         tabela += '</table>';
-        $("#listaMetodos").html(tabela);
-        $("#ListaMetodos").jqxWindow('open');
+        $("#listagemMetodos").html(tabela);
     }
 }
 
 function Utilizar(metodo){
     $("#nmeMethod").val(metodo);
-    $("#ListaMetodos").jqxWindow('close');
+    $("#methodMenuModal").modal('hide');
 }

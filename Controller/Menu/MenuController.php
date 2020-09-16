@@ -10,7 +10,7 @@ class MenuController extends BaseController
         $model = new MenuModel();
         $lista = $model->ListaMenus();
         $params = array('ListaMenus' => urlencode(serialize($lista)));
-        $view = $this->getPath()."/View/Menu/".str_replace("Controller", "View", get_class($this)).".php";
+        $view = $this->getPath()."View/Menu/".str_replace("Controller", "View", get_class($this)).".php";
         echo ($this->gen_redirect_and_form($view, $params));    
     }
     /**

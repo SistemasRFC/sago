@@ -1,20 +1,10 @@
+var todasComplexidades;
 $(function () {
-    $("#CadComplexidade").jqxWindow({
-        title: 'Cadastro de Complexidades',
-        height: 250,
-        width: 600,
-        animationType: 'fade',
-        showAnimationDuration: 500,
-        closeAnimationDuration: 500,
-        theme: 'darkcyan',
-        isModal: true,
-        autoOpen: false,
-        position: 'absolute'
-    });
-
-    $("#btnNovo").click(function () {
-        LimparCampos();
-        $("#CadComplexidade").jqxWindow("open");
+    $(".new").click(function() {
+        $("#exampleModalLabel").html("Nova Complexidade");
+        $("#codComplexidade").val(0);
+        $("#dscComplexidade").val("");
+        $("#indAtivo").prop('checked', false);
     });
 });
 
@@ -23,52 +13,60 @@ function CarregaGridComplexidade(listaComplexidade) {
 }
 
 function MontaTabelaComplexidade(listaComplexidade) {
-    var nomeGrid = 'listaComplexidade';
-    var source =
-    {
-        localdata: listaComplexidade,
-        datatype: "json",
-        updaterow: function (rowid, rowdata, commit) {
-            commit(true);
-        },
-        datafields:
-            [
-                { name: 'COD_COMPLEXIDADE', type: 'string' },
-                { name: 'DSC_COMPLEXIDADE', type: 'string' },
-                { name: 'ATIVO', type: 'boolean' }
-            ]
-    };
-    var dataAdapter = new $.jqx.dataAdapter(source);
-    $("#" + nomeGrid).jqxGrid(
-        {
-            width: 690,
-            height: 350,
-            source: dataAdapter,
-            theme: 'darkcyan',
-            sortable: true,
-            filterable: true,
-            pageable: true,
-            columnsresize: true,
-            selectionmode: 'singlerow',
-            columns: [
-                { text: 'C&oacute;d.', columntype: 'textbox', datafield: 'COD_COMPLEXIDADE', width: 45 },
-                { text: 'Descri&ccedil;&atilde;o', datafield: 'DSC_COMPLEXIDADE', columntype: 'textbox', width: 600 },
-                { text: 'Ativo', datafield: 'ATIVO', columntype: 'checkbox', width: 45, align: 'center' }
-            ]
-        });
-    // events
-    $("#" + nomeGrid).jqxGrid('localizestrings', localizationobj);
-    $('#' + nomeGrid).on('rowdoubleclick', function (event) {
-        var args = event.args;
-        var rows = $('#' + nomeGrid).jqxGrid('getdisplayrows');
-        var rowData = rows[args.visibleindex];
-        var rowID = rowData.uid;
+    todasComplexidades = listaComplexidade;
+    var html = '';
+    html +='<table class="table table-striped table-hover table-bordered" id="complexidadeTable" width="100%" cellspacing="0">';
+    html +='    <thead>';
+    html +='        <tr>';
+    html +='            <th width="10%">Código</th>';
+    html +='            <th width="75%">Descrição</th>';
+    html +='            <th width="10%" class="text-center">Ativo</th>';
+    html +='            <th width="5%"></th>';
+    html +='        </tr>';
+    html +='    </thead>';
+    html +='    <tbody>';
+    for(var i in listaComplexidade) {
+        html +='    <tr>';
+        html +='        <td>'+listaComplexidade[i]['COD_COMPLEXIDADE']+'</td>';
+        html +='        <td>'+listaComplexidade[i]['DSC_COMPLEXIDADE']+'</td>';
+        if(listaComplexidade[i]['ATIVO'] == true) {
+            html +='    <td class="text-center">Sim</td>';
+        } else {
+            html +='    <td class="text-center">Não</td>';
+        }
+        html +='        <td class="text-center">';
+        html +='            <button class="btn btn-success btn-sm edit" data-id="'+listaComplexidade[i]['COD_COMPLEXIDADE']+'" data-toggle="modal" title="Editar">';
+        html +='                <span class="icon">';
+        html +='                    <i class="fas fa-pencil-alt"></i>';
+        html +='                </span>';
+        html +='            </button>';
+        html +='        </td>';
+        html +='    </tr>';
+    }
+    html +='    </tbody>';
+    html +='</table>';
 
-        preencheCamposForm(listaComplexidade[rowID], 'indAtivo;B|');
-        $("#method").val("UpdateComplexidade");
-        $("#CadComplexidade").jqxWindow("open");
+    $("#listaComplexidade").html(html);
+
+    $('#complexidadeTable').DataTable({
+            "searching": false,
+            "pagingType": "simple_numbers",
+            "lengthChange" : false,
+            "language": {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+        }
+    });
+    
+    $(".edit").click(function(){
+        $("#exampleModalLabel").html("Editar Complexidade");
+        var item = todasComplexidades.filter(elm => elm.COD_COMPLEXIDADE == $(this).data('id'));
+        $("#codComplexidade").val(item[0].COD_COMPLEXIDADE);
+        $("#dscComplexidade").val(item[0].DSC_COMPLEXIDADE);
+        $("#indAtivo").prop('checked', item[0].ATIVO);
+        $("#complexidadeModal").modal('show');
     });
 }
+
 $(document).ready(function () {
     ExecutaDispatch('Complexidade', 'ListarComplexidade', '', CarregaGridComplexidade);
 });

@@ -1,20 +1,10 @@
+var todasComponentes;
 $(function () {
-    $("#CadComponente").jqxWindow({
-        title: 'Cadastro de Componentes',
-        height: 250,
-        width: 600,
-        animationType: 'fade',
-        showAnimationDuration: 500,
-        closeAnimationDuration: 500,
-        theme: 'darkcyan',
-        isModal: true,
-        autoOpen: false,
-        position: 'absolute'
-    });
-
-    $("#btnNovo").click(function () {
-        LimparCampos();
-        $("#CadComponente").jqxWindow("open");
+    $(".new").click(function() {
+        $("#exampleModalLabel").html("Novo Componente");
+        $("#codComponente").val(0);
+        $("#dscComponente").val("");
+        $("#indAtivo").prop('checked', false);
     });
 });
 
@@ -23,52 +13,60 @@ function CarregaGridComponente(listaComponente) {
 }
 
 function MontaTabelaComponente(listaComponente) {
-    var nomeGrid = 'listaComponente';
-    var source =
-    {
-        localdata: listaComponente,
-        datatype: "json",
-        updaterow: function (rowid, rowdata, commit) {
-            commit(true);
-        },
-        datafields:
-            [
-                { name: 'COD_COMPONENTE', type: 'string' },
-                { name: 'DSC_COMPONENTE', type: 'string' },
-                { name: 'ATIVO', type: 'boolean' }
-            ]
-    };
-    var dataAdapter = new $.jqx.dataAdapter(source);
-    $("#" + nomeGrid).jqxGrid(
-        {
-            width: 690,
-            height: 350,
-            source: dataAdapter,
-            theme: 'darkcyan',
-            sortable: true,
-            filterable: true,
-            pageable: true,
-            columnsresize: true,
-            selectionmode: 'singlerow',
-            columns: [
-                { text: 'C&oacute;d.', columntype: 'textbox', datafield: 'COD_COMPONENTE', width: 40 },
-                { text: 'Descri&ccedil;&atilde;o', datafield: 'DSC_COMPONENTE', columntype: 'textbox', width: 600 },
-                { text: 'Ativo', datafield: 'ATIVO', columntype: 'checkbox', width: 50, align: 'center' }
-            ]
-        });
-    // events
-    $("#" + nomeGrid).jqxGrid('localizestrings', localizationobj);
-    $('#' + nomeGrid).on('rowdoubleclick', function (event) {
-        var args = event.args;
-        var rows = $('#' + nomeGrid).jqxGrid('getdisplayrows');
-        var rowData = rows[args.visibleindex];
-        var rowID = rowData.uid;
+    todasComponentes = listaComponente;
+    var html = '';
+    html +='<table class="table table-striped table-hover table-bordered" id="componenteTable" width="100%" cellspacing="0">';
+    html +='    <thead>';
+    html +='        <tr>';
+    html +='            <th width="10%">Código</th>';
+    html +='            <th width="75%">Descrição</th>';
+    html +='            <th width="10%" class="text-center">Ativo</th>';
+    html +='            <th width="5%"></th>';
+    html +='        </tr>';
+    html +='    </thead>';
+    html +='    <tbody>';
+    for(var i in listaComponente) {
+        html +='    <tr>';
+        html +='        <td>'+listaComponente[i]['COD_COMPONENTE']+'</td>';
+        html +='        <td>'+listaComponente[i]['DSC_COMPONENTE']+'</td>';
+        if(listaComponente[i]['ATIVO'] == true) {
+            html +='    <td class="text-center">Sim</td>';
+        } else {
+            html +='    <td class="text-center">Não</td>';
+        }
+        html +='        <td class="text-center">';
+        html +='            <button class="btn btn-success btn-sm edit" data-id="'+listaComponente[i]['COD_COMPONENTE']+'" data-toggle="modal" title="Editar">';
+        html +='                <span class="icon">';
+        html +='                    <i class="fas fa-pencil-alt"></i>';
+        html +='                </span>';
+        html +='            </button>';
+        html +='        </td>';
+        html +='    </tr>';
+    }
+    html +='    </tbody>';
+    html +='</table>';
 
-        preencheCamposForm(listaComponente[rowID], 'indAtivo;B|');
-        $("#method").val("UpdateComponente");
-        $("#CadComponente").jqxWindow("open");
+    $("#listaComponente").html(html);
+
+    $('#componenteTable').DataTable({
+            "searching": false,
+            "pagingType": "simple_numbers",
+            "lengthChange" : false,
+            "language": {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+        }
+    });
+    
+    $(".edit").click(function(){
+        $("#exampleModalLabel").html("Editar Componente");
+        var item = todasComponentes.filter(elm => elm.COD_COMPONENTE == $(this).data('id'));
+        $("#codComponente").val(item[0].COD_COMPONENTE);
+        $("#dscComponente").val(item[0].DSC_COMPONENTE);
+        $("#indAtivo").prop('checked', item[0].ATIVO);
+        $("#componenteModal").modal('show');
     });
 }
+
 $(document).ready(function () {
     ExecutaDispatch('Componente', 'ListarComponente', '', CarregaGridComponente);
 });

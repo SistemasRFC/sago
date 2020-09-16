@@ -2,7 +2,7 @@ $(function () {
     $("#btnInserir").click(function(){
         var parametros = retornaParametros();
         parametros += "indAtivo;S";
-        ExecutaDispatch('ComplexidadeComponente', $("#method").val(), parametros, AtualizaDados);
+        ExecutaDispatch('ComplexidadeComponente', $("#method").val(), parametros, AtualizaDados, "Aguarde, salvando vínculo", "Vínculo salvo com sucesso");
     });
 
 });
@@ -11,7 +11,7 @@ function CarregaComboDisciplina(arrDados, valor, disabled) {
     if (valor==undefined){
         valor = 0;
     }
-    CriarComboDispatchComTamanho('codDisciplina', arrDados, valor, 300, disabled);
+    CriarSelectPuro('codDisciplina', arrDados, valor, disabled);
     $("#codDisciplina").change(function () {
         if ($(this).val() != 0) {
             var parametros = 'codDisciplina;'+$("#codDisciplina").val();
@@ -25,7 +25,7 @@ function CarregaComboAtividade(arrDados, valor, disabled) {
     if (valor==undefined){
         valor = 0;
     }        
-    CriarComboDispatchComTamanho('codDisciplinaAtividade', arrDados, valor, 380, disabled);
+    CriarSelectPuro('codDisciplinaAtividade', arrDados, valor, disabled);
     $("#codDisciplinaAtividade").change(function () {
         if ($(this).val() != 0) {
             var parametros = 'codDisciplinaAtividade;'+$("#codDisciplinaAtividade").val();
@@ -40,7 +40,7 @@ function CarregaComboArtefato(arrDados, valor, disabled) {
     if (valor==undefined){
         valor = 0;
     }
-    CriarComboDispatchComTamanho('codAtividadeArtefato', arrDados, valor, 400, disabled);
+    CriarSelectPuro('codAtividadeArtefato', arrDados, valor, disabled);
     $("#codAtividadeArtefato").change(function () {
         if ($(this).val() != 0) {
             var parametros = 'codAtividadeArtefato;'+$("#codAtividadeArtefato").val();
@@ -55,7 +55,7 @@ function CarregaComboComplexidade(arrDados, valor, disabled) {
     if (valor==undefined){
         valor = 0;
     }
-    CriarComboDispatchComTamanho('codArtefatoComplexidade', arrDados, valor, 400, disabled);
+    CriarSelectPuro('codArtefatoComplexidade', arrDados, valor, disabled);
     $("#codArtefatoComplexidade").change(function () {
         if ($(this).val() != 0) {
             AtualizaDados();
@@ -84,54 +84,75 @@ function CarregaComboComponente(arrDados, valor, disabled) {
     if (valor==undefined){
         valor = 0;
     }    
-    CriarComboDispatchComTamanho('codComponente', arrDados, valor, 380, disabled);
+    CriarSelectPuro('codComponente', arrDados, valor, disabled);
 }
 
 function MontaListaAtividades(lista){
     lista = lista[1];
     $("#listaComplexidades").html("");
-    var tabela = "<table width='100%' style='border: 1px solid #000000;' cellspacing='0'>";
-    tabela += "<tr>";
-    tabela += "<td style='border: 1px solid #000000;'><b>Disciplina</b></td>";
-    tabela += "<td style='border: 1px solid #000000;'><b>Atividade</b></td>";
-    tabela += "<td style='border: 1px solid #000000;'><b>Artefato</b></td>";
-    tabela += "<td style='border: 1px solid #000000;'><b>Complexidade</b></td>";
-    tabela += "<td style='border: 1px solid #000000;'><b>Componente</b></td>";
-    tabela += "<td style='border: 1px solid #000000;'><b>Pontos</b></td>";
-    tabela += "<td style='border: 1px solid #000000;'><b>Ação</b></td>";
-    tabela += "</tr>";
-    totalLista = lista.length;
-    for (i=0;i<totalLista;i++){
+    var tabela = "";
+    tabela += "<table class='table table-striped table-hover table-bordered' id='complexCompoTable' width='100%'>";
+    tabela += " <thead>";
+    tabela += " <tr>";
+    tabela += "     <th>Disciplina</th>";
+    tabela += "     <th>Atividade</th>";
+    tabela += "     <th>Artefato</th>";
+    tabela += "     <th>Complexidade</th>";
+    tabela += "     <th>Componente</th>";
+    tabela += "     <th>Pontos</th>";
+    tabela += "     <th>Ação</th>";
+    tabela += " </tr>";
+    tabela += " </thead>";
+    tabela += " <tbody>";
+    for ( var i in lista){
         tabela += "<tr>";
-        tabela += "<td style='border: 1px solid #000000;'>"+lista[i].DSC_DISCIPLINA+"</td>";
-        tabela += "<td style='border: 1px solid #000000;'>"+lista[i].DSC_ATIVIDADE+"</td>";
-        tabela += "<td style='border: 1px solid #000000;'>"+lista[i].DSC_ARTEFATO+"</td>";
-        tabela += "<td style='border: 1px solid #000000;'>"+lista[i].DSC_COMPLEXIDADE+"</td>";
-        tabela += "<td style='border: 1px solid #000000;'>"+lista[i].DSC_COMPONENTE+"</td>";
-        tabela += "<td style='border: 1px solid #000000;'>"+lista[i].QTD_PONTOS+"</td>";
+        tabela += " <td>"+lista[i].DSC_DISCIPLINA+"</td>";
+        tabela += " <td>"+lista[i].DSC_ATIVIDADE+"</td>";
+        tabela += " <td>"+lista[i].DSC_ARTEFATO+"</td>";
+        tabela += " <td>"+lista[i].DSC_COMPLEXIDADE+"</td>";
+        tabela += " <td>"+lista[i].DSC_COMPONENTE+"</td>";
+        tabela += " <td>"+lista[i].QTD_PONTOS+"</td>";
         var qtdPontos = "'"+lista[i].QTD_PONTOS+"'";
-        tabela += "<td style='border: 1px solid #000000; width: 102px;'>\n\
-                   <table width='100%'><tr>\n\
-                       <td><a href=\"javascript:editarRelacionamento("+lista[i].COD_DISCIPLINA_ATIVIDADE+", "+lista[i].COD_DISCIPLINA+", "+qtdPontos+" , "+lista[i].COD_ATIVIDADE_ARTEFATO+", "+lista[i].COD_ARTEFATO_COMPLEXIDADE+" , "+lista[i].COD_COMPONENTE+" , "+lista[i].COD_COMPLEXIDADE_COMPONENTE+");\" title='Editar'>\n\
-                            <img src='../../Resources/images/edit.png' width='20' height='20'>\n\
-                       </a></td>";
-                        if (lista[i].IND_ATIVO=='S'){
-                            tabela += "<td><a href='javascript:atualizaComplexidadeComponente("+lista[i].COD_COMPLEXIDADE_COMPONENTE+", 0);' title='Desativar'><img src='"+PATH_RAIZ+"/Resources/images/delete.png' width='25' height='25'></td>";
-                        }else{
-                            tabela += "<td><a href='javascript:atualizaComplexidadeComponente("+lista[i].COD_COMPLEXIDADE_COMPONENTE+", 1);' title='Ativar'><img src='"+PATH_RAIZ+"/Resources/images/visto.png' width='25' height='25'></td>";
-                        }
-        tabela += "     </tr></table>   \n\
-                    </td>";
+        tabela += " <td>\n\
+                        <button class='btn btn-success btn-sm mb-1' onclick=\"javascript:editarRelacionamento("+lista[i].COD_DISCIPLINA_ATIVIDADE+", "+lista[i].COD_DISCIPLINA+", "+qtdPontos+" , "+lista[i].COD_ATIVIDADE_ARTEFATO+", "+lista[i].COD_ARTEFATO_COMPLEXIDADE+" , "+lista[i].COD_COMPONENTE+" , "+lista[i].COD_COMPLEXIDADE_COMPONENTE+");\" title='Editar'>\n\
+                            <span class='icon'>\n\
+                                <i class='fas fa-pencil-alt'></i>\n\
+                            </span>\n\
+                        </button>";
+        if (lista[i].IND_ATIVO=='S'){
+            tabela += " <button class='btn btn-danger btn-sm' onclick='javascript:atualizaComplexidadeComponente("+lista[i].COD_COMPLEXIDADE_COMPONENTE+", 0);' title='Desativar'>\n\
+                            <span class='icon'>\n\
+                                <i class='fas fa-power-off'></i>\n\
+                            </span>\n\
+                        </button>";
+        }else{
+            tabela += " <button class='btn btn-success btn-sm' onclick='javascript:atualizaComplexidadeComponente("+lista[i].COD_COMPLEXIDADE_COMPONENTE+", 1);' title='Ativar'>\n\
+                            <span class='icon'>\n\
+                                <i class='fas fa-power-off'></i>\n\
+                            </span>\n\
+                        </button>";
+        }
+        tabela += " </td>";
         tabela += "</tr>";
     }
+    tabela += "</tbody>";
     tabela += "</table>";
     $("#listaComplexidades").html(tabela);
+
+    $('#complexCompoTable').DataTable({
+        "searching": false,
+        "pagingType": "simple_numbers",
+        "lengthChange" : false,
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+        }
+    });
 }
 
 function atualizaComplexidadeComponente(codComplexidadeComponente, indAtivo){
     var ativo = indAtivo==0?'N':'S';
     var parametros = 'codComplexidadeComponente;'+codComplexidadeComponente+'|indAtivo;'+ativo;
-    ExecutaDispatch('ComplexidadeComponente', 'UpdateComplexidadeComponente', parametros, AtualizaDados);    
+    ExecutaDispatch('ComplexidadeComponente', 'UpdateComplexidadeComponente', parametros, AtualizaDados, "Aguarde, salvando vínculo", "Vínculo salvo com sucesso");
 }
 
 function editarRelacionamento(codDisciplinaAtividade, codDisciplina, qtdPontos, codAtividadeArtefato, codArtefatoComplexidade, codComponente, codComplexidadeComponente){

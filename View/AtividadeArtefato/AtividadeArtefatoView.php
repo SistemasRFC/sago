@@ -1,55 +1,89 @@
+<!DOCTYPE html>
 <?php 
-include_once '../../constantes.php';
-include_once PATH."View/MenuPrincipal/Cabecalho.php";
-include_once PATH."View/MenuPrincipal/Rodape.php";
+    include_once '../../constantes.php';
 ?>
-<html>
+<html lang="pt-BR">
     <head>
-        <title>SAGO - 2-Atividade Artefato</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script src="js/AtividadeArtefatoView.js?rdm=<?php echo time();?>"></script>
-
+        <title>SAGO - Atividade-Artefato</title>
     </head>
-    <body>
-        <input type="hidden" id="method" value=''>
-        <input type="hidden" id="codAtividadeArtefato" value='' class='persist'>
-        <div class="card" style="max-width: 1010px;">
-            <div class="cabecalho">Relacionamento entre Atividades e Artefatos</div>
-            <table width="100%">
-                <tr>
-                    <td>
-                        <label for="codDisciplina" class="titulo">Disciplina</label>
-                        <div id="tdcodDisciplina"></div>                        
-                    </td>
-                    <td>
-                        <label for="codDisciplinaAtividade" class="titulo">Atividade</label>
-                        <div id="tdcodDisciplinaAtividade"></div>
-                    </td>                    
-                </tr>                    
-                <tr>
-                    <td colspan="2">
-                        <label for="codArtefato" class="titulo">Artefato</label>
-                        <div id="tdcodArtefato"></div>
-                    </td>
-                </tr>                    
-                <tr>
-                    <td colspan="2">
-                        <label for="codTarefa" class="titulo">Tarefa</label><br>
-                        <input type="text" id="codTarefa" class="titulo persist" size='50'>
-                    </td>
-                </tr>                    
-                <tr>                    
-                    <td>
-                        <br>
-                        <input type="button" id="btnInserir" value="Salvar Relacionamento" class="button-salvar" style="">
-                    </td>
-                </tr>
-            </table>
-            
-            
-            <div class="titulo" id="listaArtefatos">
-                <div id="listaArtefato"></div>
+
+    <body id="page-top">
+
+        <div id="wrapper">
+            <!-- Navegacao -->
+            <?php include_once PATH."View/MenuPrincipal/Navegacao.php";?>
+            <!-- Fim da Navegacao -->
+
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+                    <!-- Cabecalho -->
+                    <?php include_once PATH."View/MenuPrincipal/Cabecalho.php";?>
+                    <!-- Fim Cabecalho -->
+
+                    <div class="container-fluid">
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-800">Relacionamento</h1>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-4">
+                                    <!-- Card Header -->
+                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary text-uppercase">Atividade - Artefato</h6>
+                                    </div>
+
+                                    <!-- Card Body -->
+                                    <div class="card-body">
+                                        <form>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <label class="label" for="codDisciplina">Disciplina</label>
+                                                    <div id="tdcodDisciplina"></div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label class="label" for="codDisciplinaAtividade">Atividade</label>
+                                                    <div id="tdcodDisciplinaAtividade"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <label class="label" for="codArtefato">Artefato</label>
+                                                    <div id="tdcodArtefato"></div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label class="label" for="codTarefa">Tarefa</label>
+                                                    <input type="text" id="codTarefa" name="codTarefa" class="form-control persist">
+                                                </div>
+                                                <div class="col-sm-4"></div>
+                                                <div class="col-sm-4 pt-3 text-center">
+                                                    <button id="btnInserir" class='btn btn-success btn-icon-split'>
+                                                        <span class="icon text-white-50">
+                                                            <i class="fas fa-check"></i>
+                                                        </span>
+                                                        <span class="text">Salvar Relacionamento</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <div id="listaArtefatos"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-  </body>
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <script src="../../View/AtividadeArtefato/js/AtividadeArtefatoView.js?rdm=<?php echo time();?>"></script>
+
+    </body>
+
 </html>

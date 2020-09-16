@@ -1,63 +1,104 @@
+<!DOCTYPE html>
 <?php 
-include_once '../../constantes.php';
-include_once PATH."View/MenuPrincipal/Cabecalho.php";
-include_once PATH."View/MenuPrincipal/Rodape.php";
+    include_once '../../constantes.php';
 ?>
-<html>
+<html lang="pt-BR">
     <head>
-        <title>SAGO - Execução de OFs</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script src="js/ExecucaoView.js?rdm=<?php echo time();?>"></script>
-
+        <title>SAGO - Cadastro de Execução</title>
     </head>
-    <body>
-        <input type="hidden" id="method" name="method" class="persist">
-        <input type="hidden" id="codExecucao" name="codExecucao" class="persist">
-        <input type="hidden" id="indStatus" name="indStatus" class="persist">
-        <div class="card" style="max-width: 810px;">
-            <div class="cabecalho">Cadastro de O.F.</div>
-            <div class="titulo">
-                <input type="button" id="btnNovaOf" value="Nova O.F." class="button">
-                <table width="100%" align="left" id='cadNovaOf'>
-                    <tr>
-                        <td style="padding-top: 0px;">
-                            <label for="codOf" class="titulo">O.F.</label>
-                            <input type="text" name="codOf" id="codOf" class="persist titulo" size='40'>
-                        </td>
-                        <td style="padding-top: 0px;">
-                            <label for="nroMesReferencia" class="titulo">Mês referência</label>
-                            <div id="tdnroMesReferencia"></div>
-                            <!-- <input type="number" name="nroMesReferencia" id="nroMesReferencia" class="persist titulo"> -->
-                        </td>
-                        <td style="padding-top: 0px;">
-                            <label for="nroAnoReferencia" class="titulo">Ano referência</label>
-                            <div id="tdnroAnoReferencia"></div>
-                            <!-- <input type="text" name="nroAnoReferencia" id="nroAnoReferencia" class="persist titulo" size='15'> -->
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan='3'>
-                            <input type="button" id="btnSalvarExecucao" value="Salvar" class="button-salvar">
-                            <input type="button" id="btnCancelar" value="Cancelar" class="button-cancelar">
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="titulo" id="divListaExecucao">
-                <div id="listaExecucao"></div>
+
+    <body id="page-top">
+
+        <div id="wrapper">
+            <!-- Navegacao -->
+            <?php include_once PATH."View/MenuPrincipal/Navegacao.php";?>
+            <!-- Fim da Navegacao -->
+
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+                    <!-- Cabecalho -->
+                    <?php include_once PATH."View/MenuPrincipal/Cabecalho.php";?>
+                    <!-- Fim Cabecalho -->
+
+                    <div class="container-fluid">
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-800">Cadastro</h1>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-4">
+                                    <!-- Card Header - Dropdown -->
+                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-persian-dark text-uppercase">O.F.</h6>
+                                    </div>
+
+                                    <!-- Card Body -->
+                                    <div class="card-body">
+                                        <input type="hidden" id="method" name="method">
+                                        <input type="hidden" id="codExecucao" name="codExecucao" class="persist">
+                                        <input type="hidden" id="indStatus" name="indStatus" class="persist">
+                                        
+                                        <button class='btn btn-primary btn-icon-split mb-3 new' id="btnNovaOF">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-plus-circle"></i>
+                                            </span>
+                                            <span class="text">Nova O.F.</span>
+                                        </button>
+
+                                        <form id="cadNovaOF">
+                                            <div class="form-group row">
+                                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                                    <label class="label" for="codOf">O.F.</label>
+                                                    <input type="text" id="codOf" name="codOf" class='persist form-control'>
+                                                </div>
+                                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                                    <label class="label" for="nroMesReferencia">Mês referência</label>
+                                                    <div id="tdnroMesReferencia"></div>
+                                                </div>
+                                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                                    <label class="label" for="nroAnoReferencia">Ano referência</label>
+                                                    <div id="tdnroAnoReferencia"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                                    <button class='btn btn-secondary btn-block mb-3' id="btnCancelar">
+                                                        <span class="icon">
+                                                            <i class="fas fa-times"></i>
+                                                        </span>
+                                                        <span class="text">Cancelar</span>
+                                                    </button>
+                                                </div>
+                                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                                    <button class='btn btn-success btn-block mb-3' id="btnSalvarExecucao">
+                                                        <span class="icon">
+                                                            <i class="fas fa-check"></i>
+                                                        </span>
+                                                        <span class="text">Salvar</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <div id="listaExecucao"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div id="CadExecucao">
-            <div id="windowHeader"></div>
-            <div style="overflow: auto;" id="windowContent">
-                <?php include_once "CadExecucaoView.php";?>
-            </div>            
-        </div> 
-        <div id='ofMenu' style="display:none;">
-            <ul>
-                <li>Finalizar</li>
-                <li>Excluir</li>
-            </ul>
-        </div>          
-  </body>
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <script src="../../View/Execucao/js/ExecucaoView.js?rdm=<?php echo time();?>"></script>
+
+        <?php include_once "CadExecucaoView.php" ?>
+    </body>
+
 </html>

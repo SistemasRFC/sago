@@ -18,6 +18,11 @@ class UsuarioModel extends BaseModel
         if ($lista[0]){
             if ($lista[1]!=null){
                 $lista = FuncoesArray::AtualizaBooleanInArray($lista, 'IND_ATIVO', 'ATIVO');
+                for($i=0; $i<count($lista[1]);$i++){
+                    if(!$lista[1][$i]['COD_PROJETO']){
+                        $lista[1][$i]['COD_PROJETO']=-1;
+                    }
+                }                
             }
         }
         return json_encode($lista);

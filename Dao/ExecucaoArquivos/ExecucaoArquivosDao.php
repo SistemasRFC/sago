@@ -4,8 +4,9 @@ class ExecucaoArquivosDao extends BaseDao
 {
     Protected $tableName = "EXECUCAO_ARQUIVOS";
 
-    Protected $columns = array ("nmeArquivo"   => array("column" =>"NME_ARQUIVO", "typeColumn" =>"S"),
-                                "codExecucaoComplexidade"   => array("column" =>"COD_EXECUCAO_COMPLEXIDADE", "typeColumn" =>"I"));
+    Protected $columns = array ("nmeArquivo"                => array("column" => "NME_ARQUIVO",                 "typeColumn" => "S"),
+                                "codExecucaoComplexidade"   => array("column" => "COD_EXECUCAO_COMPLEXIDADE",   "typeColumn" => "I"),
+                                "txtDescricaoJustificativa" => array("column" => "TXT_DESCRICAO_JUSTIFICATIVA", "typeColumn" => "S"));
 
     Protected $columnKey = array("codExecucaoArquivo"=> array("column" =>"COD_EXECUCAO_ARQUIVO", "typeColumn" => "I"));
 
@@ -28,5 +29,19 @@ class ExecucaoArquivosDao extends BaseDao
     Public Function DeleteExecucaoArquivos(stdClass $obj) {
         $sql = 'DELETE FROM EXECUCAO_ARQUIVOS WHERE COD_EXECUCAO_ARQUIVO = '.$this->Populate('codExecucaoArquivo', 'I');
         return $this->insertDB($sql);
+    }
+
+    Public Function VerificaArquivoExistente(stdClass $obj) {
+        $sql = "SELECT COUNT(*) AS QTD 
+                  FROM EXECUCAO_ARQUIVOS EA
+                 INNER JOIN EXECUCAO_COMPLEXIDADE EC 
+                    ON EA.COD_EXECUCAO_COMPLEXIDADE=EC.COD_EXECUCAO_COMPLEXIDADE
+                 INNER JOIN EXECUCAO E 
+                    ON EC.COD_EXECUCAO = E.COD_EXECUCAO
+                 WHERE EA.NME_ARQUIVO='".$obj->nmeArquivo."'
+                   AND COALESCE(EA.TXT_DESCRICAO_JUSTIFICATIVA,'')= '".$obj->txtDescricaoJustificativa."' 
+                   AND E.COD_EXECUCAO=".$obj->codExecucao;
+        return $this->selectDB($sql, false);
+                
     }
 }

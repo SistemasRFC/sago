@@ -3,7 +3,6 @@ function ListarController(dir){
         ExecutaDispatch('Menu', 'listarController', undefined, MontaTabelaController);
     }else{
         ExecutaDispatch('Menu', 'listarController', 'pasta;'+dir+'|', MontaTabelaController);
-        
     }
     $("#pastaAtual").val(dir);
 }
@@ -31,5 +30,5 @@ function UtilizarController(Controller){
     Controller = Controller.replace("Controller.php","");
     $("#nmeController").val(Controller);
     $("#nmeClasse").val(Controller);
-    $("#ListaController").jqxWindow('close');
+    // $("#controllerMenuModal").modal('hide');
 }
