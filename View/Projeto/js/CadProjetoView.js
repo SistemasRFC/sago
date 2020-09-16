@@ -5,16 +5,16 @@ $(function () {
 });
 
 function salvarProjeto() {
-    if ($('#codProjeto').val() == '') {
+    if ($('#codProjeto').val() == 0) {
         $("#method").val('InsertProjeto');
     } else {
         $("#method").val('UpdateProjeto');
     }
     var parametros = retornaParametros();
-    ExecutaDispatch('Projeto', $("#method").val(), parametros, fecharTelaCadastro, 'Aguarde, salvando atividade!', 'Projeto salva com sucesso!');
+    ExecutaDispatch('Projeto', $("#method").val(), parametros, fecharTelaCadastro, 'Aguarde, salvando projeto!', 'Projeto salvo com sucesso!');
 }
 
 function fecharTelaCadastro(dados) {
-    $("#CadProjeto").jqxWindow("close");
+    $("#projetoModal").modal('hide');
     ExecutaDispatch('Projeto', 'ListarProjeto', '', CarregaGridProjeto);
 }

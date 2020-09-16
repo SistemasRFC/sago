@@ -1,20 +1,9 @@
+var listaProjetos;
 $(function () {
-    $("#CadProjeto").jqxWindow({
-        title: 'Cadastro de Projetos',
-        height: 250,
-        width: 600,
-        animationType: 'fade',
-        showAnimationDuration: 500,
-        closeAnimationDuration: 500,
-        theme: 'darkcyan',
-        isModal: true,
-        autoOpen: false,
-        position: 'absolute'
-    });
-
     $("#btnNovo").click(function () {
         LimparCampos();
-        $("#CadProjeto").jqxWindow("open");
+        $("#method").val("InsertProjeto");
+        $("#projetoModal").modal('show');
     });
 });
 
@@ -23,50 +12,56 @@ function CarregaGridProjeto(listaProjeto) {
 }
 
 function MontaTabelaProjeto(listaProjeto) {
-    var nomeGrid = 'listaProjeto';
-    var source =
-    {
-        localdata: listaProjeto,
-        datatype: "json",
-        updaterow: function (rowid, rowdata, commit) {
-            commit(true);
-        },
-        datafields:
-            [
-                { name: 'COD_PROJETO', type: 'string' },
-                { name: 'DSC_PROJETO', type: 'string' },
-                { name: 'ATIVO', type: 'boolean' }
-            ]
-    };
-    var dataAdapter = new $.jqx.dataAdapter(source);
-    $("#" + nomeGrid).jqxGrid(
-        {
-            width: 800,
-            height: 350,
-            source: dataAdapter,
-            theme: 'darkcyan',
-            sortable: true,
-            filterable: true,
-            pageable: true,
-            columnsresize: true,
-            selectionmode: 'singlerow',
-            columns: [
-                { text: 'C&oacute;d.', columntype: 'textbox', datafield: 'COD_PROJETO', width: 50 },
-                { text: 'Descri&ccedil;&atilde;o', datafield: 'DSC_PROJETO', columntype: 'textbox', width: 700 },
-                { text: 'Ativo', datafield: 'ATIVO', columntype: 'checkbox', width: 50, align: 'center' }
-            ]
-        });
-    // events
-    $("#" + nomeGrid).jqxGrid('localizestrings', localizationobj);
-    $('#' + nomeGrid).on('rowdoubleclick', function (event) {
-        var args = event.args;
-        var rows = $('#' + nomeGrid).jqxGrid('getdisplayrows');
-        var rowData = rows[args.visibleindex];
-        var rowID = rowData.uid;
+    listaProjetos = listaProjeto;
+    var tabela = "";
+    tabela +='<table class="table table-striped table-hover table-bordered" id="projetoTable" width="100%">';
+    tabela +='    <thead>';
+    tabela +='        <tr>';
+    tabela +='            <th width="10%">Código</th>';
+    tabela +='            <th width="75%">Descrição</th>';
+    tabela +='            <th width="10%" class="text-center">Ativo</th>';
+    tabela +='            <th width="5%"> </th>';
+    tabela +='        </tr>';
+    tabela +='    </thead>';
+    tabela +='    <tbody>';
+    for(var i in listaProjeto) {
+        tabela +='    <tr>';
+        tabela +='        <td>'+listaProjeto[i]['COD_PROJETO']+'</td>';
+        tabela +='        <td>'+listaProjeto[i]['DSC_PROJETO']+'</td>';
+        if(listaProjeto[i]['ATIVO'] == true) {
+            tabela +='    <td class="text-center">Sim</td>';
+        } else {
+            tabela +='    <td class="text-center">Não</td>';
+        }
+        tabela +='        <td class="text-center">';
+        tabela +='            <button class="btn btn-success btn-sm edit" data-id="'+listaProjeto[i]['COD_PROJETO']+'" data-toggle="modal" title="Editar">';
+        tabela +='                <span class="icon">';
+        tabela +='                    <i class="fas fa-pencil-alt"></i>';
+        tabela +='                </span>';
+        tabela +='            </button>';
+        tabela +='        </td>';
+        tabela +='    </tr>';
+    }
+    tabela +='    </tbody>';
+    tabela +='</table>';
 
-        preencheCamposForm(listaProjeto[rowID], 'indAtivo;B|');
-        $("#method").val("UpdateMenu");
-        $("#CadProjeto").jqxWindow("open");
+    $("#listaProjeto").html(tabela);
+
+    $('#projetoTable').DataTable({
+        "searching": false,
+        "pagingType": "simple_numbers",
+        "lengthChange" : false,
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+        }
+    });
+    
+    $(".edit").click(function(){
+        $("#exampleModalLabel").html("Editar Projeto");
+        var item = listaProjetos.filter(elm => elm.COD_PROJETO == $(this).data('id'));
+        preencheCamposForm(item[0], 'indAtivo;B|');
+        $("#method").val("UpdateProjeto");
+        $("#projetoModal").modal('show');
     });
 }
 $(document).ready(function () {

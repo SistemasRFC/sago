@@ -26,7 +26,7 @@ $(function () {
 
 function InsereExecucaoComplexidade(){
     var parametros = retornaParametros();
-    ExecutaDispatch('ExecucaoComplexidade', $("#method").val(), parametros, InsereArquivos);
+    ExecutaDispatch('ExecucaoComplexidade', $("#method").val(), parametros, InsereArquivos, "Aguarde, salvando!", "Registro salvo com sucesso");
 }
 
 function LimparCamposExecucao(){
@@ -144,11 +144,7 @@ function MontaListaExecucao(lista){
             }
             tabela += " <tr style='background-color:"+corLinha+";'>";
             tabela += "     <td style='width: 20px; vertical-align: middle'>\n\
-                                <a href='' class='nav-link collapsed' id='"+lista[i].COD_EXECUCAO_COMPLEXIDADE+"' data-toggle='collapse' data-target='#cd"+lista[i].COD_EXECUCAO_COMPLEXIDADE+"' aria-expanded='true' aria-controls='cd"+lista[i].COD_EXECUCAO_COMPLEXIDADE+"'>\n\
-                                    <span class='icon'>\n\
-                                        <i id='icone"+lista[i].COD_EXECUCAO_COMPLEXIDADE+"' class='far fa-plus-square'></i>\n\
-                                    </span>\n\
-                                </a>\n\
+                                <button onclick='javascript:mudaIcone("+lista[i].COD_EXECUCAO_COMPLEXIDADE+");' class='nav-link collapsed far fa-plus-square' style='border: 0px;background-color: transparent;' id='"+lista[i].COD_EXECUCAO_COMPLEXIDADE+"' data-toggle='collapse' data-target='#cd"+lista[i].COD_EXECUCAO_COMPLEXIDADE+"' aria-expanded='true' aria-controls='cd"+lista[i].COD_EXECUCAO_COMPLEXIDADE+"'></button>\n\
                             </td>";
             tabela += "     <td style='width: 106px;'>"+lista[i].DTA_REGISTRO+"</td>";
             tabela += "     <td style='width: 170px;'>"+lista[i].DSC_DISCIPLINA+"</td>";
@@ -232,36 +228,34 @@ function MontaListaExecucao(lista){
     });
 }
 
-function testando(){
-    console.log("FOI");
-}
-
 function RemoverArquivo(codExecucaoArquivo){
     var parametros = 'codExecucaoArquivo;'+codExecucaoArquivo;
-    ExecutaDispatch('ExecucaoArquivos', 'DeleteExecucaoArquivos', parametros, carregaOf); 
+    ExecutaDispatch('ExecucaoArquivos', 'DeleteExecucaoArquivos', parametros, carregaOf, "Aguarde, excluindo!", "Registro excluído com sucesso"); 
     ExecutaDispatch('Execucao', 'ListarExecucao', '', CarregaGridExecucao);
 }
 
-function mostraArquivos(codtr){
-    console.log("cd"+codtr);
-    if ($("#icone"+codtr).class() == 'far fa-plus-square') {
-        $("#icone"+codtr).class('far fa-minus-square');
+function mudaIcone(codtr){
+    var elm = document.getElementById(codtr);
+    if(elm.classList.contains("fa-plus-square")) {
+        elm.classList.remove("fa-plus-square");
+        elm.classList.add("fa-minus-square");
     } else {
-        $("#icone"+codtr).class('far fa-plus-square');
-    }   
+        elm.classList.remove("fa-minus-square");
+        elm.classList.add("fa-plus-square");
+    }
 }
 
 function RemoverExecucaoComplexidade(codExecucaoComplexidade){
     $("#method").val('DeleteExecucaoComplexidade');
     var parametros = 'codExecucaoComplexidade;'+codExecucaoComplexidade;
-    ExecutaDispatch('ExecucaoComplexidade', $("#method").val(), parametros, carregaOf);
+    ExecutaDispatch('ExecucaoComplexidade', $("#method").val(), parametros, carregaOf, "Aguarde, excluindo!", "Registro excluído com sucesso");
     ExecutaDispatch('Execucao', 'ListarExecucao', '', CarregaGridExecucao);
 }
 
 function ClonarDados(codExecucaoComplexidade){
     $("#method").val('ClonarDados');
     var parametros = 'codExecucaoComplexidade;'+codExecucaoComplexidade;
-    ExecutaDispatch('ExecucaoComplexidade', $("#method").val(), parametros, carregaOf);
+    ExecutaDispatch('ExecucaoComplexidade', $("#method").val(), parametros, carregaOf, "Aguarde");
     LimparCamposExecucao();
 }
 

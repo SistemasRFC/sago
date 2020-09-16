@@ -2,7 +2,7 @@ $(function () {
     $("#btnInserir").click(function(){
         var parametros = retornaParametros();
         parametros += "indAtivo;S";
-        ExecutaDispatch('AtividadeArtefato', $("#method").val(), parametros, AtualizaDados);
+        ExecutaDispatch('AtividadeArtefato', $("#method").val(), parametros, AtualizaDados, "Aguarde, salvando vínculo", "Vínculo salvo com sucesso");
     });
 
 });
@@ -120,7 +120,7 @@ function MontaListaAtividades(lista){
 function atualizaAtividadeArtefato(codigoAtividadeArtefato, indAtivo){
     var ativo = indAtivo==0?'N':'S';
     var parametros = 'codAtividadeArtefato;'+codigoAtividadeArtefato+'|indAtivo;'+ativo;
-    ExecutaDispatch('AtividadeArtefato', 'UpdateAtividadeArtefato', parametros, AtualizaDados);    
+    ExecutaDispatch('AtividadeArtefato', 'UpdateAtividadeArtefato', parametros, AtualizaDados, "Aguarde, salvando vínculo", "Vínculo salvo com sucesso");
 }
 
 function editarRelacionamento(codDisciplinaAtividade, codDisciplina, codArtefato, codTarefa, codAtividadeArtefato){

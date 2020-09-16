@@ -2,7 +2,7 @@ $(function () {
     $("#btnInserir").click(function(){
         var parametros = retornaParametros();
         parametros += "indAtivo;S";
-        ExecutaDispatch('ComplexidadeComponente', $("#method").val(), parametros, AtualizaDados);
+        ExecutaDispatch('ComplexidadeComponente', $("#method").val(), parametros, AtualizaDados, "Aguarde, salvando vínculo", "Vínculo salvo com sucesso");
     });
 
 });
@@ -152,7 +152,7 @@ function MontaListaAtividades(lista){
 function atualizaComplexidadeComponente(codComplexidadeComponente, indAtivo){
     var ativo = indAtivo==0?'N':'S';
     var parametros = 'codComplexidadeComponente;'+codComplexidadeComponente+'|indAtivo;'+ativo;
-    ExecutaDispatch('ComplexidadeComponente', 'UpdateComplexidadeComponente', parametros, AtualizaDados);    
+    ExecutaDispatch('ComplexidadeComponente', 'UpdateComplexidadeComponente', parametros, AtualizaDados, "Aguarde, salvando vínculo", "Vínculo salvo com sucesso");
 }
 
 function editarRelacionamento(codDisciplinaAtividade, codDisciplina, qtdPontos, codAtividadeArtefato, codArtefatoComplexidade, codComponente, codComplexidadeComponente){

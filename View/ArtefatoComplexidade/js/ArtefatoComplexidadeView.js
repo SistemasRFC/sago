@@ -2,7 +2,7 @@ $(function () {
     $("#btnInserir").click(function(){
         var parametros = retornaParametros();
         parametros += "indAtivo;S";
-        ExecutaDispatch('ArtefatoComplexidade', 'InsertArtefatoComplexidade', parametros, AtualizaDados);
+        ExecutaDispatch('ArtefatoComplexidade', 'InsertArtefatoComplexidade', parametros, AtualizaDados, "Aguarde, salvando vínculo", "Vínculo salvo com sucesso");
     });
 
 });
@@ -108,7 +108,7 @@ function MontaListaAtividades(lista){
 function atualizaArtefatoComplexidade(codigoArtefatoComplexidade, indAtivo){
     var ativo = indAtivo==0?'N':'S';
     var parametros = 'codArtefatoComplexidade;'+codigoArtefatoComplexidade+'|indAtivo;'+ativo;
-    ExecutaDispatch('ArtefatoComplexidade', 'UpdateArtefatoComplexidade', parametros, AtualizaDados);    
+    ExecutaDispatch('ArtefatoComplexidade', 'UpdateArtefatoComplexidade', parametros, AtualizaDados, "Aguarde, salvando vínculo", "Vínculo salvo com sucesso");
 }
 
 $(document).ready(function () {

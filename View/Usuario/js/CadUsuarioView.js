@@ -24,7 +24,7 @@ $(function () {
             $('#method').val('UpdateUsuario');
         }
         var parametros = retornaParametros();
-        ExecutaDispatch('Usuario',$('#method').val(), parametros, retornoSalvarUsuario, "Aguarde, Salvando Usuário!");
+        ExecutaDispatch('Usuario',$('#method').val(), parametros, retornoSalvarUsuario, "Aguarde, salvando usuário!", "Usuário salvo com sucesso");
     });
     
 });

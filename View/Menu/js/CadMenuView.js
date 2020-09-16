@@ -37,7 +37,7 @@ function salvarMenu(data) {
         $("#dscCaminhoImagem").val(data.msg);
     }
     var parametros = retornaParametros();
-    ExecutaDispatch('Menu', $("#method").val(), parametros, fecharTelaCadastro);
+    ExecutaDispatch('Menu', $("#method").val(), parametros, fecharTelaCadastro, "Aguarde, salvando menu", "Menu salvo com sucesso");
 }
 
 function fecharTelaCadastro(dados) {
