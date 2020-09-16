@@ -30,5 +30,5 @@ function UtilizarController(Controller){
     Controller = Controller.replace("Controller.php","");
     $("#nmeController").val(Controller);
     $("#nmeClasse").val(Controller);
-    // $("#controllerMenuModal").modal('hide');
+    $("#controllerMenuModal").modal('hide');
 }

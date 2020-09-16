@@ -191,10 +191,11 @@ function MontaListaExecucao(lista){
                 var indice=l+1;
                 tabela += "         <tr>";
                 tabela += "             <td style='border: 1px solid #000000;'>"+indice+"</td>";
-                tabela += "             <td style='border: 1px solid #000000;' title='"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO+"'>"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO.substring(0, 92)+"...";
                 if (lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA!=null &&
-                    lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA!=''){
-                    tabela += ';'+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA;
+                lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA!=''){
+                    tabela += "             <td style='border: 1px solid #000000;' title='"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO+';'+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA+"'>"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO.substring(0, 92)+"...";
+                } else {
+                    tabela += "             <td style='border: 1px solid #000000;' title='"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO+"'>"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO.substring(0, 92)+"...";
                 }
                 tabela += "             </td>";
                 tabela += "             <td style='border: 1px solid #000000;'>\n\
