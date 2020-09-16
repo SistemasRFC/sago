@@ -255,7 +255,7 @@ function RemoverExecucaoComplexidade(codExecucaoComplexidade){
 function ClonarDados(codExecucaoComplexidade){
     $("#method").val('ClonarDados');
     var parametros = 'codExecucaoComplexidade;'+codExecucaoComplexidade;
-    ExecutaDispatch('ExecucaoComplexidade', $("#method").val(), parametros, carregaOf, "Aguarde");
+    ExecutaDispatch('ExecucaoComplexidade', $("#method").val(), parametros, carregaOf, "Aguarde","Clonado");
     LimparCamposExecucao();
 }
 
