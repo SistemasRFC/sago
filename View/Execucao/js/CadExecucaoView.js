@@ -116,22 +116,22 @@ function carregaOf(){
 
 function MontaListaExecucao(lista){
     lista = lista[1];
-    $("#listaOF").html("");
+    $("#listaOF").html("<table class='table table-hover table-bordered' id='arquivoExecucaoTable' width='100%' cellspacing='0'><tr><td></td></tr></table>");
     if (lista!=null){
         listaGlobal = lista;
         var tabela = "";
         tabela += "<table class='table table-hover table-bordered' id='arquivoExecucaoTable' width='100%' cellspacing='0'>";
         tabela += " <thead>";
         tabela += "     <tr>";
-        tabela += "         <td style='width: 7%;'></td>";
-        tabela += "         <td style='width: 11%;'><b>Data</b></td>";
-        tabela += "         <td style='width: 16%;'><b>Disciplina</b></td>";
-        tabela += "         <td style='width: 16%;'><b>Atividade</b></td>";
-        tabela += "         <td style='width: 25%;'><b>Artefato</b></td>";
-        tabela += "         <td style='width: 8%;'><b>Complex.</b></td>";
-        tabela += "         <td style='width: 5%;'><b>Compo.</b></td>";
-        tabela += "         <td style='width: 5%;'><b>Pts.</b></td>";
-        tabela += "         <td style='width: 7%;'><b>Ação</b></td>";
+        tabela += "         <th style='width: 7%;'></th>";
+        tabela += "         <th style='width: 11%;'><b>Data</b></th>";
+        tabela += "         <th style='width: 16%;'><b>Disciplina</b></th>";
+        tabela += "         <th style='width: 16%;'><b>Atividade</b></th>";
+        tabela += "         <th style='width: 25%;'><b>Artefato</b></th>";
+        tabela += "         <th style='width: 8%;'><b>Complex.</b></th>";
+        tabela += "         <th style='width: 5%;'><b>Compo.</b></th>";
+        tabela += "         <th style='width: 5%;'><b>Pts.</b></th>";
+        tabela += "         <th style='width: 7%;'><b>Ação</b></th>";
         tabela += "     </tr>";
         tabela += " </thead>";
         tabela += " <tbody>";
@@ -191,10 +191,11 @@ function MontaListaExecucao(lista){
                 var indice=l+1;
                 tabela += "         <tr>";
                 tabela += "             <td style='border: 1px solid #000000;'>"+indice+"</td>";
-                tabela += "             <td style='border: 1px solid #000000;' title='"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO+"'>"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO.substring(0, 92)+"...";
                 if (lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA!=null &&
-                    lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA!=''){
-                    tabela += ';'+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA;
+                lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA!=''){
+                    tabela += "             <td style='border: 1px solid #000000;' title='"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO+';'+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA+"'>"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO.substring(0, 92)+"...";
+                } else {
+                    tabela += "             <td style='border: 1px solid #000000;' title='"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO+"'>"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO.substring(0, 92)+"...";
                 }
                 tabela += "             </td>";
                 tabela += "             <td style='border: 1px solid #000000;'>\n\
@@ -215,17 +216,18 @@ function MontaListaExecucao(lista){
         }
         tabela += " </tbody>";
         tabela += "</table>";
+    
+        tabela += '<a href="#" id="foo"></a>';
+        $("#listaOF").html(tabela);
+        $('#arquivoExecucaoTable').DataTable({
+            "searching": false,
+            "pagingType": "simple_numbers",
+            "lengthChange" : false,
+            "language": {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+            }
+        });
     }
-    $("#listaOF").html(tabela);
-
-    $('#arquivoExecucaoTable').DataTable({
-        "searching": false,
-        "pagingType": "simple_numbers",
-        "lengthChange" : false,
-        "language": {
-        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
-        }
-    });
 }
 
 function RemoverArquivo(codExecucaoArquivo){
@@ -257,6 +259,7 @@ function ClonarDados(codExecucaoComplexidade){
     var parametros = 'codExecucaoComplexidade;'+codExecucaoComplexidade;
     ExecutaDispatch('ExecucaoComplexidade', $("#method").val(), parametros, carregaOf, "Aguarde","Clonado");
     LimparCamposExecucao();
+    window.location.href='#foo';
 }
 
 function editarOF(codExecucaoComplexidade){
@@ -272,6 +275,7 @@ function editarOF(codExecucaoComplexidade){
     ExecutaDispatchValor('Complexidade', 'ListarComplexidadePorAtividadeArtefatoCombo', parametros, CarregaComboComplexidade, dadosArquivo.COD_ARTEFATO_COMPLEXIDADE, false);
     parametros = 'codArtefatoComplexidade;'+dadosArquivo.COD_ARTEFATO_COMPLEXIDADE;
     ExecutaDispatchValor('Componente', 'ListarComponentePorArtefatoComplexidadeCombo', parametros, CarregaComboComponente, dadosArquivo.COD_COMPLEXIDADE_COMPONENTE, false);
+    $("#nmeArquivo").focus().fadeIn("slow");
 }
 
 $(document).ready(function(){

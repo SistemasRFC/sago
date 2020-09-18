@@ -68,25 +68,45 @@ function MontaTabelaExecucao(lista){
                 tabela += '<tr><td style="width: 10px;"><b>Componente: </b></td><td>'+LEC[iLEC].DSC_COMPONENTE+'</td></tr>';
                 tabela += '<tr><td style="width: 10px;"><b>Pontuação: </b></td><td>'+LEC[iLEC].QTD_TOTAL_PONTOS+'</td></tr>';
                 var LEA =  LEC[iLEC]['LEA'+LEC[iLEC].COD_EXECUCAO_COMPLEXIDADE];
-                var totalLEA = Object.keys(LEA).length;
-                tabela += '<tr><td style="border: 1px solid #000000" colspan="2">';
-                tabela += "<table width='100%' align='center' style='border-spacing: 3px'>";
-                tabela += '<tr>';
-                tabela += '<td colspan="2" align="center" style="border: 1px solid #000"><h3 style="margin-bottom: 1px">Arquivos Alterados</h3></td>';
-                tabela += '</tr>';
-                var corLinha = 'white';
-                for (var iLEA=0;iLEA<totalLEA;iLEA++){
+                if (LEA!=null){
+                    var totalLEA = Object.keys(LEA).length;
+                    tabela += '<tr><td style="border: 1px solid #000000" colspan="2">';
+                    tabela += "<table width='100%' align='center' style='border-spacing: 3px'>";
+                    tabela += '<tr>';
+                    tabela += '<td colspan="2" align="center" style="border: 1px solid #000"><h3 style="margin-bottom: 1px">Arquivos Alterados</h3></td>';
+                    tabela += '</tr>';
+                    var corLinha = 'white';
+                    for (var iLEA=0;iLEA<totalLEA;iLEA++){
+                        if (corLinha == 'white'){
+                            corLinha = '#E8E8E8';
+                        }else{
+                            corLinha = 'white';
+                        }
+                        tabela += '<tr bgcolor="'+corLinha+'">';
+                        tabela += '<td colspan="2" style="font-size: 17px">'+LEA[iLEA].NME_ARQUIVO+'</td>';
+                        tabela += '</tr>';
+                    }
+                    tabela += "</table>";
+                    tabela += '</td></tr>';
+                }else{
+                    var totalLEA = 0; 
+                    tabela += '<tr><td style="border: 1px solid #000000" colspan="2">';
+                    tabela += "<table width='100%' align='center' style='border-spacing: 3px'>";
+                    tabela += '<tr>';
+                    tabela += '<td colspan="2" align="center" style="border: 1px solid #000"><h3 style="margin-bottom: 1px">Arquivos Alterados</h3></td>';
+                    tabela += '</tr>';
+                    var corLinha = 'white';
                     if (corLinha == 'white'){
                         corLinha = '#E8E8E8';
                     }else{
                         corLinha = 'white';
                     }
                     tabela += '<tr bgcolor="'+corLinha+'">';
-                    tabela += '<td colspan="2" style="font-size: 17px">'+LEA[iLEA].NME_ARQUIVO+'</td>';
+                    tabela += '<td colspan="2" style="font-size: 17px">Sem Arquivos</td>';
                     tabela += '</tr>';
+                    tabela += "</table>";
+                    tabela += '</td></tr>';                   
                 }
-                tabela += "</table>";
-                tabela += '</td></tr>';
                 tabela += "</table>";
                 tabela += '</td></tr>';
                 tabela += '<tr><td colspan="2"><br></td></tr>';
