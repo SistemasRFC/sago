@@ -46,7 +46,7 @@
                                             <span class="text">Nova O.F.</span>
                                         </button>
 
-                                        <form id="cadNovaOF">
+                                        <div id="cadNovaOF">
                                             <div class="form-group row">
                                                 <div class="col-sm-4 mb-3 mb-sm-0">
                                                     <label class="label" for="codOf">O.F.</label>
@@ -79,7 +79,7 @@
                                                     </button>
                                                 </div>
                                             </div>
-                                        </form>
+                                        </div>
 
                                         <div id="listaExecucao"></div>
                                     </div>
