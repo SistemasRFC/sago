@@ -58,6 +58,7 @@ class RelatorioGerencialDao extends BaseDao{
                   WHERE E.NRO_ANO_REFERENCIA = '.$obj->nroAnoReferencia.' 
                     AND E.NRO_MES_REFERENCIA = '.$obj->nroMesReferencia.'
                     AND E.COD_EXECUCAO = '.$obj->codExecucao.'
+                    AND E.IND_STATUS = \'F\'
                   group by AA.COD_TAREFA, D.DSC_DISCIPLINA, ATV.DSC_ATIVIDADE,
                   ART.DSC_ARTEFATO, CPX.DSC_COMPLEXIDADE
                   ORDER by AA.COD_TAREFA, D.DSC_DISCIPLINA, ATV.DSC_ATIVIDADE,
@@ -83,6 +84,7 @@ class RelatorioGerencialDao extends BaseDao{
                   WHERE E.NRO_ANO_REFERENCIA = '.$obj->nroAnoReferencia.' 
                     AND E.NRO_MES_REFERENCIA = '.$obj->nroMesReferencia.'
                     AND E.COD_EXECUCAO = '.$obj->codExecucao.'
+                    AND E.IND_STATUS = \'F\'
                   ORDER by AA.COD_TAREFA, D.DSC_DISCIPLINA, ATV.DSC_ATIVIDADE,
                   ART.DSC_ARTEFATO, CPX.DSC_COMPLEXIDADE';
         return $this->selectDB($sql, false);
