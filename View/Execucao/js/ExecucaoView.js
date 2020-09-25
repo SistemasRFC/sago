@@ -64,11 +64,11 @@ function MontaTabelaExecucao(listaExecucao) {
     html +='    <thead>';
     html +='        <tr>';
     html +='            <th style="vertical-align: middle">Código</th>';
-    html +='            <th style="vertical-align: middle" width="50%">O.F.</th>';
+    html +='            <th style="vertical-align: middle" width="45%">O.F.</th>';
     html +='            <th style="vertical-align: middle">Pontuação</th>';
     html +='            <th style="vertical-align: middle" class="text-center">Status</th>';
     html +='            <th style="vertical-align: middle" class="text-center">Período referência</th>';
-    html +='            <th style="vertical-align: middle" width="12%"></th>';
+    html +='            <th style="vertical-align: middle" width="15%"></th>';
     html +='        </tr>';
     html +='    </thead>';
     html +='    <tbody>';
@@ -81,9 +81,14 @@ function MontaTabelaExecucao(listaExecucao) {
         html +='        <td class="text-right">'+listaExecucao[i].PERIODO_REFERENCIA+'</td>';
         if(listaExecucao[i].IND_STATUS != 'Finalizada'){
             html +='        <td class="text-center">';
-            html +='            <button class="btn btn-success btn-sm edit" data-id="'+listaExecucao[i].COD_EXECUCAO+'" data-toggle="modal" title="Editar">';
+            html +='            <button class="btn btn-primary btn-sm edit" data-id="'+listaExecucao[i].COD_EXECUCAO+'" data-toggle="modal" title="Editar">';
             html +='                <span class="icon">';
             html +='                    <i class="fas fa-pencil-alt"></i>';
+            html +='                </span>';
+            html +='            </button>';
+            html +='            <button class="btn btn-success btn-sm fin" data-id="'+listaExecucao[i].COD_EXECUCAO+'" title="Finalizar">';
+            html +='                <span class="icon">';
+            html +='                    <i class="fas fa-check"></i>';
             html +='                </span>';
             html +='            </button>';
             html +='            <button class="btn btn-danger btn-sm del" data-id="'+listaExecucao[i].COD_EXECUCAO+'" title="Excluir">';
@@ -122,6 +127,12 @@ function MontaTabelaExecucao(listaExecucao) {
     });
     $(".del").click(function(){
         ExcluirOf($(this).data('id'));
+    });
+    $(".fin").click(function(){
+        var item = todasExecucoes.filter(elm => elm.COD_EXECUCAO == $(this).data('id'));
+        preencheCamposForm(item[0]);
+        $("#indStatus").val('F');
+        SalvarExecucao();
     });
 }
 
