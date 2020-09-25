@@ -15,7 +15,8 @@ class RelatorioGerencialDao extends BaseDao{
     Public Function ListarRelatorioGerencial(stdClass $obj){
         $sql = ' SELECT E.COD_EXECUCAO,
                         E.COD_OF,
-                        U.NME_USUARIO_COMPLETO
+                        U.NME_USUARIO_COMPLETO,
+                        E.IND_STATUS
                    FROM EXECUCAO E
                   INNER JOIN SE_USUARIO U ON E.COD_USUARIO = U.COD_USUARIO
                   WHERE E.NRO_MES_REFERENCIA = '.$obj->nroMesReferencia.'
