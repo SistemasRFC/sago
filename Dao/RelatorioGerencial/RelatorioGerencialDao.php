@@ -15,7 +15,8 @@ class RelatorioGerencialDao extends BaseDao{
     Public Function ListarRelatorioGerencial(stdClass $obj){
         $sql = ' SELECT E.COD_EXECUCAO,
                         E.COD_OF,
-                        U.NME_USUARIO_COMPLETO
+                        U.NME_USUARIO_COMPLETO,
+                        E.IND_STATUS
                    FROM EXECUCAO E
                   INNER JOIN SE_USUARIO U ON E.COD_USUARIO = U.COD_USUARIO
                   WHERE E.NRO_MES_REFERENCIA = '.$obj->nroMesReferencia.'
@@ -58,6 +59,7 @@ class RelatorioGerencialDao extends BaseDao{
                   WHERE E.NRO_ANO_REFERENCIA = '.$obj->nroAnoReferencia.' 
                     AND E.NRO_MES_REFERENCIA = '.$obj->nroMesReferencia.'
                     AND E.COD_EXECUCAO = '.$obj->codExecucao.'
+                    AND E.IND_STATUS = \'F\'
                   group by AA.COD_TAREFA, D.DSC_DISCIPLINA, ATV.DSC_ATIVIDADE,
                   ART.DSC_ARTEFATO, CPX.DSC_COMPLEXIDADE
                   ORDER by AA.COD_TAREFA, D.DSC_DISCIPLINA, ATV.DSC_ATIVIDADE,
@@ -83,6 +85,7 @@ class RelatorioGerencialDao extends BaseDao{
                   WHERE E.NRO_ANO_REFERENCIA = '.$obj->nroAnoReferencia.' 
                     AND E.NRO_MES_REFERENCIA = '.$obj->nroMesReferencia.'
                     AND E.COD_EXECUCAO = '.$obj->codExecucao.'
+                    AND E.IND_STATUS = \'F\'
                   ORDER by AA.COD_TAREFA, D.DSC_DISCIPLINA, ATV.DSC_ATIVIDADE,
                   ART.DSC_ARTEFATO, CPX.DSC_COMPLEXIDADE';
         return $this->selectDB($sql, false);
