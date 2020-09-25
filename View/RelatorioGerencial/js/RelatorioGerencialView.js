@@ -83,7 +83,12 @@ function MontaTabelaExecucao(lista){
                             corLinha = 'white';
                         }
                         tabela += '<tr bgcolor="'+corLinha+'">';
-                        tabela += '<td colspan="2" style="font-size: 17px">'+LEA[iLEA].NME_ARQUIVO+'</td>';
+                        if (null==LEA[iLEA].TXT_DESCRICAO_JUSTIFICATIVA){
+                            LEA[iLEA].TXT_DESCRICAO_JUSTIFICATIVA="Justificativa: Sem Justificativa.";
+                        }else{
+                            LEA[iLEA].TXT_DESCRICAO_JUSTIFICATIVA="Justificativa: "+LEA[iLEA].TXT_DESCRICAO_JUSTIFICATIVA;
+                        }
+                        tabela += '<td colspan="2" style="font-size: 17px">'+LEA[iLEA].NME_ARQUIVO+'<br>'+LEA[iLEA].TXT_DESCRICAO_JUSTIFICATIVA+'</td>';
                         tabela += '</tr>';
                     }
                     tabela += "</table>";
