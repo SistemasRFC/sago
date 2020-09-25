@@ -56,30 +56,32 @@ class RelatorioGerencialModel extends BaseModel{
             $nomeArquivoZip = $this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'_ofs.zip';
             if($zip->open($pasta.$nomeArquivoZip, ZIPARCHIVE::CREATE) == TRUE){
                 $totalRegistrosOf = count($listaOfs[1]);
-                for ($i=0;$i<$totalRegistrosOf;$i++){      
-                    $this->objRequest->codExecucao = $listaOfs[1][$i]['COD_EXECUCAO'];
-                    $lista = $dao->GetDadosRelatorioSumarizado($this->objRequest);
-                    if ($lista[0]){
-                        $nomeUsuario = str_replace(" ", "", $listaOfs[1][$i]['NME_USUARIO_COMPLETO']);
-                        $nomeArquivo='projeto_'.$this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'_'.$nomeUsuario.'_'.$listaOfs[1][$i]['COD_OF'].'.txt';
-                        $arquivo = fopen($pasta.$nomeArquivo,'w');
-                        if ($arquivo == false){
-                            die('Não foi possível criar o arquivo.');
+                for ($i=0;$i<$totalRegistrosOf;$i++){  
+                    if ($listaOfs[1][$i]['IND_STATUS']=='F'){
+                        $this->objRequest->codExecucao = $listaOfs[1][$i]['COD_EXECUCAO'];
+                        $lista = $dao->GetDadosRelatorioSumarizado($this->objRequest);
+                        if ($lista[0]){
+                            $nomeUsuario = str_replace(" ", "", $listaOfs[1][$i]['NME_USUARIO_COMPLETO']);
+                            $nomeArquivo='projeto_'.$this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'_'.$nomeUsuario.'_'.$listaOfs[1][$i]['COD_OF'].'.txt';
+                            $arquivo = fopen($pasta.$nomeArquivo,'w');
+                            if ($arquivo == false){
+                                die('Não foi possível criar o arquivo.');
+                            }
+                            $totalRegistros = count($lista[1]);
+                            $nl=chr(10);
+                            for ($j=0;$j<$totalRegistros;$j++){
+                                $texto = $lista[1][$j]['COD_TAREFA'].' '.
+                                         $lista[1][$j]['DISCIPLINA'].' '.
+                                         $lista[1][$j]['ATIVIDADE'].' '.
+                                         $lista[1][$j]['ARTEFATO'].' '.
+                                         $lista[1][$j]['COMPLEXIDADE'].' '.
+                                         $lista[1][$j]['TOTAL'].$nl;
+                                fwrite($arquivo, $texto, strlen($texto));
+                            }
+                            fclose($arquivo);
                         }
-                        $totalRegistros = count($lista[1]);
-                        $nl=chr(10);
-                        for ($j=0;$j<$totalRegistros;$j++){
-                            $texto = $lista[1][$j]['COD_TAREFA'].' '.
-                                     $lista[1][$j]['DISCIPLINA'].' '.
-                                     $lista[1][$j]['ATIVIDADE'].' '.
-                                     $lista[1][$j]['ARTEFATO'].' '.
-                                     $lista[1][$j]['COMPLEXIDADE'].' '.
-                                     $lista[1][$j]['TOTAL'].$nl;
-                            fwrite($arquivo, $texto, strlen($texto));
-                        }
-                        fclose($arquivo);
+                        $zip->addFile($pasta.$nomeArquivo,$nomeArquivo);
                     }
-                    $zip->addFile($pasta.$nomeArquivo,$nomeArquivo);
                 }
             }
         }
@@ -99,29 +101,31 @@ class RelatorioGerencialModel extends BaseModel{
             $nomeArquivoZip = $this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'_arquivos.zip';
             if($zip->open($pasta.$nomeArquivoZip, ZIPARCHIVE::CREATE) == TRUE){
                 $totalRegistrosOf = count($listaOfs[1]);
-                for ($i=0;$i<$totalRegistrosOf;$i++){      
-                    $this->objRequest->codExecucao = $listaOfs[1][$i]['COD_EXECUCAO'];
-                    $lista = $dao->GerarArquivosOrcamento($this->objRequest);
-                    if ($lista[0]){
-                        $nomeUsuario = str_replace(" ", "", $listaOfs[1][$i]['NME_USUARIO_COMPLETO']);
-                        $nomeArquivo='projeto_'.$this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'_'.$nomeUsuario.'_'.$listaOfs[1][$i]['COD_OF'].'.txt';
-                        $arquivo = fopen($pasta.$nomeArquivo,'w');
-                        if ($arquivo == false){
-                            die('Não foi possível criar o arquivo.');
-                        }
-                        $totalRegistros = count($lista[1]);
-                        $nl=chr(10);
-                        for ($j=0;$j<$totalRegistros;$j++){
-                            $texto = $lista[1][$j]['NME_ARQUIVO'];
-                            if ($lista[1][$j]['TXT_DESCRICAO_JUSTIFICATIVA']!=null){
-                                $texto .= ';'.$lista[1][$j]['TXT_DESCRICAO_JUSTIFICATIVA'];
+                for ($i=0;$i<$totalRegistrosOf;$i++){ 
+                    if ($listaOfs[1][$i]['IND_STATUS']=='F'){
+                        $this->objRequest->codExecucao = $listaOfs[1][$i]['COD_EXECUCAO'];
+                        $lista = $dao->GerarArquivosOrcamento($this->objRequest);
+                        if ($lista[0]){
+                            $nomeUsuario = str_replace(" ", "", $listaOfs[1][$i]['NME_USUARIO_COMPLETO']);
+                            $nomeArquivo='projeto_'.$this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'_'.$nomeUsuario.'_'.$listaOfs[1][$i]['COD_OF'].'.txt';
+                            $arquivo = fopen($pasta.$nomeArquivo,'w');
+                            if ($arquivo == false){
+                                die('Não foi possível criar o arquivo.');
                             }
-                            $texto .= $nl;
-                            fwrite($arquivo, $texto, strlen($texto));
+                            $totalRegistros = count($lista[1]);
+                            $nl=chr(10);
+                            for ($j=0;$j<$totalRegistros;$j++){
+                                $texto = $lista[1][$j]['NME_ARQUIVO'];
+                                if ($lista[1][$j]['TXT_DESCRICAO_JUSTIFICATIVA']!=null){
+                                    $texto .= ';'.$lista[1][$j]['TXT_DESCRICAO_JUSTIFICATIVA'];
+                                }
+                                $texto .= $nl;
+                                fwrite($arquivo, $texto, strlen($texto));
+                            }
+                            fclose($arquivo);
                         }
-                        fclose($arquivo);
+                        $zip->addFile($pasta.$nomeArquivo,$nomeArquivo);
                     }
-                    $zip->addFile($pasta.$nomeArquivo,$nomeArquivo);
                 }
             }
         }
