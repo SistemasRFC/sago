@@ -30,5 +30,9 @@ class MenuPrincipalController extends BaseController {
         echo $menuModel->CarregaMenuNew($this->getPath());
     }
 
+    Public Function BuscarDadosIniciais() {
+        $menuModel = new MenuPrincipalModel();
+        echo $menuModel->BuscarDadosIniciais();
+    }
 }
 ?>

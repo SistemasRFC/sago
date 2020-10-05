@@ -586,7 +586,7 @@ function CriarGraficoBarras(nmeCampo, dados) {
                         padding: 5,
                         // Include a dollar sign in the ticks
                         callback: function (value, index, values) {
-                            return number_format(value) + ' USTBB';
+                            return number_format(value) + ' USTIBB';
                         }
                     },
                     gridLines: {
@@ -616,10 +616,126 @@ function CriarGraficoBarras(nmeCampo, dados) {
                 callbacks: {
                     label: function (tooltipItem, chart) {
                         var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                        return datasetLabel + number_format(tooltipItem.yLabel) + ' USTBB';
+                        return datasetLabel + number_format(tooltipItem.yLabel) + ' USTIBB';
                     }
                 }
             },
         }
     });
+}
+
+function CriarGraficoArea(nmeCampo, dados) {
+    var campo = document.getElementById(""+nmeCampo+"");
+    var valores = [];
+    var labelMeses = [];
+    if(new Date().getMonth() <= 5) {
+        labelMeses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho"];
+        for (var i in labelMeses) {
+            var ref = parseInt(i) + parseInt(1);
+            var valMesAtual = dados.filter(elm => elm.NRO_MES_REFERENCIA == ref);
+            if(valMesAtual.length > 0) {
+                valores.push(valMesAtual[0].QTD_TOTAL_PONTOS);
+            } else {
+                valores.push(0);
+            }
+        }
+    } else {
+        labelMeses = ["Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+        for (var i in labelMeses) {
+            var ref = parseInt(i) + parseInt(7);
+            var valMesAtual = dados.filter(elm => elm.NRO_MES_REFERENCIA == ref);
+            if(valMesAtual.length > 0) {
+                valores.push(valMesAtual[0].QTD_TOTAL_PONTOS);
+            } else {
+                valores.push(0);
+            }
+        }
+    }
+    new Chart(campo, {
+        type: 'line',
+        data: {
+          labels: labelMeses,
+          datasets: [{
+            label: "Pontuação: ",
+            lineTension: 0.3,
+            backgroundColor: "rgba(78, 115, 223, 0.05)",
+            borderColor: "rgba(78, 115, 223, 1)",
+            pointRadius: 3,
+            pointBackgroundColor: "rgba(78, 115, 223, 1)",
+            pointBorderColor: "rgba(78, 115, 223, 1)",
+            pointHoverRadius: 3,
+            pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+            pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+            pointHitRadius: 10,
+            pointBorderWidth: 2,
+            data: valores,
+          }],
+        },
+        options: {
+          maintainAspectRatio: false,
+          layout: {
+            padding: {
+              left: 10,
+              right: 25,
+              top: 25,
+              bottom: 0
+            }
+          },
+          scales: {
+            xAxes: [{
+              time: {
+                unit: 'date'
+              },
+              gridLines: {
+                display: false,
+                drawBorder: false
+              },
+              ticks: {
+                maxTicksLimit: 7
+              }
+            }],
+            yAxes: [{
+              ticks: {
+                maxTicksLimit: 5,
+                padding: 10,
+                // Include a dollar sign in the ticks
+                callback: function(value, index, values) {
+                  return  number_format(value) + ' USTIBB';
+                }
+              },
+              gridLines: {
+                color: "rgb(234, 236, 244)",
+                zeroLineColor: "rgb(234, 236, 244)",
+                drawBorder: false,
+                borderDash: [2],
+                zeroLineBorderDash: [2]
+              }
+            }],
+          },
+          legend: {
+            display: false
+          },
+          tooltips: {
+            backgroundColor: "rgb(255,255,255)",
+            bodyFontColor: "#858796",
+            titleMarginBottom: 10,
+            titleFontColor: '#6e707e',
+            titleFontSize: 14,
+            borderColor: '#dddfeb',
+            borderWidth: 1,
+            xPadding: 15,
+            yPadding: 15,
+            displayColors: false,
+            intersect: false,
+            mode: 'index',
+            caretPadding: 10,
+            callbacks: {
+              label: function(tooltipItem, chart) {
+                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                return datasetLabel + number_format(tooltipItem.yLabel) + ' USTIBB';
+              }
+            }
+          }
+        }
+      });      
 }

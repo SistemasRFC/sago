@@ -78,5 +78,59 @@ class MenuPrincipalDao extends BaseDao
                  WHERE U.COD_USUARIO = $codUsuario";
         return $this->selectDB($sql, false);
     }
+
+    public function BuscarDados($codUsuario) {
+        $sql = "SELECT U.COD_USUARIO,
+                       U.COD_PROJETO,
+                       P.DSC_PROJETO
+                  FROM SE_USUARIO U
+                 INNER JOIN PROJETO P ON U.COD_PROJETO = P.COD_PROJETO
+                 WHERE U.COD_USUARIO = $codUsuario";
+                //  echo $sql; die;
+        return $this->selectDB($sql, false);
+    }
+
+    public function BuscarPontuacaoMesAtual($codUsuario) {
+        $select = " SELECT COD_EXECUCAO,
+                           SUM(QTD_TOTAL_PONTOS) AS PONTUACAO_ATUAL
+                      FROM (SELECT E.COD_EXECUCAO,
+                                   EC.COD_EXECUCAO_COMPLEXIDADE,
+                                   CC.QTD_PONTOS*COUNT(EA.COD_EXECUCAO_ARQUIVO) AS QTD_TOTAL_PONTOS
+                              FROM EXECUCAO E
+                             INNER JOIN EXECUCAO_COMPLEXIDADE EC ON E.COD_EXECUCAO = EC.COD_EXECUCAO
+                             INNER JOIN EXECUCAO_ARQUIVOS EA ON EC.COD_EXECUCAO_COMPLEXIDADE = EA.COD_EXECUCAO_COMPLEXIDADE
+                             INNER JOIN COMPLEXIDADE_COMPONENTE CC ON EC.COD_COMPLEXIDADE_COMPONENTE = CC.COD_COMPLEXIDADE_COMPONENTE
+                             WHERE NRO_ANO_REFERENCIA = YEAR(NOW())
+                               AND COD_USUARIO = $codUsuario
+                               AND NRO_MES_REFERENCIA = MONTH(NOW())
+                             GROUP BY E.COD_EXECUCAO, CC.QTD_PONTOS) AS X
+                     GROUP BY COD_EXECUCAO";
+        return $this->selectDB($select, false);
+    }
+
+    public function BuscarPontuacaoSemestreAtual($codUsuario) {
+        $select = " SELECT NRO_MES_REFERENCIA,
+                           SUM(QTD_TOTAL_PONTOS) AS QTD_TOTAL_PONTOS
+                      FROM (SELECT E.NRO_MES_REFERENCIA,
+                                   EC.COD_EXECUCAO_COMPLEXIDADE,
+                                   CC.QTD_PONTOS*COUNT(EA.COD_EXECUCAO_ARQUIVO) AS QTD_TOTAL_PONTOS
+                              FROM EXECUCAO E
+                             INNER JOIN EXECUCAO_COMPLEXIDADE EC ON E.COD_EXECUCAO = EC.COD_EXECUCAO
+                             INNER JOIN EXECUCAO_ARQUIVOS EA ON EC.COD_EXECUCAO_COMPLEXIDADE = EA.COD_EXECUCAO_COMPLEXIDADE
+                             INNER JOIN COMPLEXIDADE_COMPONENTE CC ON EC.COD_COMPLEXIDADE_COMPONENTE = CC.COD_COMPLEXIDADE_COMPONENTE
+                             WHERE NRO_ANO_REFERENCIA = YEAR(NOW())
+                               AND COD_USUARIO = $codUsuario";
+        if(date('m') <= 6) {
+            $select .= "       AND E.NRO_MES_REFERENCIA IN (1,2,3,4,5,6)";
+        } else {
+            $select .= "       AND E.NRO_MES_REFERENCIA IN (7,8,9,10,11,12)";
+        }
+        $select .= "         GROUP BY E.NRO_MES_REFERENCIA, EC.COD_EXECUCAO_COMPLEXIDADE) AS X
+                     GROUP BY NRO_MES_REFERENCIA
+                  ORDER BY NRO_MES_REFERENCIA";
+        // echo $select; die;
+        return $this->selectDB($select, false);
+    }
+    
 }
 ?>
