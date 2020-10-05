@@ -17,7 +17,7 @@ $(function(){
 function MontaGrafico(lista){
     $("#chartContainer").remove();
     $("#divCanvas").append('<canvas id="chartContainer"></canvas>');
-    CriarGraficoBarras('chartContainer', lista[1]);  
+    CriarGraficoBarras('chartContainer', lista[1]);
 }
 
 function CarregaComboUsuario(arrDados) {

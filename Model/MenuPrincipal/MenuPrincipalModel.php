@@ -59,5 +59,16 @@ class MenuPrincipalModel extends BaseModel
         $dao = new MenuPrincipalDao();
         $_SESSION['DadosUsuario'] = $dao->CarregaDadosUsuario($_SESSION['cod_usuario']);
     }
+
+    Public Function BuscarDadosIniciais() {
+        $dao = new MenuPrincipalDao();
+        $lista = $dao->BuscarDados($_SESSION['cod_usuario']);
+        $listaPontosMes = $dao->BuscarPontuacaoMesAtual($_SESSION['cod_usuario']);
+        $lista[1]['PONTUACAO_MES_ATUAL'] = $listaPontosMes[1];
+        $listaPontosSemestre = $dao->BuscarPontuacaoSemestreAtual($_SESSION['cod_usuario']);
+        $lista[1]['PONTUACAO_SEMESTRE_ATUAL'] = $listaPontosSemestre[1];
+
+        return json_encode($lista);
+    }
 }
 ?>

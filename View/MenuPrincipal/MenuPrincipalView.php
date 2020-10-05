@@ -6,7 +6,6 @@
 
 <head>
     <title>SAGO - Início</title>
-    <script src="../../View/MenuPrincipal/js/MenuPrincipalView.js?rdm=<?php echo time();?>"></script>
 </head>
 
 <body id="page-top">
@@ -45,11 +44,12 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Meu Time</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Ubatânia - Audit</div>
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Meu Projeto</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="projeto">-</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-users fa-3x text-gray-400"></i>
+                                            <i class="fas fa-project-diagram fa-3x text-gray-400"></i>
+                                            <!-- <i class="fas fa-users fa-3x text-gray-400"></i> -->
                                         </div>
                                     </div>
                                 </div>
@@ -64,7 +64,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Pontuação do mês</div>
                                             
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">410 USTBB</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="pontuacao">0 USTIBB</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-coins fa-3x text-gray-400"></i>
@@ -84,40 +84,28 @@
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-persian-dark">VISÃO GERAL DOS GANHOS <span class="badge bg-success text-gray-100"> Mês Atual</span></h6>
+                                    <h6 class="m-0 font-weight-bold text-persian-dark">VISÃO GERAL DOS GANHOS <span class="badge bg-primary text-gray-100"> Semestre Atual</span></h6>
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
+                                        <canvas id="areaChart"></canvas>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
-                <!-- /.container-fluid -->
-
             </div>
-            <!-- End of Main Content -->
-
         </div>
-        <!-- End of Content Wrapper -->
-
     </div>
-    <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
 
-<!-- Page level custom scripts -->
-<script src="../../Resources/bootstrap-admin/js/demo/chart-area-demo.js"></script>
-<script src="../../Resources/bootstrap-admin/js/demo/chart-pie-demo.js"></script>
-<script src="../../Resources/bootstrap-admin/js/demo/chart-bar-demo.js"></script>
+    <script src="../../View/MenuPrincipal/js/MenuPrincipalView.js?rdm=<?php echo time();?>"></script>
 
 </body>
 
