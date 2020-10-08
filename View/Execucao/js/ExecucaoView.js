@@ -18,10 +18,11 @@ $(function () {
 function ExcluirOf(codExecucao){
     swal({
         title: "Excluir",
-        text: "Deseja realmente excluir esse registro?",
+        text: "Deseja realmente excluir essa O.F.?",
         type: "warning",
         showCancelButton: true,
-        buttons: ["Não", "Sim"],
+        confirmButtonText: "Sim",
+        cancelButtonText: "Não",
     },
     function(isConfirm) {
       if (isConfirm) {
@@ -30,7 +31,7 @@ function ExcluirOf(codExecucao){
             ExecutaDispatch('Execucao', $("#method").val(), parametros, AtualizaGrid, 'Aguarde, excluíndo!', 'Registro excluído!');    
             $("#CadExecucao").jqxWindow("close");
       } else {
-        swal("Cancelled", "Seu Arquivo imaginário está salvo :)", "error");
+        swal("Cancelado", "Nada aconteceu :)");
       }
     });
 }
@@ -130,9 +131,7 @@ function MontaTabelaExecucao(listaExecucao) {
     });
     $(".fin").click(function(){
         var item = todasExecucoes.filter(elm => elm.COD_EXECUCAO == $(this).data('id'));
-        preencheCamposForm(item[0]);
-        $("#indStatus").val('F');
-        SalvarExecucao();
+        FinalizarOf(item[0]);
     });
 }
 
@@ -142,6 +141,26 @@ function CarregaComboMeses(meses) {
 
 function CarregaComboAnos(anos) {
     CriarSelectPuro('nroAnoReferencia', anos, new Date().getFullYear());
+}
+
+function FinalizarOf(item){
+    swal({
+        title: "Finalizar",
+        text: "Deseja realmente finalizar essa O.F.?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sim",
+        cancelButtonText: "Não",
+    },
+    function(isConfirm) {
+      if (isConfirm) {
+            preencheCamposForm(item);
+            $("#indStatus").val('F');
+            SalvarExecucao();
+      } else {
+        swal("Cancelado", "Nada aconteceu :)");
+      }
+    });
 }
 
 $(document).ready(function () {
