@@ -178,7 +178,8 @@ function MontaListaExecucao(lista){
             tabela += "             <thead>";
             tabela += "             <tr style='background-color: #fff'>";
             tabela += "                 <th style='width: 5%;border: 1px solid #000000;'>N.º</th>";
-            tabela += "                 <th style='width: 80%;border: 1px solid #000000;'>Nome Arquivo</th>";
+            tabela += "                 <th style='width: 60%;border: 1px solid #000000;'>Nome Arquivo</th>";
+            tabela += "                 <th style='width: 20%;border: 1px solid #000000;'>Justificativa</th>";
             tabela += "                 <th style='width: 5%;border: 1px solid #000000;'>Ação</th>";
             tabela += "             </tr>";
             tabela += "             </thead>";
@@ -191,14 +192,22 @@ function MontaListaExecucao(lista){
                 var indice=l+1;
                 tabela += "         <tr>";
                 tabela += "             <td style='border: 1px solid #000000;'>"+indice+"</td>";
-                if (lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA!=null &&
-                lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA!=''){
-                    tabela += "             <td style='border: 1px solid #000000;' title='"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO+';'+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA+"'>"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO.substring(0, 92)+"...";
+                if(lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO.length > 72) {
+                    tabela += "             <td style='border: 1px solid #000000;' title='"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO+"'>"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO.substring(0, 72)+"...</td>";
                 } else {
-                    tabela += "             <td style='border: 1px solid #000000;' title='"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO+"'>"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO.substring(0, 92)+"...";
+                    tabela += "             <td style='border: 1px solid #000000;' title='"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO+"'>"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO+"</td>";
                 }
-                tabela += "             </td>";
-                tabela += "             <td style='border: 1px solid #000000;'>\n\
+                if (lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA != null &&
+                lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA != ''){
+                    if (lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA.length > 20) {
+                        tabela += "             <td style='border: 1px solid #000000;' title='"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA+"'>"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA.substring(0, 20)+"...</td>";
+                    } else {
+                        tabela += "             <td style='border: 1px solid #000000;' title='"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA+"'>"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA+"</td>";
+                    }
+                } else {
+                    tabela += "             <td style='border: 1px solid #000000;'>\"Sem justificativa\"</td>";
+                }
+                tabela += "             <td class='text-center' style='border: 1px solid #000000;'>\n\
                                             <button class='btn btn-danger btn-sm' onclick='javascript:RemoverArquivo("+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].COD_EXECUCAO_ARQUIVO+");' title='Remover arquivo'>\n\
                                                 <span class='icon'>\n\
                                                     <i class='fas fa-trash'></i>\n\
