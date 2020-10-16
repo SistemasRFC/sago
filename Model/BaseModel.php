@@ -7,6 +7,9 @@ class BaseModel {
     Protected $objRequest;
     
     Public Static Function PermissaoMetodoUsuario($controller, $method){
+        if (!isset($_SESSION['cod_usuario'])){
+            header("location: index.php");
+        }
         $result = BaseDao::PermissaoMetodoUsuario($_SESSION['cod_usuario'], $controller, $method);
         if ($result[0]){
             if ($result[1][0]['QTD']>0){
