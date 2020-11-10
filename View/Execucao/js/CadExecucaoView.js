@@ -10,6 +10,17 @@ $(function () {
             });            
             return;
         }
+        var nmeArquivo = $("#nmeArquivo").val().replace('/\/g', '/');
+        var palavra="";
+        for (var i=0;i<nmeArquivo.length;i++){
+            if (nmeArquivo[i]=="\\"){
+                console.log(nmeArquivo[i]);
+                palavra += '/';
+            }else{
+                palavra += nmeArquivo[i];
+            }
+        }
+        $("#nmeArquivo").val(palavra);
         if ($('#codExecucaoComplexidade').val() == '') {
             $("#method").val('InsertExecucaoComplexidade');
         } else {
