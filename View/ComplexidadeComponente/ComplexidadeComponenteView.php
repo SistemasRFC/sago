@@ -8,7 +8,8 @@
     </head>
 
     <body id="page-top">
-
+        <input type='hidden' id='method'>
+        <input type="hidden" id="codComplexidadeComponente" value='' class='persist'>
         <div id="wrapper">
             <!-- Navegacao -->
             <?php include_once PATH."View/MenuPrincipal/Navegacao.php";?>
