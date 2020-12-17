@@ -616,7 +616,7 @@ function CriarGraficoBarras(nmeCampo, dados) {
                 callbacks: {
                     label: function (tooltipItem, chart) {
                         var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                        return datasetLabel + number_format(tooltipItem.yLabel) + ' USTIBB';
+                        return datasetLabel + number_format(tooltipItem.yLabel, 1, ',', '.') + ' USTIBB';
                     }
                 }
             },
@@ -732,7 +732,7 @@ function CriarGraficoArea(nmeCampo, dados) {
             callbacks: {
               label: function(tooltipItem, chart) {
                 var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                return datasetLabel + number_format(tooltipItem.yLabel) + ' USTIBB';
+                return datasetLabel + number_format(tooltipItem.yLabel, 1, ',', '.') + ' USTIBB';
               }
             }
           }

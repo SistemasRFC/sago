@@ -115,13 +115,13 @@ function MontaTabelaExecucao(lista){
                 tabela += "</table>";
                 tabela += '</td></tr>';
                 tabela += '<tr><td colspan="2"><br></td></tr>';
-                qtdPontos = parseInt(LEC[iLEC].QTD_TOTAL_PONTOS)+parseInt(qtdPontos);
+                qtdPontos = LEC[iLEC].QTD_TOTAL_PONTOS+qtdPontos;
             }
-            totalPontos = parseInt(totalPontos)+parseInt(qtdPontos);
-            tabela += '<tr><td colspan="2" align="right"><b>Total de Pontos da O.F. => '+qtdPontos+'</b></td></tr>';
+            totalPontos = totalPontos+qtdPontos;
+            tabela += '<tr><td colspan="2" align="right"><b>Total de Pontos da O.F. => '+number_format(qtdPontos, 2, ",")+'</b></td></tr>';
             tabela += '<tr><td colspan="2"><hr style="border: 1px solid"></td></tr>';
         }
-        tabela += '<tr><td colspan="2" align="right"><b>Total de Pontos => '+totalPontos+'</b></td></tr>';
+        tabela += '<tr><td colspan="2" align="right"><b>Total de Pontos => '+number_format(totalPontos, 2, ",")+'</b></td></tr>';
         tabela += '<tr><td><br></td></tr>';
         tabela += '<tr><td><br></td></tr>';
         tabela += '<tr><td><br></td></tr>';
