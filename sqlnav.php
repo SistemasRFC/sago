@@ -3,6 +3,7 @@ session_start();
 if (!isset($_SESSION['cod_usuario'])){
     header("Location: index.php");
 }
+include_once("constantes.php");
 include_once("Dao/BaseDao.php");
 $bd = new BaseDao();
 
