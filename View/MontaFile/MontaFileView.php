@@ -1,7 +1,5 @@
 <?php
 include_once '../../constantes.php';
-include_once PATH."View/MenuPrincipal/Cabecalho.php";
-include_once PATH."View/MenuPrincipal/Rodape.php";
 ?>
 <html lang="pt-BR">
     <head>
