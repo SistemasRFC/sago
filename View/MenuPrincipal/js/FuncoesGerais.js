@@ -13,7 +13,7 @@ function MontaMenu(menu) {
                 html += "<li class='nav-item'>"
                 html += "    <a href='' class='nav-link collapsed' id='menu'" + DadosMenu[i].COD_MENU_W + "' data-toggle='collapse' data-target='#collapse" + DadosMenu[i].COD_MENU_W + "' aria-expanded='true' aria-controls='collapse" + DadosMenu[i].COD_MENU_W + "'>";
                 html += "        <i class='far fa-circle'></i>";
-                html += "        <span>" + DadosMenu[i].DSC_MENU_W + "</span>";
+                html += "        <span><b>" + DadosMenu[i].DSC_MENU_W + "</b></span>";
                 html += "    </a>";
                 html += "    <div id='collapse" + DadosMenu[i].COD_MENU_W + "' class='collapse' aria-labelledby='heading" + DadosMenu[i].COD_MENU_W + "' data-parent='#accordionSidebar'>";
                 html += "        <div class='bg-white py-2 collapse-inner rounded'>";
