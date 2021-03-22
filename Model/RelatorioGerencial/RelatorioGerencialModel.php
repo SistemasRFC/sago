@@ -64,6 +64,7 @@ class RelatorioGerencialModel extends BaseModel{
                             $nomeUsuario = str_replace(" ", "", $listaOfs[1][$i]['NME_USUARIO_COMPLETO']);
                             $nomeArquivo='projeto_'.$this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'_'.$nomeUsuario.'_'.$listaOfs[1][$i]['COD_OF'].'.txt';
                             $arquivo = fopen($pasta.$nomeArquivo,'w');
+                            echo $pasta.$nomeArquivo;
                             if ($arquivo == false){
                                 die('Não foi possível criar o arquivo.');
                             }
@@ -109,6 +110,7 @@ class RelatorioGerencialModel extends BaseModel{
                             $nomeUsuario = str_replace(" ", "", $listaOfs[1][$i]['NME_USUARIO_COMPLETO']);
                             $nomeArquivo='projeto_'.$this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'_'.$nomeUsuario.'_'.$listaOfs[1][$i]['COD_OF'].'.txt';
                             $arquivo = fopen($pasta.$nomeArquivo,'w');
+                            echo $pasta.$nomeArquivo;
                             if ($arquivo == false){
                                 die('Não foi possível criar o arquivo.');
                             }
