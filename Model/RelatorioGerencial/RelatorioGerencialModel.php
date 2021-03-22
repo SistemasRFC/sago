@@ -47,7 +47,7 @@ class RelatorioGerencialModel extends BaseModel{
         $dao = new RelatorioGerencialDao();
         BaseModel::PopulaObjetoComRequest($dao->getColumns());
         $listaOfs = $dao->ListarRelatorioGerencial($this->objRequest);
-        $pasta = PATH.'Resources/arquivos/'.$this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'/ofs/';
+        $pasta = 'Resources/arquivos/'.$this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'/ofs/';
         if (!is_dir($pasta)){
             mkdir($pasta, 0777, true);
         }
