@@ -69,6 +69,8 @@ class RelatorioGerencialModel extends BaseModel{
 //                            error_reporting(E_ALL);
                             $nomeArquivo = str_replace('(', '', $nomeArquivo);
                             $nomeArquivo = str_replace(')', '', $nomeArquivo);
+                            $nomeArquivo = str_replace(' ', '_', $nomeArquivo);
+                            $nomeArquivo = str_replace('/', '_', $nomeArquivo);
                             $arquivo = fopen($pasta.$nomeArquivo,'w');
 //                            echo $pasta.$nomeArquivo;
                             if ($arquivo == false){
