@@ -63,12 +63,12 @@ class RelatorioGerencialModel extends BaseModel{
                         if ($lista[0]){
                             $nomeUsuario = str_replace(" ", "", $listaOfs[1][$i]['NME_USUARIO_COMPLETO']);
                             $nomeArquivo='projeto_'.$this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'_'.$nomeUsuario.'_'.$listaOfs[1][$i]['COD_OF'].'.txt';
-                            ini_set('display_errors', true);
-                            error_reporting(E_ALL);
-                            $nomeArquivo = str_replace('(', '', $nomeArquivo);
-                            $nomeArquivo = str_replace(')', '', $nomeArquivo);
+//                            ini_set('display_errors', true);
+//                            error_reporting(E_ALL);
+//                            $nomeArquivo = str_replace('(', '', $nomeArquivo);
+//                            $nomeArquivo = str_replace(')', '', $nomeArquivo);
                             $arquivo = fopen($pasta.$nomeArquivo,'w');
-                            echo $pasta.$nomeArquivo;
+//                            echo $pasta.$nomeArquivo;
                             if ($arquivo == false){
                                 die('Não foi possível criar o arquivo.');
                             }
