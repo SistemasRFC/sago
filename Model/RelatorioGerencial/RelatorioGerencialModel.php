@@ -117,7 +117,6 @@ class RelatorioGerencialModel extends BaseModel{
                             $nomeArquivo = str_replace(' ', '_', $nomeArquivo);
                             $nomeArquivo = str_replace('/', '_', $nomeArquivo);
                             $arquivo = fopen($pasta.$nomeArquivo,'w');
-                            echo $pasta.$nomeArquivo;
                             if ($arquivo == false){
                                 die('Não foi possível criar o arquivo.');
                             }
