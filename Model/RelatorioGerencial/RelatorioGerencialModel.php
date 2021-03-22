@@ -54,8 +54,6 @@ class RelatorioGerencialModel extends BaseModel{
         if ($listaOfs[0]){
             $zip = new ZipArchive();
             $nomeArquivoZip = $this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'_ofs.zip';
-                                        ini_set('display_errors', true);
-                            error_reporting(E_ALL);
             if($zip->open($pasta.$nomeArquivoZip, ZIPARCHIVE::CREATE) == TRUE){
                 $totalRegistrosOf = count($listaOfs[1]);
                 for ($i=0;$i<$totalRegistrosOf;$i++){  
@@ -65,14 +63,11 @@ class RelatorioGerencialModel extends BaseModel{
                         if ($lista[0]){
                             $nomeUsuario = str_replace(" ", "", $listaOfs[1][$i]['NME_USUARIO_COMPLETO']);
                             $nomeArquivo='projeto_'.$this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'_'.$nomeUsuario.'_'.$listaOfs[1][$i]['COD_OF'].'.txt';
-//                            ini_set('display_errors', true);
-//                            error_reporting(E_ALL);
                             $nomeArquivo = str_replace('(', '', $nomeArquivo);
                             $nomeArquivo = str_replace(')', '', $nomeArquivo);
                             $nomeArquivo = str_replace(' ', '_', $nomeArquivo);
                             $nomeArquivo = str_replace('/', '_', $nomeArquivo);
                             $arquivo = fopen($pasta.$nomeArquivo,'w');
-//                            echo $pasta.$nomeArquivo;
                             if ($arquivo == false){
                                 die('Não foi possível criar o arquivo.');
                             }
@@ -117,6 +112,10 @@ class RelatorioGerencialModel extends BaseModel{
                         if ($lista[0]){
                             $nomeUsuario = str_replace(" ", "", $listaOfs[1][$i]['NME_USUARIO_COMPLETO']);
                             $nomeArquivo='projeto_'.$this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'_'.$nomeUsuario.'_'.$listaOfs[1][$i]['COD_OF'].'.txt';
+                            $nomeArquivo = str_replace('(', '', $nomeArquivo);
+                            $nomeArquivo = str_replace(')', '', $nomeArquivo);
+                            $nomeArquivo = str_replace(' ', '_', $nomeArquivo);
+                            $nomeArquivo = str_replace('/', '_', $nomeArquivo);
                             $arquivo = fopen($pasta.$nomeArquivo,'w');
                             echo $pasta.$nomeArquivo;
                             if ($arquivo == false){
