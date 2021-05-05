@@ -32,7 +32,7 @@ function MontaTabelaExecucao(lista){
             tabela += '         <td>'+lista[i].NME_USUARIO_COMPLETO+'</td>';
             tabela += '         <td>'+lista[i].QTD_TOTAL_PONTOS+'</td>';
             tabela += '     </tr>';
-            total += lista[i].QTD_TOTAL_PONTOS;
+            total = parseInt(total)+parseInt(lista[i].QTD_TOTAL_PONTOS);
         }
         tabela += '     <tr>';
         tabela += '         <td>TOTAL ========>>>>>>>></td>';
