@@ -41,7 +41,8 @@ class ExecucaoDao extends BaseDao
                            LEFT JOIN DISCIPLINA D ON DA.COD_DISCIPLINA = D.COD_DISCIPLINA
                            WHERE E.COD_USUARIO = '.$codUsuario.'
                            GROUP BY E.COD_EXECUCAO, CC.QTD_PONTOS) X 
-                  group by COD_EXECUCAO';
+                  group by COD_EXECUCAO
+                  order by E.COD_EXECUCAO DESC';
         return $this->selectDB($sql, false);
     }
     
