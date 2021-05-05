@@ -15,6 +15,7 @@ $(function(){
 });
 
 function MontaTabelaExecucao(lista){
+    var total = lista[2];
     lista = lista[1];
     $("#listagemExecucao").html('');
     if (lista!=null){
@@ -26,13 +27,11 @@ function MontaTabelaExecucao(lista){
         tabela += '         </tr>';        
         tabela += '     </thead>';
         tabela += '     </tbody>';
-        var total = 0;
         for (var i in lista){
             tabela += '     <tr>';
             tabela += '         <td>'+lista[i].NME_USUARIO_COMPLETO+'</td>';
             tabela += '         <td>'+lista[i].QTD_TOTAL_PONTOS+'</td>';
             tabela += '     </tr>';
-            total = parseInt(total)+parseInt(lista[i].QTD_TOTAL_PONTOS);
         }
         tabela += '     <tr>';
         tabela += '         <td>TOTAL ========>>>>>>>></td>';
