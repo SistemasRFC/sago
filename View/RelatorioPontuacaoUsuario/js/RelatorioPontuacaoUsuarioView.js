@@ -35,7 +35,7 @@ function MontaTabelaExecucao(lista){
         }
         tabela += '     <tr>';
         tabela += '         <td>TOTAL ========>>>>>>>></td>';
-        tabela += '         <td>'+total.tofixed(2)+'</td>';
+        tabela += '         <td>'+total.toFixed(2)+'</td>';
         tabela += '     </tr>';        
         tabela += '     </tbody>';
         tabela += '   </table>';
