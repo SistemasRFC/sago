@@ -42,7 +42,7 @@ class ExecucaoDao extends BaseDao
                            WHERE E.COD_USUARIO = '.$codUsuario.'
                            GROUP BY E.COD_EXECUCAO, CC.QTD_PONTOS) X 
                   group by COD_EXECUCAO
-                  order by E.COD_EXECUCAO DESC';
+                  order by COD_EXECUCAO DESC';
         return $this->selectDB($sql, false);
     }
     
