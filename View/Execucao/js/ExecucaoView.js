@@ -113,6 +113,7 @@ function MontaTabelaExecucao(listaExecucao) {
         "searching": false,
         "pagingType": "simple_numbers",
         "lengthChange" : false,
+        "order": [[ 3, "desc" ]],
         "language": {
             "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
         }
