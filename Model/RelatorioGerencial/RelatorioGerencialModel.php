@@ -127,9 +127,6 @@ class RelatorioGerencialModel extends BaseModel{
                                 if ($lista[1][$j]['TXT_DESCRICAO_JUSTIFICATIVA']!=null){
                                     $texto .= ';'.$lista[1][$j]['TXT_DESCRICAO_JUSTIFICATIVA'];
                                 }
-                                if ($lista[1][$j]['TXT_REFERENCIA_ATIVIDADE']!=null){
-                                    $texto .= ';'.$lista[1][$j]['TXT_REFERENCIA_ATIVIDADE'];
-                                }
                                 $texto .= $nl;
                                 fwrite($arquivo, $texto, strlen($texto));
                             }
