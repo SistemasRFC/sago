@@ -88,7 +88,12 @@ function MontaTabelaExecucao(lista){
                         }else{
                             LEA[iLEA].TXT_DESCRICAO_JUSTIFICATIVA="Justificativa: "+LEA[iLEA].TXT_DESCRICAO_JUSTIFICATIVA;
                         }
-                        tabela += '<td colspan="2" style="font-size: 17px">'+LEA[iLEA].NME_ARQUIVO+'<br>'+LEA[iLEA].TXT_DESCRICAO_JUSTIFICATIVA+'</td>';
+                        if (null==LEA[iLEA].TXT_REFERENCIA_ATIVIDADE){
+                            LEA[iLEA].TXT_REFERENCIA_ATIVIDADE="Referência: Sem Referência.";
+                        }else{
+                            LEA[iLEA].TXT_REFERENCIA_ATIVIDADE="Referência: "+LEA[iLEA].TXT_REFERENCIA_ATIVIDADE;
+                        }
+                        tabela += '<td colspan="2" style="font-size: 17px">'+LEA[iLEA].NME_ARQUIVO+'<br>'+LEA[iLEA].TXT_DESCRICAO_JUSTIFICATIVA+'<br>'+LEA[iLEA].TXT_REFERENCIA_ATIVIDADE+'</td>';
                         tabela += '</tr>';
                     }
                     tabela += "</table>";

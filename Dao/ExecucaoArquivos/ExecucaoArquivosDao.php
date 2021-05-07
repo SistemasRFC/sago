@@ -6,7 +6,8 @@ class ExecucaoArquivosDao extends BaseDao
 
     Protected $columns = array ("nmeArquivo"                => array("column" => "NME_ARQUIVO",                 "typeColumn" => "S"),
                                 "codExecucaoComplexidade"   => array("column" => "COD_EXECUCAO_COMPLEXIDADE",   "typeColumn" => "I"),
-                                "txtDescricaoJustificativa" => array("column" => "TXT_DESCRICAO_JUSTIFICATIVA", "typeColumn" => "S"));
+                                "txtDescricaoJustificativa" => array("column" => "TXT_DESCRICAO_JUSTIFICATIVA", "typeColumn" => "S"),
+                                "txtReferenciaAtividade"    => array("column" => "TXT_REFERENCIA_ATIVIDADE",    "typeColumn" => "S"));
 
     Protected $columnKey = array("codExecucaoArquivo"=> array("column" =>"COD_EXECUCAO_ARQUIVO", "typeColumn" => "I"));
 

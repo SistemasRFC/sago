@@ -51,6 +51,12 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        <div class="col-sm-12 mb-3 mb-sm-0">
+                            <label class="label" for="txtReferenciaAtividade">Referência da Atividade</label>
+                            <input type="text" id="txtReferenciaAtividade" name="txtReferenciaAtividade" class='persist input form-control'>
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <div class="col-sm-6 mb-3 mb-sm-0">
                             <button class='btn btn-info btn-block mb-3' id="btnLimpar">
                                 <span class="icon">
