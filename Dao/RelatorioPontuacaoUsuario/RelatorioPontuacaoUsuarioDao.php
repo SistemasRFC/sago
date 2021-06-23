@@ -17,7 +17,7 @@ class RelatorioPontuacaoUsuarioDao extends BaseDao{
                    FROM (SELECT U.COD_USUARIO,
                                 U.NME_USUARIO_COMPLETO,
                                         EC.COD_EXECUCAO_COMPLEXIDADE,
-                                        CC.QTD_PONTOS*COUNT(EA.COD_EXECUCAO_ARQUIVO) AS QTD_TOTAL_PONTOS
+                                        EC.QTD_PONTOS*COUNT(EA.COD_EXECUCAO_ARQUIVO) AS QTD_TOTAL_PONTOS
                                    FROM EXECUCAO E
                                   INNER JOIN EXECUCAO_COMPLEXIDADE EC ON E.COD_EXECUCAO = EC.COD_EXECUCAO
                                   INNER JOIN EXECUCAO_ARQUIVOS EA ON EC.COD_EXECUCAO_COMPLEXIDADE = EA.COD_EXECUCAO_COMPLEXIDADE

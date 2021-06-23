@@ -6,7 +6,8 @@ class ExecucaoComplexidadeDao extends BaseDao
 
     Protected $columns = array ("codExecucao"   => array("column" =>"COD_EXECUCAO", "typeColumn" =>"I"),
                                 "codComplexidadeComponente"   => array("column" =>"COD_COMPLEXIDADE_COMPONENTE", "typeColumn" =>"I"),
-                                "dtaRegistro"   => array("column" =>"DTA_REGISTRO", "typeColumn" =>"D"));
+                                "dtaRegistro"   => array("column" =>"DTA_REGISTRO", "typeColumn" =>"D"),
+                                "qtdPontos"     => array("column" => "QTD_PONTOS", "typeColumn" => "F"));
 
     Protected $columnKey = array("codExecucaoComplexidade"=> array("column" =>"COD_EXECUCAO_COMPLEXIDADE", "typeColumn" => "I"));
 
@@ -21,7 +22,7 @@ class ExecucaoComplexidadeDao extends BaseDao
     Public Function ListarExecucaoComplexidadePorExecucao(stdClass $obj) {
         $sql = ' SELECT EC.COD_EXECUCAO_COMPLEXIDADE,
                         EC.DTA_REGISTRO,
-                        CC.QTD_PONTOS,
+                        EC.QTD_PONTOS,
                         CMP.DSC_COMPONENTE,
                         CPX.DSC_COMPLEXIDADE,
                         COALESCE(AA.COD_TAREFA, \'\') AS COD_TAREFA,
@@ -53,7 +54,8 @@ class ExecucaoComplexidadeDao extends BaseDao
                 VALUES (".$codigo.",
                         ".$obj->codExecucao.",
                         ".$obj->codComplexidadeComponente.",
-                        NOW())";
+                        NOW(),
+                        ".$obj->qtdPontos.")";
         $result = $this->insertDB($sql);
         $result[2] = $codigo;
         return $result;
@@ -66,7 +68,8 @@ class ExecucaoComplexidadeDao extends BaseDao
                 SELECT '.$codigo.',
                        COD_EXECUCAO,
                        COD_COMPLEXIDADE_COMPONENTE,
-                       NOW()
+                       NOW(),
+                       QTD_PONTOS
                   FROM EXECUCAO_COMPLEXIDADE
                  WHERE COD_EXECUCAO_COMPLEXIDADE = '.$this->Populate('codExecucaoComplexidade', 'I');
         return $this->insertDB($sql);

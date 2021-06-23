@@ -1,6 +1,7 @@
 <?php
 include_once("Model/BaseModel.php");
 include_once("Dao/ExecucaoComplexidade/ExecucaoComplexidadeDao.php");
+include_once("Dao/ComplexidadeComponente/ComplexidadeComponenteDao.php");
 class ExecucaoComplexidadeModel extends BaseModel
 {
     public function ExecucaoComplexidadeModel() {
@@ -22,14 +23,20 @@ class ExecucaoComplexidadeModel extends BaseModel
 
     Public Function InsertExecucaoComplexidade() {
         $dao = new ExecucaoComplexidadeDao();
+        $cDao = new ComplexidadeComponenteDao();
         BaseModel::PopulaObjetoComRequest($dao->getColumns());
+        $resultCC = $cDao->GetQtdPontosPorCodComplexidadeComponente($this->objRequest);
+        $this->objRequest->qtdPontos = $resultCC[1][0]['QTD_PONTOS'];
         $result = $dao->InsertExecucaoComplexidade($this->objRequest);
         return json_encode($result);
     }
 
     Public Function UpdateExecucaoComplexidade() {
         $dao = new ExecucaoComplexidadeDao();
+        $cDao = new ComplexidadeComponenteDao();
         BaseModel::PopulaObjetoComRequest($dao->getColumns());
+        $resultCC = $cDao->GetQtdPontosPorCodComplexidadeComponente($this->objRequest);
+        $this->objRequest->qtdPontos = $resultCC[1][0]['QTD_PONTOS'];
         $result = $dao->UpdateExecucaoComplexidade($this->objRequest);
         return json_encode($result);
     }

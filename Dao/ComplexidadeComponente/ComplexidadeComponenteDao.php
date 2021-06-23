@@ -55,4 +55,8 @@ class ComplexidadeComponenteDao extends BaseDao
     Public Function InsertComplexidadeComponente(stdClass $obj) {
         return $this->MontarInsert($obj);
     }
+    
+    Public Function GetQtdPontosPorCodComplexidadeComponente(stdClass $obj){
+        return $this->MontarSelect("WHERE COD_COMPLEXIDADE_COMPONENTE = ".$obj->codComplexidadeComponente);
+    }
 }
