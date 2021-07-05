@@ -50,7 +50,7 @@ class ExecucaoComplexidadeDao extends BaseDao
 
     Public Function InsertExecucaoComplexidade(stdClass $obj) {
         $codigo = $this->CatchUltimoCodigo($this->tableName, $this->columnKey[key($this->columnKey)]['column']);
-        $sql = "INSERT INTO EXECUCAO_COMPLEXIDADE (COD_EXECUCAO_COMPLEXIDADE, COD_EXECUCAO, COD_COMPLEXIDADE_COMPONENTE, DTA_REGISTRO)
+        $sql = "INSERT INTO EXECUCAO_COMPLEXIDADE (COD_EXECUCAO_COMPLEXIDADE, COD_EXECUCAO, COD_COMPLEXIDADE_COMPONENTE, DTA_REGISTRO, QTD_PONTOS)
                 VALUES (".$codigo.",
                         ".$obj->codExecucao.",
                         ".$obj->codComplexidadeComponente.",
