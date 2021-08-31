@@ -299,5 +299,5 @@ function editarOF(codExecucaoComplexidade){
 }
 
 $(document).ready(function(){
-    ExecutaDispatch('Disciplina', 'ListarDisciplinaCombo', '', CarregaComboDisciplina);
+    ExecutaDispatch('Disciplina', 'ListarDisciplinaAtivaCombo', '', CarregaComboDisciplina);
 });

@@ -17,6 +17,10 @@ class DisciplinaDao extends BaseDao
         return $this->MontarSelect();
     }
 
+    Public Function ListarDisciplinaAtiva() {
+        return $this->MontarSelect("WHERE IND_ATIVO = 'S'");
+    }
+
     Public Function UpdateDisciplina(stdClass $obj) {
         return $this->MontarUpdate($obj);
     }

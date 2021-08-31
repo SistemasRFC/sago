@@ -21,6 +21,11 @@ class DisciplinaController extends BaseController
         echo $DisciplinaModel->ListarDisciplinaCombo();
     }
     
+    Public Function ListarDisciplinaAtivaCombo() {
+        $DisciplinaModel = new DisciplinaModel();
+        echo $DisciplinaModel->ListarDisciplinaAtivaCombo();
+    }
+    
     Public Function InsertDisciplina() {
         $DisciplinaModel = new DisciplinaModel();
         echo $DisciplinaModel->InsertDisciplina();

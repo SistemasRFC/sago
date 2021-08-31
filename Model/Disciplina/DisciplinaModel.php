@@ -46,6 +46,29 @@ class DisciplinaModel extends BaseModel
         }
     }
 
+
+    Public Function ListarDisciplinaAtivaCombo($Json=true) {
+        $dao = new DisciplinaDao();
+        $lista = $dao->ListarDisciplinaAtiva();
+        $return[0] = false;
+        $return[1][0]['ID'] = "-1";        
+        $return[1][0]['DSC'] = "(Selecione)";
+        if ($lista[0]){
+            $return[0] = true;
+            $c = count($lista[1]);
+            for ($i=0;$i<$c;$i++){
+                $return[1][$i+1]['ID'] = $lista[1][$i]['COD_DISCIPLINA'];
+                $return[1][$i+1]['DSC'] = $lista[1][$i]['DSC_DISCIPLINA'];
+            }
+        }
+        $lista = $return;
+        if ($Json){
+            return json_encode($lista);
+        }else{
+            return $lista;
+        }
+    }
+
     Public Function InsertDisciplina() {
         $dao = new DisciplinaDao();
         BaseModel::PopulaObjetoComRequest($dao->getColumns());
