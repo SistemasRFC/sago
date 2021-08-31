@@ -12,6 +12,7 @@
             <div class="modal-body">
             <form>
                 <input type="hidden" id="codAtividade" name="codAtividade" value="0" class="persist">
+                <input type="hidden" id="method" name="method">
                 <div class="form-group row">
                     <div class="col-sm-10 mb-3 mb-sm-0">
                         <label class="label" for="dscAtividade">Descrição</label>
