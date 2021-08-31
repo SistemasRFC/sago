@@ -41,7 +41,7 @@ function InsereExecucaoComplexidade(){
 }
 
 function LimparCamposExecucao(){
-    ExecutaDispatchValor('Disciplina', 'ListarDisciplinaCombo', '', CarregaComboDisciplina);
+    ExecutaDispatchValor('Disciplina', 'ListarDisciplinaAtivaCombo', '', CarregaComboDisciplina);
     $("#tdcodDisciplinaAtividade").html('');
     $("#tdcodAtividadeArtefato").html('');
     $("#tdcodArtefatoComplexidade").html('');
