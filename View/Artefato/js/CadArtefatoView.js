@@ -5,7 +5,7 @@ $(function () {
 });
 
 function salvarArtefato() {
-    if ($('#codArtefato').val() == '') {
+    if ($('#codArtefato').val() == 0) {
         $("#method").val('InsertArtefato');
     } else {
         $("#method").val('UpdateArtefato');

@@ -5,7 +5,7 @@ $(function () {
 });
 
 function salvarComplexidade() {
-    if ($('#codComplexidade').val() == '') {
+    if ($('#codComplexidade').val() == 0) {
         $("#method").val('InsertComplexidade');
     } else {
         $("#method").val('UpdateComplexidade');

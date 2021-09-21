@@ -5,7 +5,7 @@ $(function () {
 });
 
 function salvarDisciplina() {
-    if ($('#codDisciplina').val() == '') {
+    if ($('#codDisciplina').val() == 0) {
         $("#method").val('InsertDisciplina');
     } else {
         $("#method").val('UpdateDisciplina');

@@ -5,7 +5,7 @@ $(function () {
 });
 
 function salvarAtividade() {
-    if ($('#codAtividade').val() == '') {
+    if ($('#codAtividade').val() == 0) {
         $("#method").val('InsertAtividade');
     } else {
         $("#method").val('UpdateAtividade');

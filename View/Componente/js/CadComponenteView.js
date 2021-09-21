@@ -5,7 +5,7 @@ $(function () {
 });
 
 function salvarComponente() {
-    if ($('#codComponente').val() == '') {
+    if ($('#codComponente').val() == 0) {
         $("#method").val('InsertComponente');
     } else {
         $("#method").val('UpdateComponente');
