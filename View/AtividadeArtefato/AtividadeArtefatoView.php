@@ -36,6 +36,8 @@
                                     <!-- Card Body -->
                                     <div class="card-body">
                                         <form>
+                                            <input type="hidden" id="method" value=''>
+                                            <input type="hidden" id="codAtividadeArtefato" value='' class='persist'>
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <label class="label" for="codDisciplina">Disciplina</label>
