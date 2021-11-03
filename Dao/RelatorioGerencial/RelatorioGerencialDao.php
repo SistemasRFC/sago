@@ -13,14 +13,31 @@ class RelatorioGerencialDao extends BaseDao{
     Protected $columnKey = array();
 
     Public Function ListarRelatorioGerencial(stdClass $obj){
-        $sql = ' SELECT E.COD_EXECUCAO,
+        $sql = ' SELECT COD_EXECUCAO,
+                        COD_OF,
+                        NRO_ORDEM_CONTRATACAO,
+                        NME_USUARIO_COMPLETO,
+                        COD_CHAVE,
+                        IND_STATUS,
+                        SUM(QTD_PONTOS) AS QTD_TOTAL
+                   FROM (
+                 SELECT E.COD_EXECUCAO,
                         E.COD_OF,
+                        E.NRO_ORDEM_CONTRATACAO,
                         U.NME_USUARIO_COMPLETO,
-                        E.IND_STATUS
+                        U.COD_CHAVE,
+                        E.IND_STATUS,
+                        EC.QTD_PONTOS*COUNT(EA.COD_EXECUCAO_ARQUIVO) QTD_PONTOS 
                    FROM EXECUCAO E
-                  INNER JOIN SE_USUARIO U ON E.COD_USUARIO = U.COD_USUARIO
+                  INNER JOIN SE_USUARIO U ON E.COD_USUARIO = U.COD_USUARIO  
+                   LEFT JOIN EXECUCAO_COMPLEXIDADE EC ON E.COD_EXECUCAO = EC.COD_EXECUCAO
+                   LEFT JOIN EXECUCAO_ARQUIVOS EA ON EC.COD_EXECUCAO_COMPLEXIDADE = EA.COD_EXECUCAO_COMPLEXIDADE
                   WHERE E.NRO_MES_REFERENCIA = '.$obj->nroMesReferencia.'
-                    AND E.NRO_ANO_REFERENCIA = '.$obj->nroAnoReferencia;
+                    AND E.NRO_ANO_REFERENCIA = '.$obj->nroAnoReferencia.'
+                  GROUP BY EC.COD_EXECUCAO_COMPLEXIDADE
+                  ) AS A
+                  GROUP BY NME_USUARIO_COMPLETO';
+;
         return $this->selectDB($sql, false);
     }
     
@@ -69,7 +86,9 @@ class RelatorioGerencialDao extends BaseDao{
     
     Public Function GerarArquivosOrcamento(stdClass $obj){
         $sql = 'SELECT EA.NME_ARQUIVO,
-                       EA.TXT_DESCRICAO_JUSTIFICATIVA
+                       EA.TXT_DESCRICAO_JUSTIFICATIVA,
+                       EC.QTD_PONTOS,
+                       AA.COD_TAREFA
                    FROM EXECUCAO_COMPLEXIDADE EC
                   INNER JOIN COMPLEXIDADE_COMPONENTE CC ON EC.COD_COMPLEXIDADE_COMPONENTE = CC.COD_COMPLEXIDADE_COMPONENTE
                   INNER JOIN COMPONENTE CMP ON CC.COD_COMPONENTE = CMP.COD_COMPONENTE

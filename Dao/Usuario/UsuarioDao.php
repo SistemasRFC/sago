@@ -12,7 +12,8 @@ class UsuarioDao extends BaseDao {
                                 "codPerfilW"            => array("column" =>"COD_PERFIL_W", "typeColumn" =>"I"),
                                 "indAtivo"              => array("column" =>"IND_ATIVO", "typeColumn" =>"S"),
                                 "nroCpf"                => array("column" =>"NRO_CPF", "typeColumn" =>"S"),
-                                "codProjeto"            => array("column" =>"COD_PROJETO", "typeColumn" => "I"));
+                                "codProjeto"            => array("column" =>"COD_PROJETO", "typeColumn" => "I"),
+                                "codChave"              => array("column" =>"COD_CHAVE", "typeColumn" => "S"));
     
     Protected $columnKey = array("codUsuario"          => array("column" => "COD_USUARIO", "typeColumn" => "I"));
 
@@ -30,7 +31,8 @@ class UsuarioDao extends BaseDao {
                         P.DSC_PERFIL_W,
                         U.IND_ATIVO,
                         U.COD_PROJETO,
-                        PR.DSC_PROJETO
+                        PR.DSC_PROJETO,
+                        U.COD_CHAVE
                    FROM SE_USUARIO U
                   INNER JOIN SE_PERFIL P
                      ON U.COD_PERFIL_W = P.COD_PERFIL_W
@@ -65,7 +67,8 @@ class UsuarioDao extends BaseDao {
                               IND_ATIVO,
                               TXT_EMAIL,
                               NRO_CPF,
-                              COD_PROJETO)
+                              COD_PROJETO,
+                              COD_CHAVE)
                        VALUES (
                               $codUsuario,
                               '" . filter_input(INPUT_POST, 'nmeUsuario', FILTER_SANITIZE_MAGIC_QUOTES) . "',
@@ -75,7 +78,8 @@ class UsuarioDao extends BaseDao {
                               '" . filter_input(INPUT_POST, 'indAtivo', FILTER_SANITIZE_STRING) . "',
                               '" . filter_input(INPUT_POST, 'txtEmail', FILTER_SANITIZE_STRING) . "',
                               '" . filter_input(INPUT_POST, 'nroCpf', FILTER_SANITIZE_STRING) . "',
-                              " . filter_input(INPUT_POST, 'codProjeto', FILTER_SANITIZE_NUMBER_INT) . ")";
+                              " . filter_input(INPUT_POST, 'codProjeto', FILTER_SANITIZE_NUMBER_INT) . ",
+                              '" . filter_input(INPUT_POST, 'codChave', FILTER_SANITIZE_STRING) . "')";
         $result = $this->insertDB("$sql_lista");
         if ($result[0]) {
             $result[1] = $codUsuario;
@@ -92,7 +96,8 @@ class UsuarioDao extends BaseDao {
                               COD_PERFIL_W         = '" . filter_input(INPUT_POST, 'codPerfilW', FILTER_SANITIZE_NUMBER_INT) . "',
                               IND_ATIVO            = '" . filter_input(INPUT_POST, 'indAtivo', FILTER_SANITIZE_STRING) . "',
                               COD_PROJETO          = " . filter_input(INPUT_POST, 'codProjeto', FILTER_SANITIZE_NUMBER_INT) . ",
-                              NRO_CPF              = '". filter_input(INPUT_POST, 'nroCpf', FILTER_SANITIZE_STRING) . "'
+                              NRO_CPF              = '". filter_input(INPUT_POST, 'nroCpf', FILTER_SANITIZE_STRING) . "',
+                              COD_CHAVE            = '". filter_input(INPUT_POST, 'codChave', FILTER_SANITIZE_STRING) . "'
                         WHERE COD_USUARIO = " . filter_input(INPUT_POST, 'codUsuario', FILTER_SANITIZE_NUMBER_INT);
         $result = $this->insertDB("$sql_lista");
         if ($result[0]) {

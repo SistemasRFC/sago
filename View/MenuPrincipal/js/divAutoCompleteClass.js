@@ -1,6 +1,6 @@
 class divAutoCompleteClass{
 
-	constructor{
+	constructor(){
 		this._nmeDiv;
 		this._nmeInput;
 		this._url;

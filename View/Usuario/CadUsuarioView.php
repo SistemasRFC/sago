@@ -31,7 +31,11 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <div class="col-sm-8">
+                    <div class="col-sm-6">
+                        <label class="label" for="codChave">Chave BB</label>
+                        <input type="text" id="codChave" name="codChave" class='persist input form-control'>
+                    </div>                    
+                    <div class="col-sm-6">
                         <label class="label" for="txtEmail">E-mail</label>
                         <input type="text" id="txtEmail" name="txtEmail" class='persist input form-control'>
                     </div>

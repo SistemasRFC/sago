@@ -68,6 +68,6 @@ class combo{
 		}
 		select += '</select>';
 		$("#td"+this._nmeCombo).html(select);
-		$("#"+this._nmeCombo).jqxDropDownList({{dropDownHeight: this._altura+'px', width: this_largura+'px', disabled: this._disabled});
+		$("#"+this._nmeCombo).jqxDropDownList({dropDownHeight: this._altura+'px', width: this_largura+'px', disabled: this._disabled});
 	}
 }

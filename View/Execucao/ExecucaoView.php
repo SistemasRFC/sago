@@ -48,15 +48,19 @@
 
                                         <div id="cadNovaOF">
                                             <div class="form-group row">
-                                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                                <div class="col-sm-3 mb-3 mb-sm-0">
                                                     <label class="label" for="codOf">O.F.</label>
                                                     <input type="text" id="codOf" name="codOf" class='persist form-control'>
                                                 </div>
-                                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                                <div class="col-sm-3 mb-3 mb-sm-0">
+                                                    <label class="label" for="nroOrdemContratacao">Ordem Contratação</label>
+                                                    <input type="text" id="nroOrdemContratacao" name="nroOrdemContratacao" class='persist form-control'>
+                                                </div>                                                
+                                                <div class="col-sm-3 mb-3 mb-sm-0">
                                                     <label class="label" for="nroMesReferencia">Mês referência</label>
                                                     <div id="tdnroMesReferencia"></div>
                                                 </div>
-                                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                                <div class="col-sm-3 mb-3 mb-sm-0">
                                                     <label class="label" for="nroAnoReferencia">Ano referência</label>
                                                     <div id="tdnroAnoReferencia"></div>
                                                 </div>

@@ -138,5 +138,77 @@ class RelatorioGerencialModel extends BaseModel{
             }
         }
         return json_encode(array(true, array('nomeArquivo'=> $nomeArquivoZip, 'pasta'=> $pasta)));
+    }     
+    
+    Public Function GerarJson(){
+        $dao = new RelatorioGerencialDao();
+        BaseModel::PopulaObjetoComRequest($dao->getColumns());
+        $listaOfs = $dao->ListarRelatorioGerencial($this->objRequest);
+        $pasta = 'Resources/arquivos/'.$this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'/arquivos/';
+        if (!is_dir($pasta)){
+            mkdir($pasta, 0777, true);
+        }
+        if ($listaOfs[0]){
+            $zip = new ZipArchive();
+            $nomeArquivoZip = $this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'_arquivos.zip';
+            if($zip->open($pasta.$nomeArquivoZip, ZIPARCHIVE::CREATE) == TRUE){
+                $totalRegistrosOf = count($listaOfs[1]);
+                $retorno = "";
+                for ($i=0;$i<$totalRegistrosOf;$i++){ 
+                    if ($listaOfs[1][$i]['IND_STATUS']=='F'){
+                        $retorno='{"chave":"'.$listaOfs[1][$i]['COD_CHAVE'].'",
+                                   "numeroOF":"'.$listaOfs[1][$i]['COD_OF'].'",
+                                   "numeroOrdemContratacao":"'.$listaOfs[1][$i]['NRO_ORDEM_CONTRATACAO'].'",
+                                   "valorOF":'.$listaOfs[1][$i]['QTD_TOTAL'].',
+                                   "entregas":[';
+                        $this->objRequest->codExecucao = $listaOfs[1][$i]['COD_EXECUCAO'];
+                        $lista = $dao->GerarArquivosOrcamento($this->objRequest);
+                        if ($lista[0]){
+                            $nomeUsuario = str_replace(" ", "", $listaOfs[1][$i]['NME_USUARIO_COMPLETO']);
+                            $nomeArquivo='projeto_'.$this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'_'.$nomeUsuario.'_'.$listaOfs[1][$i]['COD_OF'].'.txt';
+                            $nomeArquivo = str_replace('(', '', $nomeArquivo);
+                            $nomeArquivo = str_replace(')', '', $nomeArquivo);
+                            $nomeArquivo = str_replace(' ', '_', $nomeArquivo);
+                            $nomeArquivo = str_replace('/', '_', $nomeArquivo);
+                            $arquivo = fopen($pasta.$nomeArquivo,'w');
+                            if ($arquivo == false){
+                                die('Não foi possível criar o arquivo.');
+                            }
+                            $totalRegistros = count($lista[1]);
+                            $nl=chr(10);
+                            $valorOf=0;
+                            $codTarefaAnterior=0;
+                            for ($j=0;$j<$totalRegistros;$j++){
+                                if ($codTarefaAnterior!=$lista[1][$j]['COD_TAREFA']){
+                                    if ($codTarefaAnterior!=0){
+                                        $retorno = substr($retorno, 0, strlen($retorno)-1);
+                                        $retorno .="]
+                                                },";
+                                    }
+                                    $retorno .= "{";
+                                    $retorno .= '"itemGuia":"'.$lista[1][$j]['COD_TAREFA'].'",
+                                                 "complexidade":"Padrão",
+                                                 "itens": [';
+                                    
+                                }
+                                $retorno.='{"artefato":"'.$lista[1][$j]['NME_ARQUIVO'].'",';
+                                $retorno.=' "descricao":"'.$lista[1][$j]['TXT_DESCRICAO_JUSTIFICATIVA'].'"},';
+                                $valorOf+=$lista[1][$j]['QTD_PONTOS'];
+                                $codTarefaAnterior = $lista[1][$j]['COD_TAREFA'];       
+                            }
+                            $retorno = substr($retorno, 0, strlen($retorno)-1);
+                            $retorno .="]}";                            
+                            $retorno .= "]}
+                                    ";                            
+                            fwrite($arquivo, $retorno, strlen($retorno));
+                            fclose($arquivo);
+                        }
+                        $zip->addFile($pasta.$nomeArquivo,$nomeArquivo);
+                    }
+                }
+
+            }
+        }
+        return json_encode(array(true, array('nomeArquivo'=> $nomeArquivoZip, 'pasta'=> $pasta)));
     }    
 }

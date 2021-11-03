@@ -19,7 +19,7 @@
                     <!-- Cabecalho -->
                     <?php include_once PATH."View/MenuPrincipal/Cabecalho.php";?>
                     <!-- Fim Cabecalho -->
-
+<input type="hidden" id="verificaPermissao" name="verificaPermissao" value="N" class="persist">
                     <!-- Conteúdo -->
                     <div class="container-fluid">
 
@@ -54,7 +54,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <div class="col-sm-4 pr-1">
+                                            <div class="col-sm-3 pr-1">
                                                 <button id="btnPesquisar" class='btn btn-primary btn-block'>
                                                     <span class="icon text-white-40">
                                                         <i class="fas fa-search"></i>
@@ -62,7 +62,7 @@
                                                     <span class="text">Pesquisar</span>
                                                 </button>
                                             </div>
-                                            <div class="col-sm-4 pl-1 pr-1">
+                                            <div class="col-sm-3 pl-1 pr-1">
                                                 <button id="btnPesquisarSumarizado" class='btn btn-warning btn-block'>
                                                     <span class="icon text-white-40">
                                                         <i class="far fa-file-excel"></i>
@@ -70,7 +70,7 @@
                                                     <span class="text">Gerar Orçamento</span>
                                                 </button>
                                             </div>
-                                            <div class="col-sm-4 pl-1">
+                                            <div class="col-sm-3 pl-1">
                                                 <button id="btnPesquisarArquivos" class='btn btn-info btn-block'>
                                                     <span class="icon text-white-40">
                                                         <i class="far fa-file-archive"></i>
@@ -78,6 +78,14 @@
                                                     <span class="text">Gerar Arquivos</span>
                                                 </button>
                                             </div>
+                                            <div class="col-sm-3 pl-1">
+                                                <button id="btnGerarJson" class='btn btn-success btn-block'>
+                                                    <span class="icon text-white-40">
+                                                        <i class="far fa-file-archive"></i>
+                                                    </span>
+                                                    <span class="text">Gerar JSON</span>
+                                                </button>
+                                            </div>                                            
                                         </div>
 
                                         <!-- <hr>

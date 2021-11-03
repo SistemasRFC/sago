@@ -8,7 +8,6 @@
     </head>
 
     <body id="page-top">
-
         <div id="wrapper">
             <!-- Navegacao -->
             <?php include_once PATH."View/MenuPrincipal/Navegacao.php";?>

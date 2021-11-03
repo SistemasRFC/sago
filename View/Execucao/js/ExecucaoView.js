@@ -66,6 +66,7 @@ function MontaTabelaExecucao(listaExecucao) {
     html +='        <tr>';
     html +='            <th style="vertical-align: middle">Código</th>';
     html +='            <th style="vertical-align: middle" width="45%">O.F.</th>';
+    html +='            <th style="vertical-align: middle" width="45%">Ordem Contratação</th>';
     html +='            <th style="vertical-align: middle">Pontuação</th>';
     html +='            <th style="vertical-align: middle" class="text-center">Status</th>';
     html +='            <th style="vertical-align: middle" class="text-center">Período referência</th>';
@@ -77,6 +78,7 @@ function MontaTabelaExecucao(listaExecucao) {
         html +='    <tr>';
         html +='        <td>'+listaExecucao[i].COD_EXECUCAO+'</td>';
         html +='        <td>'+listaExecucao[i].COD_OF+'</td>';
+        html +='        <td>'+listaExecucao[i].NRO_ORDEM_CONTRATACAO+'</td>';
         html +='        <td>'+listaExecucao[i].QTD_PONTOS_TOTAL+'</td>';
         html +='        <td class="text-center">'+listaExecucao[i].IND_STATUS+'</td>';
         html +='        <td class="text-right">'+listaExecucao[i].PERIODO_REFERENCIA+'</td>';

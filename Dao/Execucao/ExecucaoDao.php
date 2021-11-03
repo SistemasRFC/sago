@@ -8,7 +8,8 @@ class ExecucaoDao extends BaseDao
                                 "codUsuario"   => array("column" =>"COD_USUARIO", "typeColumn" =>"I"),
                                 "indStatus"   => array("column" =>"IND_STATUS", "typeColumn" =>"S"),
                                 "nroMesReferencia"   => array("column" =>"NRO_MES_REFERENCIA", "typeColumn" =>"I"),
-                                "nroAnoReferencia"   => array("column" =>"NRO_ANO_REFERENCIA", "typeColumn" =>"I"));
+                                "nroAnoReferencia"   => array("column" =>"NRO_ANO_REFERENCIA", "typeColumn" =>"I"),
+                                "nroOrdemContratacao"   => array("column" =>"NRO_ORDEM_CONTRATACAO", "typeColumn" =>"I"));
 
     Protected $columnKey = array("codExecucao"=> array("column" =>"COD_EXECUCAO", "typeColumn" => "I"));
 
@@ -17,9 +18,10 @@ class ExecucaoDao extends BaseDao
     }
 
     Public Function ListarExecucao($codUsuario) {
-        $sql = ' SELECT COD_EXECUCAO, COD_OF, SUM(QTD_PONTOS_TOTAL) as QTD_PONTOS_TOTAL, IND_STATUS, NRO_MES_REFERENCIA, NRO_ANO_REFERENCIA, PERIODO_REFERENCIA
+        $sql = ' SELECT COD_EXECUCAO, COD_OF, NRO_ORDEM_CONTRATACAO, SUM(QTD_PONTOS_TOTAL) as QTD_PONTOS_TOTAL, IND_STATUS, NRO_MES_REFERENCIA, NRO_ANO_REFERENCIA, PERIODO_REFERENCIA
                    FROM (SELECT E.COD_EXECUCAO,
                                 E.COD_OF,
+                                E.NRO_ORDEM_CONTRATACAO,
                                 COALESCE(CC.QTD_PONTOS*(COUNT(EA.COD_EXECUCAO_ARQUIVO)),0) AS QTD_PONTOS_TOTAL,
                                 CASE E.IND_STATUS WHEN "E" THEN "Em execução"
                                                   WHEN "F" THEN "Finalizada"

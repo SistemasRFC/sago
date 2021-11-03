@@ -37,6 +37,19 @@ $(function(){
         } 
         var parametros = retornaParametros();
         Download('RelatorioGerencial', 'GerarArquivosOrcamento', parametros);
+    });  
+    $("#btnGerarJson").click(function(){
+        if ($("#nroMesReferencia").val() == 0 || $("#nroAnoReferencia").val() == 0) {
+            swal({
+                title: "Aviso!",
+                text: "Selecione o Mês e o Ano!",
+                showConfirmButton: true,
+                type: "info"
+            });            
+            return false;
+        } 
+        var parametros = retornaParametros();
+        Download('RelatorioGerencial', 'GerarJson', parametros);
     });   
 });
 

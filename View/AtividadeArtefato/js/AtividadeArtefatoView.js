@@ -2,6 +2,7 @@ $(function () {
     $("#btnInserir").click(function(){
         var parametros = retornaParametros();
         parametros += "indAtivo;S";
+        alert($("#method").val());
         ExecutaDispatch('AtividadeArtefato', $("#method").val(), parametros, AtualizaDados, "Aguarde, salvando vínculo", "Vínculo salvo com sucesso");
     });
 

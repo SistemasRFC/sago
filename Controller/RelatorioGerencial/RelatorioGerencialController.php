@@ -29,4 +29,10 @@ class RelatorioGerencialController  extends BaseController{
         $nomeArquivo = $RelatorioGerencialModel->GerarArquivosOrcamento();
         echo $nomeArquivo;
     }
+    
+    Public Function GerarJson(){
+        $RelatorioGerencialModel = new RelatorioGerencialModel();
+        $nomeArquivo = $RelatorioGerencialModel->GerarJson();
+        echo $nomeArquivo;
+    }
 }
