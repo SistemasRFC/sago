@@ -165,7 +165,7 @@ class RelatorioGerencialModel extends BaseModel{
                         $lista = $dao->GerarArquivosOrcamento($this->objRequest);
                         if ($lista[0]){
                             $nomeUsuario = str_replace(" ", "", $listaOfs[1][$i]['NME_USUARIO_COMPLETO']);
-                            $nomeArquivo='projeto_'.$this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'_'.$nomeUsuario.'_'.$listaOfs[1][$i]['COD_OF'].'.txt';
+                            $nomeArquivo='projeto_'.$this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'_'.$nomeUsuario.'_'.$listaOfs[1][$i]['COD_OF'].'.json';
                             $nomeArquivo = str_replace('(', '', $nomeArquivo);
                             $nomeArquivo = str_replace(')', '', $nomeArquivo);
                             $nomeArquivo = str_replace(' ', '_', $nomeArquivo);
