@@ -90,7 +90,7 @@ class MenuPrincipalDao extends BaseDao
         return $this->selectDB($sql, false);
     }
 
-    public function BuscarPontuacaoMesAtual($codUsuario) {
+    public function BuscarPontuacaoMesAtual($codUsuario, $mes, $ano) {
         $select = " SELECT COD_EXECUCAO,
                            SUM(QTD_TOTAL_PONTOS) AS PONTUACAO_ATUAL
                       FROM (SELECT E.COD_EXECUCAO,
@@ -100,9 +100,9 @@ class MenuPrincipalDao extends BaseDao
                              INNER JOIN EXECUCAO_COMPLEXIDADE EC ON E.COD_EXECUCAO = EC.COD_EXECUCAO
                              INNER JOIN EXECUCAO_ARQUIVOS EA ON EC.COD_EXECUCAO_COMPLEXIDADE = EA.COD_EXECUCAO_COMPLEXIDADE
                              INNER JOIN COMPLEXIDADE_COMPONENTE CC ON EC.COD_COMPLEXIDADE_COMPONENTE = CC.COD_COMPLEXIDADE_COMPONENTE
-                             WHERE NRO_ANO_REFERENCIA = YEAR(NOW())
+                             WHERE NRO_ANO_REFERENCIA = $ano
                                AND COD_USUARIO = $codUsuario
-                               AND NRO_MES_REFERENCIA = MONTH(NOW())
+                               AND NRO_MES_REFERENCIA = $mes
                              GROUP BY E.COD_EXECUCAO, CC.QTD_PONTOS) AS X
                      GROUP BY COD_EXECUCAO";
         return $this->selectDB($select, false);
