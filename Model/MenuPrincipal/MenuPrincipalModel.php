@@ -63,16 +63,16 @@ class MenuPrincipalModel extends BaseModel
     Public Function BuscarDadosIniciais() {
         $dao = new MenuPrincipalDao();
         $lista = $dao->BuscarDados($_SESSION['cod_usuario']);
-        $mes = date('m');
+        $mes = date('m')+1;
         $ano = date('Y');
-        if ($mes==12){
+        if ($mes==13){
             $mes=1;
             $ano++;
         }
         $listaPontosMes = $dao->BuscarPontuacaoMesAtual($_SESSION['cod_usuario'], $mes, $ano);
         $lista[1]['PONTUACAO_MES_ATUAL'] = $listaPontosMes[1];
-        $listaPontosSemestre = $dao->BuscarPontuacaoSemestreAtual($_SESSION['cod_usuario']);
-        $lista[1]['PONTUACAO_SEMESTRE_ATUAL'] = $listaPontosSemestre[1];
+        $listaPontosAno = $dao->BuscarPontuacaoAnoAtual($_SESSION['cod_usuario']);
+        $lista[1]['PONTUACAO_GRAFICO'] = $listaPontosAno[1];
 
         return json_encode($lista);
     }

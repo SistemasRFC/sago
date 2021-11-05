@@ -108,7 +108,7 @@ class MenuPrincipalDao extends BaseDao
         return $this->selectDB($select, false);
     }
 
-    public function BuscarPontuacaoSemestreAtual($codUsuario) {
+    public function BuscarPontuacaoAnoAtual($codUsuario) {
         $select = " SELECT NRO_MES_REFERENCIA,
                            SUM(QTD_TOTAL_PONTOS) AS QTD_TOTAL_PONTOS
                       FROM (SELECT E.NRO_MES_REFERENCIA,
@@ -118,12 +118,11 @@ class MenuPrincipalDao extends BaseDao
                              INNER JOIN EXECUCAO_COMPLEXIDADE EC ON E.COD_EXECUCAO = EC.COD_EXECUCAO
                              INNER JOIN EXECUCAO_ARQUIVOS EA ON EC.COD_EXECUCAO_COMPLEXIDADE = EA.COD_EXECUCAO_COMPLEXIDADE
                              INNER JOIN COMPLEXIDADE_COMPONENTE CC ON EC.COD_COMPLEXIDADE_COMPONENTE = CC.COD_COMPLEXIDADE_COMPONENTE
-                             WHERE NRO_ANO_REFERENCIA = YEAR(NOW())
-                               AND COD_USUARIO = $codUsuario";
-        if(date('m') <= 6) {
-            $select .= "       AND E.NRO_MES_REFERENCIA IN (1,2,3,4,5,6)";
+                             WHERE COD_USUARIO = $codUsuario";
+        if(date('m') == 12) {
+            $select .= "       AND NRO_ANO_REFERENCIA = YEAR(NOW())+1";
         } else {
-            $select .= "       AND E.NRO_MES_REFERENCIA IN (7,8,9,10,11,12)";
+            $select .= "       AND NRO_ANO_REFERENCIA = YEAR(NOW())";
         }
         $select .= "         GROUP BY E.NRO_MES_REFERENCIA, EC.COD_EXECUCAO_COMPLEXIDADE) AS X
                      GROUP BY NRO_MES_REFERENCIA

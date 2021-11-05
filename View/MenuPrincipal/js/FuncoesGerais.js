@@ -627,28 +627,15 @@ function CriarGraficoBarras(nmeCampo, dados) {
 function CriarGraficoArea(nmeCampo, dados) {
     var campo = document.getElementById(""+nmeCampo+"");
     var valores = [];
-    var labelMeses = [];
-    if(new Date().getMonth() <= 5) {
-        labelMeses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho"];
-        for (var i in labelMeses) {
-            var ref = parseInt(i) + parseInt(1);
-            var valMesAtual = dados.filter(elm => elm.NRO_MES_REFERENCIA == ref);
-            if(valMesAtual.length > 0) {
-                valores.push(valMesAtual[0].QTD_TOTAL_PONTOS);
-            } else {
-                valores.push(0);
-            }
-        }
-    } else {
-        labelMeses = ["Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-        for (var i in labelMeses) {
-            var ref = parseInt(i) + parseInt(7);
-            var valMesAtual = dados.filter(elm => elm.NRO_MES_REFERENCIA == ref);
-            if(valMesAtual.length > 0) {
-                valores.push(valMesAtual[0].QTD_TOTAL_PONTOS);
-            } else {
-                valores.push(0);
-            }
+    var labelMeses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+    "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+    for (var i in labelMeses) {
+        var ref = parseInt(i) + parseInt(1);
+        var valMesAtual = dados.filter(elm => elm.NRO_MES_REFERENCIA == ref);
+        if(valMesAtual.length > 0) {
+            valores.push(valMesAtual[0].QTD_TOTAL_PONTOS);
+        } else {
+            valores.push(0);
         }
     }
     new Chart(campo, {
