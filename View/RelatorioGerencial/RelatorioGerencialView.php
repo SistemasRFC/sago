@@ -19,7 +19,7 @@
                     <!-- Cabecalho -->
                     <?php include_once PATH."View/MenuPrincipal/Cabecalho.php";?>
                     <!-- Fim Cabecalho -->
-<input type="hidden" id="verificaPermissao" name="verificaPermissao" value="N" class="persist">
+                    <input type="hidden" id="verificaPermissao" name="verificaPermissao" value="N" class="persist">
                     <!-- Conteúdo -->
                     <div class="container-fluid">
 

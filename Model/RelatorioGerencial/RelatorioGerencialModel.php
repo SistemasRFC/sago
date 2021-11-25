@@ -150,7 +150,7 @@ class RelatorioGerencialModel extends BaseModel{
         }
         if ($listaOfs[0]){
             $zip = new ZipArchive();
-            $nomeArquivoZip = $this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'_arquivos.zip';
+            $nomeArquivoZip = $this->objRequest->nroMesReferencia.$this->objRequest->nroAnoReferencia.'_json.zip';
             if($zip->open($pasta.$nomeArquivoZip, ZIPARCHIVE::CREATE) == TRUE){
                 $totalRegistrosOf = count($listaOfs[1]);
                 $retorno = "";

@@ -106,7 +106,7 @@ class RelatorioGerencialDao extends BaseDao{
                     AND E.COD_EXECUCAO = '.$obj->codExecucao.'
                     AND E.IND_STATUS = \'F\'
                   ORDER by AA.COD_TAREFA, D.DSC_DISCIPLINA, ATV.DSC_ATIVIDADE,
-                  ART.DSC_ARTEFATO, CPX.DSC_COMPLEXIDADE';
+                  ART.DSC_ARTEFATO, CPX.DSC_COMPLEXIDADE, EA.NME_ARQUIVO';
         return $this->selectDB($sql, false);
     }
 }
