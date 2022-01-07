@@ -203,10 +203,15 @@ function MontaListaExecucao(lista){
                 var indice=l+1;
                 tabela += "         <tr>";
                 tabela += "             <td style='border: 1px solid #000000;'>"+indice+"</td>";
-                if(lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO.length > 72) {
-                    tabela += "             <td style='border: 1px solid #000000;' title='"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO+"'>"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO.substring(0, 72)+"...</td>";
+                if(lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO != null &&
+                lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO != '') {
+                    if(lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO.length > 72) {
+                        tabela += "             <td style='border: 1px solid #000000;' title='"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO+"'>"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO.substring(0, 72)+"...</td>";
+                    } else {
+                        tabela += "             <td style='border: 1px solid #000000;' title='"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO+"'>"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO+"</td>";
+                    }
                 } else {
-                    tabela += "             <td style='border: 1px solid #000000;' title='"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO+"'>"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].NME_ARQUIVO+"</td>";
+                    tabela += "             <td style='border: 1px solid #000000;' > NULL (Exclui que deu ruim!) </td>";
                 }
                 if (lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA != null &&
                 lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA != ''){

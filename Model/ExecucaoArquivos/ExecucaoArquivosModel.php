@@ -46,6 +46,11 @@ class ExecucaoArquivosModel extends BaseModel
         $dao = new ExecucaoArquivosDao();
         BaseModel::PopulaObjetoComRequest($dao->getColumns());
         $this->objRequest->codExecucao = $dao->Populate("codExecucao", "I");
+        if (!isset($this->objRequest->nmeArquivo) || trim($this->objRequest->nmeArquivo) == ''){
+            $result[0]=false;
+            $result[1]="Nenhum arquivo foi informado!";
+            return json_encode($result);
+        }
         if (!isset($this->objRequest->txtDescricaoJustificativa)){
             $this->objRequest->txtDescricaoJustificativa='';
         }
@@ -56,7 +61,7 @@ class ExecucaoArquivosModel extends BaseModel
                 $result[1]="Já existe este mesmo artefato nesta OF!";
             }
         }
-        return json_encode($result);        
+        return json_encode($result);
     }
     
 }
