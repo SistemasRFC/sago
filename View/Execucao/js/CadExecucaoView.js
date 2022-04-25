@@ -102,9 +102,17 @@ function CarregaComboArtefato(arrDados, valor, disabled) {
 
 function CarregaComboComplexidade(arrDados, valor, disabled) {
     if (valor==undefined){
-        valor = 0;
+        if(arrDados[1].length==2){
+            valor = arrDados[1][1]['ID'];
+        } else {
+            valor = 0;
+        }
     }    
     CriarSelectPuro('codArtefatoComplexidade', arrDados, valor, disabled);
+    if(valor != 0) {
+        var parametros = 'codArtefatoComplexidade;'+$("#codArtefatoComplexidade").val();
+        ExecutaDispatch('Componente', 'ListarComponentePorArtefatoComplexidadeCombo', parametros, CarregaComboComponente);
+    }
     $("#codArtefatoComplexidade").change(function () {
         if ($(this).val() != 0) {
             var parametros = 'codArtefatoComplexidade;'+$("#codArtefatoComplexidade").val();
@@ -115,7 +123,11 @@ function CarregaComboComplexidade(arrDados, valor, disabled) {
 
 function CarregaComboComponente(arrDados, valor, disabled) {
     if (valor==undefined){
-        valor = 0;
+        if(arrDados[1].length==2){
+            valor = arrDados[1][1]['ID'];
+        } else {
+            valor = 0;
+        }
     }    
     CriarSelectPuro('codComplexidadeComponente', arrDados, valor, disabled);
 }
