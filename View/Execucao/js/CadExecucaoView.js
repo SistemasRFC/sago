@@ -63,7 +63,11 @@ function InsereArquivos(dados){
 
 function CarregaComboDisciplina(arrDados, valor, disabled) {
     if (valor==undefined){
-        valor = 0;
+        if(arrDados[1].length==2){
+            valor = arrDados[1][1]['ID'];
+        } else {
+            valor = 0;
+        }
     }
     CriarSelectPuro('codDisciplina', arrDados, valor, disabled);
     $("#codDisciplina").change(function () {
@@ -76,7 +80,11 @@ function CarregaComboDisciplina(arrDados, valor, disabled) {
 
 function CarregaComboAtividade(arrDados, valor, disabled) {
     if (valor==undefined){
-        valor = 0;
+        if(arrDados[1].length==2){
+            valor = arrDados[1][1]['ID'];
+        } else {
+            valor = 0;
+        }
     }    
     CriarSelectPuro('codDisciplinaAtividade', arrDados, valor, disabled);
     $("#codDisciplinaAtividade").change(function () {
@@ -89,7 +97,11 @@ function CarregaComboAtividade(arrDados, valor, disabled) {
 
 function CarregaComboArtefato(arrDados, valor, disabled) {
     if (valor==undefined){
-        valor = 0;
+        if(arrDados[1].length==2){
+            valor = arrDados[1][1]['ID'];
+        } else {
+            valor = 0;
+        }
     }    
     CriarSelectPuro('codAtividadeArtefato', arrDados, valor, disabled);
     $("#codAtividadeArtefato").change(function () {

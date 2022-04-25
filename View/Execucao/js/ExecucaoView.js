@@ -7,6 +7,7 @@ $(function () {
         LimparCampos();
         $("#cadNovaOF").show("fade");
         $("#btnNovaOF").hide("fade");
+        $("#nroAnoReferencia").val(new Date().getFullYear());
     });
     $("#btnCancelar").click(function(){
         $("#cadNovaOF").hide("fade");
