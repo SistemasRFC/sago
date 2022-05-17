@@ -70,6 +70,9 @@ function CarregaComboDisciplina(arrDados, valor, disabled) {
         }
     }
     CriarSelectPuro('codDisciplina', arrDados, valor, disabled);
+    setTimeout(function () {
+        $("#codDisciplina").change();
+      }, 1000);
     $("#codDisciplina").change(function () {
         if ($(this).val() != 0) {
             var parametros = 'codDisciplina;'+$("#codDisciplina").val();
