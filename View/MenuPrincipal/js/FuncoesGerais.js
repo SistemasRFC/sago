@@ -207,7 +207,7 @@ function ExecutaDispatch(Controller, Method, Parametros, Callback, MensagemAguar
     if (Parametros != undefined) {
         var dados = Parametros.split('|');
         for (i = 0; i < dados.length; i++) {
-            var campos = dados[i].split(';');
+            var campos = dados[i].split('<=>');
             Object.defineProperty(obj, campos[0], {
                 __proto__: null,
                 enumerable: true,
@@ -220,6 +220,7 @@ function ExecutaDispatch(Controller, Method, Parametros, Callback, MensagemAguar
         obj,
         function (retorno) {
             retorno = eval('(' + retorno + ')');
+            // console.log(retorno);
             if (retorno[0] == true) {
                 if (MensagemRetorno != undefined) {
                     $(".jquery-waiting-base-container").fadeOut({ modo: "fast" });
@@ -323,7 +324,7 @@ function ExecutaDispatchValor(Controller, Method, Parametros, Callback, Valor, D
     if (Parametros != undefined) {
         var dados = Parametros.split('|');
         for (i = 0; i < dados.length; i++) {
-            var campos = dados[i].split(';');
+            var campos = dados[i].split('<=>');
             Object.defineProperty(obj, campos[0], {
                 __proto__: null,
                 enumerable: true,
@@ -384,7 +385,7 @@ function retornaParametros() {
                 value = $(this).val();
                 break;
         }
-        retorno += name + ';' + value + '|';
+        retorno += name + '<=>' + value + '|';
     });
     return retorno;
 }

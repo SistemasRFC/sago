@@ -23,4 +23,17 @@ function posLogin(logar){
 $(document).ready(function () {
     $("#nmeLogin").focus();
     $("#nmeLogin").val('adm');
+    // geraDados();
 });
+
+function geraDados(){
+    var obj={
+        nome:'Rafael',
+        idade:41,
+        sobre:'CArneiro'
+    }
+    recebeDados(obj);
+}
+function recebeDados(dados){
+    console.log(dados);
+}

@@ -55,7 +55,7 @@ function MontaComboMenu(arrDados) {
 }
 
 function DeleteMenu() {
-    ExecutaDispatch('Menu', 'DeleteMenu', 'codMenuW;' + $("#codMenuW").val() + '|', retornoDeleteMenu, "Aguarde, removendo menu", "Menu removido com sucesso!");
+    ExecutaDispatch('Menu', 'DeleteMenu', 'codMenuW<=>' + $("#codMenuW").val() + '|', retornoDeleteMenu, "Aguarde, removendo menu", "Menu removido com sucesso!");
 }
 
 function retornoDeleteMenu(retorno) {

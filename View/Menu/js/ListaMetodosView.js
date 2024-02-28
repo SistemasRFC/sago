@@ -1,6 +1,6 @@
 function ListarMetodos(classe){
     if(classe != ""){
-        ExecutaDispatch('Menu', 'ListarMetodos', 'classe;'+classe+'|'+'pastaAtual;'+$("#pastaAtual").val()+'|', MontaTabelaMetodos);
+        ExecutaDispatch('Menu', 'ListarMetodos', 'classe<=>'+classe+'|'+'pastaAtual<=>'+$("#pastaAtual").val()+'|', MontaTabelaMetodos);
     } else {
         $("#listagemMetodos").html("<h4 class='text-center'>OPS! Selecione uma Controller Primeiro</h4>");
     }

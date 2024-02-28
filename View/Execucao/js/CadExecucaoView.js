@@ -11,6 +11,16 @@ $(function () {
             return;
         }
         var nmeArquivo = $("#nmeArquivo").val().replace('/\/g', '/');
+        if (nmeArquivo.split('\n').length>1) {
+            var temp = nmeArquivo.split('\n');
+            var lista = "";
+            temp.forEach(elm => {
+                lista += elm+"*-*";
+            });
+            $("#nmeArquivo").val(lista.substring(0, lista.length-3));
+            var parametros = retornaParametros();
+            ExecutaDispatch('ExecucaoArquivos', "InsertMultiploExecucaoArquivos", parametros, retornoInsertMultiplo, 'Aguarde, Salvando!', 'Registros salvos com sucesso!');
+        }
         var palavra="";
         for (var i=0;i<nmeArquivo.length;i++){
             if (nmeArquivo[i]=="\\"){
@@ -27,7 +37,8 @@ $(function () {
             $("#method").val('UpdateExecucaoComplexidade');
         }
         var parametros = retornaParametros();
-        ExecutaDispatch('ExecucaoArquivos', "VerificaArquivoExistente", parametros, InsereExecucaoComplexidade);
+        // console.log(parametros);
+        // ExecutaDispatch('ExecucaoArquivos', "VerificaArquivoExistente", parametros, InsereExecucaoComplexidade);
     });
     
     $("#btnLimpar").click(function(){
@@ -61,6 +72,26 @@ function InsereArquivos(dados){
     ExecutaDispatch('Execucao', 'ListarExecucao', '', CarregaGridExecucao);
 }
 
+function retornoInsertMultiplo(dados) {
+    $("#nmeArquivo").val("");
+    if(dados[3] != "") {
+        swal.close();
+        swal({
+            title: "Atenção!",
+            text: "O(s) artefato(s) abaixo já estão na OF: \n\n" + dados[3],
+            type: "warning",
+            confirmButtonText: "Fechar"
+        },
+        function(isConfirm) {
+            if (isConfirm) {
+                carregaOf();
+            }
+        });
+    } else {
+        carregaOf();   
+    }
+}
+
 function CarregaComboDisciplina(arrDados, valor, disabled) {
     if (valor==undefined){
         if(arrDados[1].length==2){
@@ -74,8 +105,8 @@ function CarregaComboDisciplina(arrDados, valor, disabled) {
         $("#codDisciplina").change();
       }, 1000);
     $("#codDisciplina").change(function () {
-        if ($(this).val() != 0) {
-            var parametros = 'codDisciplina;'+$("#codDisciplina").val();
+        if ($(this).val() > 0) {
+            var parametros = 'codDisciplina<=>'+$("#codDisciplina").val();
             ExecutaDispatch('Atividade', 'ListarAtividadeComboPorDisciplina', parametros, CarregaComboAtividade);    
         }
     });
@@ -92,7 +123,7 @@ function CarregaComboAtividade(arrDados, valor, disabled) {
     CriarSelectPuro('codDisciplinaAtividade', arrDados, valor, disabled);
     $("#codDisciplinaAtividade").change(function () {
         if ($(this).val() != 0) {
-            var parametros = 'codDisciplinaAtividade;'+$("#codDisciplinaAtividade").val();
+            var parametros = 'codDisciplinaAtividade<=>'+$("#codDisciplinaAtividade").val();
             ExecutaDispatch('Artefato', 'ListarArtefatoPorDisciplinaAtividadeCombo', parametros, CarregaComboArtefato);
         }
     });    
@@ -109,7 +140,7 @@ function CarregaComboArtefato(arrDados, valor, disabled) {
     CriarSelectPuro('codAtividadeArtefato', arrDados, valor, disabled);
     $("#codAtividadeArtefato").change(function () {
         if ($(this).val() != 0) {
-            var parametros = 'codAtividadeArtefato;'+$("#codAtividadeArtefato").val();
+            var parametros = 'codAtividadeArtefato<=>'+$("#codAtividadeArtefato").val();
             ExecutaDispatch('Complexidade', 'ListarComplexidadePorAtividadeArtefatoCombo', parametros, CarregaComboComplexidade);
         }
     });
@@ -125,12 +156,12 @@ function CarregaComboComplexidade(arrDados, valor, disabled) {
     }    
     CriarSelectPuro('codArtefatoComplexidade', arrDados, valor, disabled);
     if(valor != 0) {
-        var parametros = 'codArtefatoComplexidade;'+$("#codArtefatoComplexidade").val();
+        var parametros = 'codArtefatoComplexidade<=>'+$("#codArtefatoComplexidade").val();
         ExecutaDispatch('Componente', 'ListarComponentePorArtefatoComplexidadeCombo', parametros, CarregaComboComponente);
     }
     $("#codArtefatoComplexidade").change(function () {
         if ($(this).val() != 0) {
-            var parametros = 'codArtefatoComplexidade;'+$("#codArtefatoComplexidade").val();
+            var parametros = 'codArtefatoComplexidade<=>'+$("#codArtefatoComplexidade").val();
             ExecutaDispatch('Componente', 'ListarComponentePorArtefatoComplexidadeCombo', parametros, CarregaComboComponente);
         }
     });
@@ -148,16 +179,16 @@ function CarregaComboComponente(arrDados, valor, disabled) {
 }
 
 function carregaOf(){
-    var parametros = 'codExecucao;'+$("#codExecucao").val();
+    var parametros = 'codExecucao<=>'+$("#codExecucao").val();
     ExecutaDispatch('Execucao', 'ListarExecucaoPorOf', parametros, MontaListaExecucao);
 }
 
 function MontaListaExecucao(lista){
     lista = lista[1];
     $("#listaOF").html("<table class='table table-hover table-bordered' id='arquivoExecucaoTable' width='100%' cellspacing='0'><tr><td></td></tr></table>");
+    var tabela = "";
     if (lista!=null){
         listaGlobal = lista;
-        var tabela = "";
         tabela += "<table class='table table-hover table-bordered' id='arquivoExecucaoTable' width='100%' cellspacing='0'>";
         tabela += " <thead>";
         tabela += "     <tr>";
@@ -217,7 +248,7 @@ function MontaListaExecucao(lista){
             tabela += "             <tr style='background-color: #fff'>";
             tabela += "                 <th style='width: 5%;border: 1px solid #000000;'>N.º</th>";
             tabela += "                 <th style='width: 60%;border: 1px solid #000000;'>Nome Arquivo</th>";
-            tabela += "                 <th style='width: 20%;border: 1px solid #000000;'>Justificativa</th>";
+            tabela += "                 <th style='width: 20%;border: 1px solid #000000;'>Descrição</th>";
             tabela += "                 <th style='width: 5%;border: 1px solid #000000;'>Ação</th>";
             tabela += "             </tr>";
             tabela += "             </thead>";
@@ -248,7 +279,7 @@ function MontaListaExecucao(lista){
                         tabela += "             <td style='border: 1px solid #000000;' title='"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA+"'>"+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].TXT_DESCRICAO_JUSTIFICATIVA+"</td>";
                     }
                 } else {
-                    tabela += "             <td style='border: 1px solid #000000;'>\"Sem justificativa\"</td>";
+                    tabela += "             <td style='border: 1px solid #000000;'>\"Sem descrição\"</td>";
                 }
                 tabela += "             <td class='text-center' style='border: 1px solid #000000;'>\n\
                                             <button class='btn btn-danger btn-sm' onclick='javascript:RemoverArquivo("+lista[i]['cd'+lista[i].COD_EXECUCAO_COMPLEXIDADE][l].COD_EXECUCAO_ARQUIVO+");' title='Remover arquivo'>\n\
@@ -279,11 +310,23 @@ function MontaListaExecucao(lista){
             "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
             }
         });
+    } else {
+        tabela += "<h6 class='text-center'>NENHUM ARTEFATO CADASTRADO AINDA.</h6>"
     }
+    $("#listaOF").html(tabela);
+    $('#arquivoExecucaoTable').DataTable({
+        "searching": false,
+        "pagingType": "simple_numbers",
+        "lengthChange" : false,
+        "language": {
+        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+        }
+    });
+    
 }
 
 function RemoverArquivo(codExecucaoArquivo){
-    var parametros = 'codExecucaoArquivo;'+codExecucaoArquivo;
+    var parametros = 'codExecucaoArquivo<=>'+codExecucaoArquivo;
     ExecutaDispatch('ExecucaoArquivos', 'DeleteExecucaoArquivos', parametros, carregaOf, "Aguarde, excluindo!", "Registro excluído com sucesso"); 
     ExecutaDispatch('Execucao', 'ListarExecucao', '', CarregaGridExecucao);
 }
@@ -301,14 +344,14 @@ function mudaIcone(codtr){
 
 function RemoverExecucaoComplexidade(codExecucaoComplexidade){
     $("#method").val('DeleteExecucaoComplexidade');
-    var parametros = 'codExecucaoComplexidade;'+codExecucaoComplexidade;
+    var parametros = 'codExecucaoComplexidade<=>'+codExecucaoComplexidade;
     ExecutaDispatch('ExecucaoComplexidade', $("#method").val(), parametros, carregaOf, "Aguarde, excluindo!", "Registro excluído com sucesso");
     ExecutaDispatch('Execucao', 'ListarExecucao', '', CarregaGridExecucao);
 }
 
 function ClonarDados(codExecucaoComplexidade){
     $("#method").val('ClonarDados');
-    var parametros = 'codExecucaoComplexidade;'+codExecucaoComplexidade;
+    var parametros = 'codExecucaoComplexidade<=>'+codExecucaoComplexidade;
     ExecutaDispatch('ExecucaoComplexidade', $("#method").val(), parametros, carregaOf, "Aguarde","Clonado");
     LimparCamposExecucao();
     window.location.href='#foo';
@@ -319,13 +362,13 @@ function editarOF(codExecucaoComplexidade){
     var dadosArquivo = item[0];
     $("#codExecucaoComplexidade").val(dadosArquivo.COD_EXECUCAO_COMPLEXIDADE);
     ExecutaDispatchValor('Disciplina', 'ListarDisciplinaCombo', '', CarregaComboDisciplina, dadosArquivo.COD_DISCIPLINA, false);
-    var parametros = 'codDisciplina;'+dadosArquivo.COD_DISCIPLINA;    
+    var parametros = 'codDisciplina<=>'+dadosArquivo.COD_DISCIPLINA;    
     ExecutaDispatchValor('Atividade', 'ListarAtividadeComboPorDisciplina', parametros, CarregaComboAtividade, dadosArquivo.COD_DISCIPLINA_ATIVIDADE, false); 
-    parametros = 'codDisciplinaAtividade;'+dadosArquivo.COD_DISCIPLINA_ATIVIDADE;
+    parametros = 'codDisciplinaAtividade<=>'+dadosArquivo.COD_DISCIPLINA_ATIVIDADE;
     ExecutaDispatchValor('Artefato', 'ListarArtefatoPorDisciplinaAtividadeCombo', parametros, CarregaComboArtefato, dadosArquivo.COD_ATIVIDADE_ARTEFATO, false);
-    parametros = 'codAtividadeArtefato;'+dadosArquivo.COD_ATIVIDADE_ARTEFATO;
+    parametros = 'codAtividadeArtefato<=>'+dadosArquivo.COD_ATIVIDADE_ARTEFATO;
     ExecutaDispatchValor('Complexidade', 'ListarComplexidadePorAtividadeArtefatoCombo', parametros, CarregaComboComplexidade, dadosArquivo.COD_ARTEFATO_COMPLEXIDADE, false);
-    parametros = 'codArtefatoComplexidade;'+dadosArquivo.COD_ARTEFATO_COMPLEXIDADE;
+    parametros = 'codArtefatoComplexidade<=>'+dadosArquivo.COD_ARTEFATO_COMPLEXIDADE;
     ExecutaDispatchValor('Componente', 'ListarComponentePorArtefatoComplexidadeCombo', parametros, CarregaComboComponente, dadosArquivo.COD_COMPLEXIDADE_COMPONENTE, false);
     $("#nmeArquivo").focus().fadeIn("slow");
 }

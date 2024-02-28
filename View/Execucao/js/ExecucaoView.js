@@ -28,7 +28,7 @@ function ExcluirOf(codExecucao){
     function(isConfirm) {
       if (isConfirm) {
             $("#method").val('DeleteExecucao');
-            var parametros = "codExecucao;"+codExecucao;
+            var parametros = "codExecucao<=>"+codExecucao;
             ExecutaDispatch('Execucao', $("#method").val(), parametros, AtualizaGrid, 'Aguarde, excluíndo!', 'Registro excluído!');    
             $("#CadExecucao").jqxWindow("close");
       } else {
@@ -71,7 +71,7 @@ function MontaTabelaExecucao(listaExecucao) {
     html +='            <th style="vertical-align: middle">Pontuação</th>';
     html +='            <th style="vertical-align: middle" width="14%" class="text-center">Status</th>';
     html +='            <th style="vertical-align: middle" width="10%" class="text-center">Período referência</th>';
-    html +='            <th style="vertical-align: middle" width="15%"></th>';
+    html +='            <th style="vertical-align: middle" width="15%">Ação</th>';
     html +='        </tr>';
     html +='    </thead>';
     html +='    <tbody>';
@@ -170,6 +170,6 @@ function FinalizarOf(item){
 $(document).ready(function () {
     $("#cadNovaOF").hide();
     ExecutaDispatch('Execucao', 'ListarExecucao', '', CarregaGridExecucao);
-    ExecutaDispatch('Execucao', 'ListarMeses', 'verificaPermissao;N|', CarregaComboMeses);
-    ExecutaDispatch('Execucao', 'ListarAnos', 'verificaPermissao;N|', CarregaComboAnos);    
+    ExecutaDispatch('Execucao', 'ListarMeses', 'verificaPermissao<=>N|', CarregaComboMeses);
+    ExecutaDispatch('Execucao', 'ListarAnos', 'verificaPermissao<=>N|', CarregaComboAnos);    
 });

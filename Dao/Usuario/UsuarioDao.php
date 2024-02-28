@@ -57,7 +57,7 @@ class UsuarioDao extends BaseDao {
     function AddUsuario() {
         $codUsuario = $this->CatchUltimoCodigo('SE_USUARIO', 'COD_USUARIO');
         $txtSenha = '123459';
-        $senha = md5($txtSenha);
+        $senha = base64_encode($txtSenha);
         $sql_lista = " INSERT INTO SE_USUARIO (
                               COD_USUARIO,
                               NME_USUARIO,

@@ -11,7 +11,7 @@ class BaseDao{
         self::disconnect();
     }
     private static $dbtype   = "mysql";
-    private static $host     = "localhost";
+    private static $host     = HOST;
     private static $port     = PORT;
     private static $user     = USER;
     private static $password = PASSWORD;
@@ -389,7 +389,7 @@ class BaseDao{
         }else if ($type=='D'){
             $return = BaseDao::ConverteDataForm(filter_input(INPUT_POST, $field, $array[$type]));            
         }else if ($type=='P'){
-            $return = md5(filter_input(INPUT_POST, $field, $array[$type]));
+            $return = base64_encode(filter_input(INPUT_POST, $field, $array[$type]));
         }else{
             $return = filter_input(INPUT_POST, $field, $array[$type]);
         }

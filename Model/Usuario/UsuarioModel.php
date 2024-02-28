@@ -94,7 +94,7 @@ class UsuarioModel extends BaseModel
                 if($result[0]) {
                     if($result[1] > 0) {
                         $codUsuario = $result[1][0]['COD_USUARIO'];
-                        $novaSenha = md5('954321');
+                        $novaSenha = base64_encode('954321');
                         $result = $dao->RecuperarSenha($codUsuario, $novaSenha);
                         // if ($result[0]) {
                         //     Enviar email para o usuário com a nova senha

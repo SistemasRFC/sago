@@ -12,7 +12,7 @@ class LoginModel extends BaseModel
         if ($result[0]){
             if ($result[1]!=NULL){
                 static::AtualizaSessao($result[1]);
-                if ($txtSenha==md5('123459') || $txtSenha==md5('954321')){
+                if ($txtSenha==base64_encode('123459') || $txtSenha==base64_encode('954321')){
                     $result[1][0]['DSC_PAGINA'] = 'Login';
                     $result[1][0]['NME_METHOD'] = 'ChamaAlterarSenhaView';
                 } else {
@@ -35,8 +35,8 @@ class LoginModel extends BaseModel
         $LoginDao = new LoginDao();
         $this->RecuperaRequest();
         $this->objRequest->codUsuario = $_SESSION['cod_usuario'];
-        $this->objRequest->txtSenhaAtual = md5($this->objRequest->txtSenhaAtual);
-        $this->objRequest->txtSenhaNova = md5($this->objRequest->txtSenhaNova);
+        $this->objRequest->txtSenhaAtual = base64_encode($this->objRequest->txtSenhaAtual);
+        $this->objRequest->txtSenhaNova = base64_encode($this->objRequest->txtSenhaNova);
         $result = $this->VerificaSenhaAtual();
         if ($result[0]){
             $result = $LoginDao->AlterarSenha($this->objRequest);

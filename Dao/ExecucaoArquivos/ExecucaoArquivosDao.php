@@ -19,8 +19,8 @@ class ExecucaoArquivosDao extends BaseDao
         return $this->MontarSelect("WHERE COD_EXECUCAO_COMPLEXIDADE = ".$obj->codExecucaoComplexidade);
     }
 
-    Public Function UpdateExecucaoArquivos(stdClass $obj) {
-        return $this->MontarUpdate($obj);
+    Public Function InsertMultiploExecucaoArquivos(stdClass $obj) {
+        // return $this->MontarUpdate($obj);
     }
 
     Public Function InsertExecucaoArquivos(stdClass $obj) {

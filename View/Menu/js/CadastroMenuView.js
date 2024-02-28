@@ -67,7 +67,7 @@ function MontaTabelaMenu(listaMenus) {
     $("#listaMenus").html(tabela);
 
     $('#menuTable').DataTable({
-        "searching": false,
+        "searching": true,
         "pagingType": "simple_numbers",
         "lengthChange" : false,
         "language": {

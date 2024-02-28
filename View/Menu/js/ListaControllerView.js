@@ -2,7 +2,7 @@ function ListarController(dir){
     if (dir==undefined){
         ExecutaDispatch('Menu', 'listarController', undefined, MontaTabelaController);
     }else{
-        ExecutaDispatch('Menu', 'listarController', 'pasta;'+dir+'|', MontaTabelaController);
+        ExecutaDispatch('Menu', 'listarController', 'pasta<=>'+dir+'|', MontaTabelaController);
     }
     $("#pastaAtual").val(dir);
 }

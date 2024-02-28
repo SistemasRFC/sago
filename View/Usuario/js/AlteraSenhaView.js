@@ -6,7 +6,7 @@ $(function() {
 
 function AlterarSenha(){
         if ($("#txtSenhaNova").val()==$("#txtConfirmacao").val()){
-            ExecutaDispatch('Login', 'AlterarSenha', 'txtSenhaAtual;'+$("#txtSenha").val()+'|txtSenhaNova;'+$("#txtSenhaNova").val()+'|verificaPermissao;N|', RedirecionaTela);
+            ExecutaDispatch('Login', 'AlterarSenha', 'txtSenhaAtual;'+$("#txtSenha").val()+'|txtSenhaNova;'+$("#txtSenhaNova").val()+'|verificaPermissao<=>N|', RedirecionaTela);
         }else{
             swal({
                 title: 'AVISO!',

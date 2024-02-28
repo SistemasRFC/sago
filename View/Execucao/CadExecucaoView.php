@@ -41,36 +41,37 @@
                     <div class="form-group row">
                         <div class="col-sm-12 mb-3 mb-sm-0">
                             <label class="label" for="nmeArquivo">Arquivo</label>
-                            <input type="text" id="nmeArquivo" name="nmeArquivo" class='persist input form-control'>
+                            <textarea id="nmeArquivo" name="nmeArquivo" rows="3" class="persist input form-control"></textarea>
+                            <!-- <input type="text" id="nmeArquivo" name="nmeArquivo" class='persist input form-control'> -->
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <!-- <div class="form-group row">
                         <div class="col-sm-12 mb-3 mb-sm-0">
                             <label class="label" for="txtDescricaoJustificativa">Justificativa</label>
                             <input type="text" id="txtDescricaoJustificativa" name="txtDescricaoJustificativa" class='persist input form-control'>
                         </div>
-                    </div>
-                    <div class="form-group row">
+                    </div> -->
+                    <!-- <div class="form-group row">
                         <div class="col-sm-12 mb-3 mb-sm-0">
                             <label class="label" for="txtReferenciaAtividade">Referência da Atividade</label>
                             <input type="text" id="txtReferenciaAtividade" name="txtReferenciaAtividade" class='persist input form-control'>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="form-group row">
                         <div class="col-sm-6 mb-3 mb-sm-0">
                             <button class='btn btn-info btn-block mb-3' id="btnLimpar">
                                 <span class="icon">
                                     <i class="fas fa-eraser"></i>
                                 </span>
-                                <span class="text">Limpar Campos</span>
+                                <span class="text"> Limpar Campos</span>
                             </button>
                         </div>
                         <div class="col-sm-6 mb-3 mb-sm-0">
                             <button class='btn btn-success btn-block mb-3' id="btnInserirArquivo">
                                 <span class="icon">
-                                    <i class="fas fa-check"></i>
+                                    <i class="fas fa-plus"></i>
                                 </span>
-                                <span class="text">Salvar Arquivo</span>
+                                <span class="text"> Incluir</span>
                             </button>
                         </div>
                     </div>

@@ -21,14 +21,18 @@ class ExecucaoComplexidadeModel extends BaseModel
         }
     }
 
-    Public Function InsertExecucaoComplexidade() {
+    Public Function InsertExecucaoComplexidade($Json=true) {
         $dao = new ExecucaoComplexidadeDao();
         $cDao = new ComplexidadeComponenteDao();
         BaseModel::PopulaObjetoComRequest($dao->getColumns());
         $resultCC = $cDao->GetQtdPontosPorCodComplexidadeComponente($this->objRequest);
         $this->objRequest->qtdPontos = $resultCC[1][0]['QTD_PONTOS'];
         $result = $dao->InsertExecucaoComplexidade($this->objRequest);
-        return json_encode($result);
+        if ($Json){
+            return json_encode($result);
+        }else{
+            return $result;
+        }
     }
 
     Public Function UpdateExecucaoComplexidade() {

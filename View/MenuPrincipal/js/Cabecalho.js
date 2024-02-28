@@ -115,5 +115,5 @@ function CriarComboTamanho(nmeCombo, largura, altura, larguraDrop, url, parametr
 }
 
 $(document).ready(function(){        
-    ExecutaDispatch('MenuPrincipal', 'VerificaSessao', 'verificaPermissao;N|', VerificaSessao);
+    ExecutaDispatch('MenuPrincipal', 'VerificaSessao', 'verificaPermissao<=>N|', VerificaSessao);
 });

@@ -18,10 +18,10 @@ function MontaComboSelecionado() {
 
 function SalvarPermissoes(checkBoxes) {
     $('#method').val('AtualizaPermissoes');
-    ExecutaDispatch('PermissaoMenu', $('#method').val(), 'codPerfil;' + $("#codPerfil").val() + '|C;' + checkBoxes, CarregaListaMenus, 'Aguarde, salvando permissões', 'Permissões Salvas com Sucesso!');
+    ExecutaDispatch('PermissaoMenu', $('#method').val(), 'codPerfil<=>' + $("#codPerfil").val() + '|C<=>' + checkBoxes, CarregaListaMenus, 'Aguarde, salvando permissões', 'Permissões Salvas com Sucesso!');
 }
 function CarregaListaMenus() {
-    ExecutaDispatch('PermissaoMenu', 'ListarMenus', 'codPerfil;' + $("#codPerfil").val() + '|', ListaMenus);
+    ExecutaDispatch('PermissaoMenu', 'ListarMenus', 'codPerfil<=>' + $("#codPerfil").val() + '|', ListaMenus);
 }
 function ListaMenus(ListaMenus) {
     ListaMenus = ListaMenus[1];

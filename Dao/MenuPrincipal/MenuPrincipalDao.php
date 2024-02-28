@@ -9,7 +9,7 @@ class MenuPrincipalDao extends BaseDao
     function CarregaMenu( $codUsuario, $codMenuPai, $path ) {
         try {
             $sql_localiza = " SELECT DSC_MENU_W,
-                                     m.COD_MENU_W,
+                                     M.COD_MENU_W,
                                      CONCAT('" .$path. "','/Controller/',NME_CONTROLLER) AS NME_CONTROLLER,
                                      NME_METHOD,
                                      NME_USUARIO_COMPLETO,
@@ -34,7 +34,7 @@ class MenuPrincipalDao extends BaseDao
     public function CarregaMenuNew($codUsuario, $path) {
         try {
             $sql_localiza = " SELECT DSC_MENU_W,
-                                     m.COD_MENU_W,                   
+                                     M.COD_MENU_W,                   
                                      NME_CONTROLLER,
                                      CONCAT('" . $path . "','/Controller/',NME_CONTROLLER) AS NME_PATH,
                                      NME_METHOD,

@@ -178,8 +178,8 @@ function CarregaComboAnos(anos) {
 
 $(document).ready(function () {
     ExecutaDispatch('Usuario', 'ListarUsuarioCombo', '', CarregaComboUsuario);
-    ExecutaDispatch('Execucao', 'ListarMeses', 'verificaPermissao;N|', CarregaComboMeses);
-    ExecutaDispatch('Execucao', 'ListarAnos', 'verificaPermissao;N|', CarregaComboAnos);
+    ExecutaDispatch('Execucao', 'ListarMeses', 'verificaPermissao<=>N|', CarregaComboMeses);
+    ExecutaDispatch('Execucao', 'ListarAnos', 'verificaPermissao<=>N|', CarregaComboAnos);
 });
 
 

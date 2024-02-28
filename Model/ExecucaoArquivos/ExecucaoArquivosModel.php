@@ -1,5 +1,6 @@
 <?php
 include_once("Model/BaseModel.php");
+include_once("Model/ExecucaoComplexidade/ExecucaoComplexidadeModel.php");
 include_once("Dao/ExecucaoArquivos/ExecucaoArquivosDao.php");
 class ExecucaoArquivosModel extends BaseModel
 {
@@ -28,11 +29,50 @@ class ExecucaoArquivosModel extends BaseModel
         return json_encode($result);
     }
 
-    Public Function UpdateExecucaoArquivos() {
+    Public Function InsertMultiploExecucaoArquivos() {
         $dao = new ExecucaoArquivosDao();
+        $modelExecucaoComplexidade = new ExecucaoComplexidadeModel();
         BaseModel::PopulaObjetoComRequest($dao->getColumns());
-        $result = $dao->UpdateExecucaoArquivos($this->objRequest);
+        $duplicados = "";
+        // var_dump($this->objRequest->nmeArquivo);
+        $listaArquivos = explode('*-*', $this->objRequest->nmeArquivo);
+        // var_dump($listaArquivos);die;
+        for($i = 0; $i < count($listaArquivos); $i++) {
+            $partes = explode(';', $listaArquivos[$i]);
+            if(count($partes)==2){
+                $retorno = $this->VerificaArquivoExistenteP($partes[0], $partes[1]);
+            } else {
+                $retorno = $this->VerificaArquivoExistenteP($partes[0], '');
+            }
+            if($retorno[0]) {
+                if(!isset($this->objRequest->codExecucaoComplexidade) || trim($this->objRequest->codExecucaoComplexidade) == '') {
+                    $complexidade = $modelExecucaoComplexidade->InsertExecucaoComplexidade(false);
+                    $this->objRequest->codExecucaoComplexidade = $complexidade[2];
+                }
+                $result = $dao->InsertExecucaoArquivos($this->objRequest);
+            } else {
+                $duplicados .= "- ".$retorno[1]. "\n";
+            }
+        }
+        $result[3] = $duplicados;
+
+        // $result = $dao->InsertMultiploExecucaoArquivos($this->objRequest);
         return json_encode($result);
+    }
+    
+    Private Function VerificaArquivoExistenteP($nmeArquivo, $txtJustificativa){
+        $dao = new ExecucaoArquivosDao();
+        $this->objRequest->codExecucao = $dao->Populate("codExecucao", "I");
+        $this->objRequest->nmeArquivo = $nmeArquivo;
+        $this->objRequest->txtDescricaoJustificativa = $txtJustificativa;
+        $result = $dao->VerificaArquivoExistente($this->objRequest);
+        if ($result[0]){
+            if ($result[1][0]['QTD']>0){
+                $result[0] = false;
+                $result[1] = $nmeArquivo;
+            }
+        }
+        return $result;
     }
 
     Public Function DeleteExecucaoArquivos() {

@@ -21,9 +21,9 @@ class ExecucaoArquivosController extends BaseController
         echo $ExecucaoArquivosModel->InsertExecucaoArquivos();
     }
 
-    Public Function UpdateExecucaoArquivos() {
+    Public Function InsertMultiploExecucaoArquivos() {
         $ExecucaoArquivosModel = new ExecucaoArquivosModel();
-        echo $ExecucaoArquivosModel->UpdateExecucaoArquivos();
+        echo $ExecucaoArquivosModel->InsertMultiploExecucaoArquivos();
     }
 
     Public Function DeleteExecucaoArquivos() {

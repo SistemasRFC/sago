@@ -67,7 +67,7 @@ class LoginDao extends BaseDao{
                 VALUES(".$codUsuario.",
                        '".$this->Populate('nmeUsuario')."',
                        '".$this->Populate('nmeUsuarioCompleto')."', 
-                       '".md5($this->Populate('txtSenhaW'))."', 
+                       '".base64_encode($this->Populate('txtSenhaW'))."', 
                        '".$this->Populate('nroTelCelular')."', 
                        '".$this->Populate('txtEmail')."', 
                        2,
