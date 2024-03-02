@@ -373,9 +373,8 @@ class BaseDao{
      *       = 'F' - FILTER_SANITIZE_NUMBER_FLOAT
      *       = 'D' - FILTER_SANITIZE_STRING (formatado para data)
      *       = 'P' - FILTER_SANITIZE_STRING (Formato para senha)
-     * @param type $field
-     * @param type $type
-     * @return type
+     * @param string $field
+     * @param string $type
      */
     Public Static Function Populate($field, $type='S'){
         $array = array('S' => FILTER_SANITIZE_STRING,

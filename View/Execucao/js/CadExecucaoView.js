@@ -10,33 +10,18 @@ $(function () {
             });            
             return;
         }
-        var nmeArquivo = $("#nmeArquivo").val().replace('/\/g', '/');
-        if (nmeArquivo.split('\n').length>1) {
-            var temp = nmeArquivo.split('\n');
-            var lista = "";
-            temp.forEach(elm => {
-                lista += elm+"*-*";
-            });
-            $("#nmeArquivo").val(lista.substring(0, lista.length-3));
-            var parametros = retornaParametros();
-            ExecutaDispatch('ExecucaoArquivos', "InsertMultiploExecucaoArquivos", parametros, retornoInsertMultiplo, 'Aguarde, Salvando!', 'Registros salvos com sucesso!');
-        }
-        var palavra="";
-        for (var i=0;i<nmeArquivo.length;i++){
-            if (nmeArquivo[i]=="\\"){
-                console.log(nmeArquivo[i]);
-                palavra += '/';
-            }else{
-                palavra += nmeArquivo[i];
-            }
-        }
-        $("#nmeArquivo").val(palavra);
-        if ($('#codExecucaoComplexidade').val() == '') {
-            $("#method").val('InsertExecucaoComplexidade');
-        } else {
-            $("#method").val('UpdateExecucaoComplexidade');
-        }
+        tratarNomeArquivo();
+        var lista = montarListaArquivos();
         var parametros = retornaParametros();
+        parametros += '|listaArquivos<=>'+lista;
+        ExecutaDispatch('ExecucaoArquivos', "InsertMultiploExecucaoArquivos", parametros, retornoInsertMultiplo, 'Aguarde, Salvando!', 'Registros salvos com sucesso!');
+        
+        // if ($('#codExecucaoComplexidade').val() == '') {
+        //     $("#method").val('InsertExecucaoComplexidade');
+        // } else {
+        //     $("#method").val('UpdateExecucaoComplexidade');
+        // }
+        // var parametros = retornaParametros();
         // console.log(parametros);
         // ExecutaDispatch('ExecucaoArquivos', "VerificaArquivoExistente", parametros, InsereExecucaoComplexidade);
     });
@@ -46,10 +31,36 @@ $(function () {
     });
 });
 
-function InsereExecucaoComplexidade(){
-    var parametros = retornaParametros();
-    ExecutaDispatch('ExecucaoComplexidade', $("#method").val(), parametros, InsereArquivos, "Aguarde, salvando!", "Registro salvo com sucesso");
+function tratarNomeArquivo() {
+    var nmeArquivo = $("#nmeArquivo").val().replace('/\/g', '/');
+    var palavra="";
+    for (var i=0;i<nmeArquivo.length;i++){
+        if (nmeArquivo[i]=="\\"){
+            console.log(nmeArquivo[i]);
+            palavra += '/';
+        }else{
+            palavra += nmeArquivo[i];
+        }
+    }
+    $("#nmeArquivo").val(palavra);
 }
+
+function montarListaArquivos() {
+    var arquivos = $("#nmeArquivo").val();
+    var temp = arquivos.split('\n');
+    var listaArquivos = "";
+    temp.forEach(elm => {
+        listaArquivos += elm+"*-*";
+    });
+    listaArquivos = listaArquivos.substring(0, listaArquivos.length-3);
+
+    return listaArquivos;
+}
+
+// function InsereExecucaoComplexidade(){
+//     var parametros = retornaParametros();
+//     ExecutaDispatch('ExecucaoComplexidade', $("#method").val(), parametros, InsereArquivos, "Aguarde, salvando!", "Registro salvo com sucesso");
+// }
 
 function LimparCamposExecucao(){
     ExecutaDispatchValor('Disciplina', 'ListarDisciplinaAtivaCombo', '', CarregaComboDisciplina);
@@ -62,20 +73,20 @@ function LimparCamposExecucao(){
     $("#codExecucaoComplexidade").val('');
 }
 
-function InsereArquivos(dados){
-    $("#codExecucaoComplexidade").val(dados[2]);
-    $("#method").val('InsertExecucaoArquivos');
-    var parametros = retornaParametros();
-    ExecutaDispatch('ExecucaoArquivos', $("#method").val(), parametros, carregaOf, 'Aguarde, Salvando!', 'Registro Salvo com Sucesso!');
-    $("#nmeArquivo").val("");
-    $("#txtDescricaoJustificativa").val("");
-    ExecutaDispatch('Execucao', 'ListarExecucao', '', CarregaGridExecucao);
-}
+// function InsereArquivos(dados){
+//     $("#codExecucaoComplexidade").val(dados[2]);
+//     $("#method").val('InsertExecucaoArquivos');
+//     var parametros = retornaParametros();
+//     ExecutaDispatch('ExecucaoArquivos', $("#method").val(), parametros, carregaOf, 'Aguarde, Salvando!', 'Registro Salvo com Sucesso!');
+//     $("#nmeArquivo").val("");
+//     $("#txtDescricaoJustificativa").val("");
+//     ExecutaDispatch('Execucao', 'ListarExecucao', '', CarregaGridExecucao);
+// }
 
 function retornoInsertMultiplo(dados) {
     $("#nmeArquivo").val("");
     if(dados[3] != "") {
-        swal.close();
+        // swal.close();
         swal({
             title: "Atenção!",
             text: "O(s) artefato(s) abaixo já estão na OF: \n\n" + dados[3],
@@ -361,9 +372,10 @@ function editarOF(codExecucaoComplexidade){
     var item = listaGlobal.filter(elm => elm.COD_EXECUCAO_COMPLEXIDADE == codExecucaoComplexidade);
     var dadosArquivo = item[0];
     $("#codExecucaoComplexidade").val(dadosArquivo.COD_EXECUCAO_COMPLEXIDADE);
-    ExecutaDispatchValor('Disciplina', 'ListarDisciplinaCombo', '', CarregaComboDisciplina, dadosArquivo.COD_DISCIPLINA, false);
-    var parametros = 'codDisciplina<=>'+dadosArquivo.COD_DISCIPLINA;    
-    ExecutaDispatchValor('Atividade', 'ListarAtividadeComboPorDisciplina', parametros, CarregaComboAtividade, dadosArquivo.COD_DISCIPLINA_ATIVIDADE, false); 
+    // ExecutaDispatchValor('Disciplina', 'ListarDisciplinaCombo', '', CarregaComboDisciplina, dadosArquivo.COD_DISCIPLINA, false);
+    var parametros = 'codDisciplina<=>'+dadosArquivo.COD_DISCIPLINA; 
+    // ExecutaDispatchValor('Atividade', 'ListarAtividadeComboPorDisciplina', parametros, CarregaComboAtividade, dadosArquivo.COD_DISCIPLINA_ATIVIDADE, false); 
+    $("#codDisciplinaAtividade").val(dadosArquivo.COD_DISCIPLINA_ATIVIDADE);
     parametros = 'codDisciplinaAtividade<=>'+dadosArquivo.COD_DISCIPLINA_ATIVIDADE;
     ExecutaDispatchValor('Artefato', 'ListarArtefatoPorDisciplinaAtividadeCombo', parametros, CarregaComboArtefato, dadosArquivo.COD_ATIVIDADE_ARTEFATO, false);
     parametros = 'codAtividadeArtefato<=>'+dadosArquivo.COD_ATIVIDADE_ARTEFATO;

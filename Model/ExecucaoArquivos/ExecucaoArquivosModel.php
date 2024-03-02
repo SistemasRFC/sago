@@ -33,12 +33,13 @@ class ExecucaoArquivosModel extends BaseModel
         $dao = new ExecucaoArquivosDao();
         $modelExecucaoComplexidade = new ExecucaoComplexidadeModel();
         BaseModel::PopulaObjetoComRequest($dao->getColumns());
+        $listaArquivos = $dao->Populate("listaArquivos", "S");
         $duplicados = "";
-        // var_dump($this->objRequest->nmeArquivo);
-        $listaArquivos = explode('*-*', $this->objRequest->nmeArquivo);
-        // var_dump($listaArquivos);die;
-        for($i = 0; $i < count($listaArquivos); $i++) {
-            $partes = explode(';', $listaArquivos[$i]);
+        // var_dump($listaArquivos);
+        $arrArquivos = explode('*-*', $listaArquivos);
+        // var_dump($arrArquivos);die;
+        for($i = 0; $i < count($arrArquivos); $i++) {
+            $partes = explode(';', $arrArquivos[$i]);
             if(count($partes)==2){
                 $retorno = $this->VerificaArquivoExistenteP($partes[0], $partes[1]);
             } else {
